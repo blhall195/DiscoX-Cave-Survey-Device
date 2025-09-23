@@ -16,6 +16,10 @@
 	background: #fff;
 }
 
+.banner {
+    background: #fff !important;
+}
+
 
 html, body, div, span, applet, object,
 iframe, h1, h2, h3, h4, h5, h6, p, blockquote,
@@ -8611,5 +8615,6 @@ input, select, textarea {
 			#wrapper.divided > .invert:first-child {
 				box-shadow: none !important;
 			}
+
 
 
