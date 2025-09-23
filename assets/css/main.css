@@ -13,6 +13,7 @@
     width: 100%;
     height: 100%;
     display: block;
+	background: #fff;
 }
 
 
@@ -8610,4 +8611,5 @@ input, select, textarea {
 			#wrapper.divided > .invert:first-child {
 				box-shadow: none !important;
 			}
+
 
