@@ -23,7 +23,7 @@
 							<h1>The DiscoX Cave Survey Device</h1>
 							<p class="major">A new open source cave survey device - avalible for preorder (Release date: December 2025).</a></p>
 							<ul class="actions stacked">
-								<li><a href="mailto:info@discox.co.uk" class="button big wide smooth-scroll-middle">Get in touch</a></li>
+								<li><a href="#contact" class="button big wide smooth-scroll-middle">Get in touch</a></li>
 							</ul>
 						</div>
 						<div class="image">
@@ -87,8 +87,8 @@
 					<!-- Six -->
 					<section class="spotlight style1 orient-right content-align-left image-position-center onscroll-image-fade-in" id="first">
 						<div class="content">
-							<h2>DiscoX price: £470</h2>
-							<p>There will be an initial batch run of 30 DiscoX devices due for completion in december 2025, if you're intrested in reserving a DiscoX or have any questions feel free to <a href="mailto:info@discox.co.uk">get in touch.</a></p>
+							<h2>DiscoX price: £450</h2>
+							<p>There will be an initial batch run of 30 DiscoX devices due for completion in december 2025, if you're intrested in reserving a DiscoX or have any questions feel free to <a href="#contact">get in touch.</a></p>
 						</div>
 
 					</section>
@@ -163,32 +163,50 @@
 						</div>
 					</section>
 
-				<!-- Seven 
-					<section class="wrapper style1 align-center">
-						<div class="inner medium">
-							<h2>Get in touch</h2>
-							<form method="post" action="#">
-								<div class="fields">
-									<div class="field half">
-										<label for="name">Name</label>
-										<input type="text" name="name" id="name" value="" />
-									</div>
-									<div class="field half">
-										<label for="email">Email</label>
-										<input type="email" name="email" id="email" value="" />
-									</div>
-									<div class="field">
-										<label for="message">Message</label>
-										<textarea name="message" id="message" rows="6"></textarea>
-									</div>
-								</div>
-								<ul class="actions special">
-									<li><input type="submit" name="submit" id="submit" value="Send Message" /></li>
-								</ul>
-							</form>
+					<!-- Get in touch section -->
+					<section id="contact" class="wrapper style1 align-center">
+					<div class="inner medium">
+						<h2>Get in touch</h2>
 
+						<!-- Connected to Formspree -->
+						<form action="https://formspree.io/f/mvgwqgyq" method="POST">
+						<div class="fields">
+							<div class="field half">
+							<label for="name">Name</label>
+							<input type="text" name="name" id="name" required />
+							</div>
+
+							<div class="field half">
+							<label for="email">Email</label>
+							<input type="email" name="email" id="email" required />
+							</div>
+
+							<div class="field">
+							<label for="message">Message</label>
+							<textarea name="message" id="message" rows="6" required></textarea>
+							</div>
+
+							<!-- Optional reCAPTCHA widget -->
+							<!--
+							<div class="field">
+							<div class="g-recaptcha" data-sitekey="YOUR_SITE_KEY"></div>
+							</div>
+							-->
 						</div>
-					</section> -->
+
+						<ul class="actions special">
+							<li>
+							<input type="submit" value="Send Message" class="primary" />
+							</li>
+						</ul>
+						</form>
+					</div>
+					</section>
+
+					<!-- Optional reCAPTCHA script -->
+					<!-- <script src="https://www.google.com/recaptcha/api.js" async defer></script> -->
+
+				
 
 			</div>
 
@@ -204,46 +222,3 @@
 	</body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
