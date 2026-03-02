@@ -1,225 +1,866 @@
-<!DOCTYPE HTML>
-<!--
-	The DiscoX Cave Survey Device
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>The DiscoX Cave Survey Device</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
-	<body class="is-preload">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DiscoX — Amber Underground Theme</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & Variables ── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-		<!-- Wrapper -->
-			<div id="wrapper" class="divided">
+    :root {
+      --bg: #0c0a08;
+      --surface: #141210;
+      --surface-2: #1d1a16;
+      --border: #2e2820;
+      --text: #ede8e0;
+      --text-dim: #9a8e7e;
+      --accent: #ffb020;
+      --accent-dim: #cc8d1a;
+      --red: #ff4d4d;
+      --green: #2ecc71;
+      --purple: #a66bff;
+      --font-body: 'DM Sans', sans-serif;
+      --font-mono: 'Space Mono', monospace;
+      --max-w: 1120px;
+      --radius: 10px;
+    }
 
-				<!-- One -->
-					<section class="banner style1 orient-left content-align-left image-position-right fullscreen onload-image-fade-in onload-content-fade-right">
-						<div class="content">
-							<h1>The DiscoX Cave Survey Device</h1>
-							<p class="major">A new open source cave survey device - Now Available.</a></p>
-							<ul class="actions stacked">
-								<li><a href="https://buy.stripe.com/7sYdRae3DfaQ8ykgmba7C01" class="button big wide smooth-scroll-middle">Order</a></li>
-							</ul>
-						</div>
-						<div class="image">
-							<img src="images/logo.JPG" alt="" />
-						</div>
-					</section>
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 
-				<!-- Two -->
-					<section class="spotlight style1 orient-right content-align-left image-position-center onscroll-image-fade-in" id="first">
-						<div class="content">
-							<h2>A tough water resistant design</h2>
-							<p>Designed for wet and muddy cave environments, the case is constructed from a mixture of polycarbonate and PETG, it includes in internal epoxy coating, a scratch-resistant gorilla glass display cover and quarts glass laser protector.</p>
-							<ul class="actions stacked">
-								<li><a href="specs" class="button">See Full Specs.</a></li>
-							</ul>
-						</div>
-						<div class="image">
-							<img src="images/in_hand.png" alt="" />
-						</div>
-					</section>
-				
-				<!-- Three -->
-					<section class="spotlight style1 orient-left content-align-left image-position-center onscroll-image-fade-in">
-						<div class="content">
-							<h2>A modular repairable design</h2>
-							<p>Manage to break it? - no problem, the device is completely repairable. Most of the components are available to buy from commerical vendors, can be salvaged from other DiscoX devices, 3D printed and laser cut. Alternatively, get in touch, and I'll help fix it.</p>
-							<ul class="actions stacked">
-								<li><a href="spares" class="button">Find Spare Parts</a></li>
-							</ul>
-						</div>
-						<div class="image">
-							<img src="images/disassembled.jpg" alt="" />
-						</div>
-					</section>
-				
-					<!-- Four -->
-					<section class="spotlight style1 orient-right content-align-left image-position-center onscroll-image-fade-in" id="first">
-						<div class="content">
-							<h2>Clarity in Colour - RGB status indicator</h2>
-							<p>The DiscoX's RGB LED status light band, alerts the user to anomalous results and indicates whether the device is being held stable before a reading is taken, improving survey accuracy. There's also a dedicated disco button to activate "Rave Mode".</p>
-						</div>
-						<div class="image">
-							<img src="images/Picture1.png" alt="" />
-						</div>
-					</section>
-			
-				<!-- Five -->
-					<section class="spotlight style1 orient-left content-align-left image-position-center onscroll-image-fade-in">
-						<div class="content">
-							<h2>An Open Source Project</h2>
-							<p>This is a result of the open source <a href="https://stic.readthedocs.io/" target="_blank">SAP6</a> project by Phil Underwood, the project is completely open to adaptation and improvement.</p>
-							<ul class="actions stacked">
-								<li><a href="https://github.com/blhall195/Mr_Zappy" class="button">View Codebase</a></li>
-							</ul>
-						</div>
-						<div class="image">
-							<img src="images/code.jpg" alt="" />
-						</div>
-					</section>
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
 
-					<!-- Six -->
-					<section class="spotlight style1 orient-right content-align-left image-position-center onscroll-image-fade-in" id="first">
-						<div class="content">
-							<h2>DiscoX price: £470</h2>
-							<p>There will be an initial batch run of 30 DiscoX devices due for completion in december 2025, if you're intrested in reserving a DiscoX or have any questions feel free to <a href="#contact">get in touch.</a></p>
-						</div>
+    ::selection { background: var(--accent); color: var(--bg); }
 
-					</section>
-					
-				<!-- Seven -->
-					<section class="wrapper style1 align-center">
-						<div class="inner">
-							<h2>More Features</h2>
-							<p>The DiscoX is designed to be simple to use and fully customisable.</p>
-							<div class="items style1 medium onscroll-fade-in">
-								<section>
-									<span class="icon style2 major fa-gem"></span>
-									<h3>Scratch Resistant protection</h3>
-									<p>Made from quartz glass, the laser cover resists scratches</p>
-								</section>
-								<section>
-									<span class="icon solid style2 major fa-water"></span>
-									<h3>Water resistant design</h3>
-									<p>A sealed case protects electronic components from water, although not rated for submersion</p>
-								</section>
-								<section>
-									<span class="icon solid style2 major fa-solid fa-wifi"></span>
-									<h3>Paperless Surveying</h3>
-									<p>The DiscoX currently supports both TopoDroid V6 and SexyTopo</p>
-								</section>
-								<section>
-									<span class="icon solid style2 major fa-solid fa-play"></span>
-									<h3>Nice Buttons</h3>
-									<p>Four easy-to-press membrane buttons on the top of the device ensure simple operation even with gloves</p>
-								</section>
-								<section>
-									<span class="icon solid style2 major fa-cog"></span>
-									<h3>Custom Settings</h3>
-									<p>To modify the key settings within the device, simply plug it into a PC and modify the settings file</p>
-								</section>
-								<section>
-									<span class="icon solid style2 major fa-regular fa-thumbs-up"></span>
-									<h3>Compact ergomonic design</h3>
-									<p>Fits in the palm of your hand, comes with an integrated wrist strap</p>
-								</section>
-								<section>
-									<span class="icon solid style2 major fa-solid fa-chart-line"></span>
-									<h3>Intuative Calibration</h3>
-									<p>An intuitive onboard calibration algorithm keeps your device accurate without the need for a second device</p>
-								</section>
-								<section>
-									<span class="icon solid style2 major fa-solid fa-eye"></span>
-									<h3>Anomoly detection</h3>
-									<p>The discoX checks readings after you take them and reports if it suspects magnetic anomalies</p>
-								</section>
-								<section>
-									<span class="icon solid style2 major fa-solid fa-plug"></span>
-									<h3>Sealed USB-C port</h3>
-									<p>A resin-capped USB-C port completely isolates the electronic components from the outside of the device while allowing easy access for programming/charging</p>
-								</section>
-								<section>
-									<span class="icon solid style2 major fa-solid fa-battery-three-quarters"></span>
-									<h3>Accurate Battery Montioring</h3>
-									<p>A dedicated battery monitoring chip provides you with a reliable battery status</p>
-								</section>
-								<section>
-									<span class="icon solid style2 major fa-solid fa-microchip"></span>
-									<h3>Industrial Accelerometer</h3>
-									<p>Designed for rough environments, this accelerometer should withstand knocks and bumps</p>
-								</section>
-								<section>
-									<span class="icon solid style2 major fa-solid fa-desktop"></span>
-									<h3>Large Screen</h3>
-									<p>A 128x128 pixel screen - big enough for you to see everything you need all at once</p>
-								</section>
-							</div>
-						</div>
-					</section>
+    img { max-width: 100%; display: block; }
+    a { color: var(--accent); text-decoration: none; transition: opacity .2s; }
+    a:hover { opacity: .8; }
 
-					<!-- Get in touch section -->
-					<section id="contact" class="wrapper style1 align-center">
-					<div class="inner medium">
-						<h2>Get in touch</h2>
+    /* ── Utility ── */
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 28px; }
+    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+    .tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: .7rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      color: var(--text-dim);
+    }
 
-						<!-- Connected to Formspree -->
-						<form action="https://formspree.io/f/mvgwqgyq" method="POST">
-						<div class="fields">
-							<div class="field half">
-							<label for="name">Name</label>
-							<input type="text" name="name" id="name" required />
-							</div>
+    /* ── Nav ── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(12,10,8,.82);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav__inner {
+      max-width: var(--max-w); margin: 0 auto; padding: 0 28px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .nav__logo {
+      font-family: var(--font-mono); font-weight: 700; font-size: 1.1rem;
+      color: var(--text); letter-spacing: -.02em;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .nav__logo img { height: 36px; width: auto; display: block; }
+    .nav__logo span span { color: var(--accent); }
+    .nav__links { display: flex; gap: 6px; align-items: center; }
+    .nav__links a {
+      font-size: .82rem; font-weight: 500; color: var(--text-dim);
+      padding: 6px 14px; border-radius: 8px; transition: all .2s;
+    }
+    .nav__links a:hover { color: var(--text); background: var(--surface-2); opacity: 1; }
+    .nav__cta {
+      background: var(--accent) !important; color: var(--bg) !important;
+      font-weight: 700 !important; border-radius: 8px !important;
+      padding: 8px 18px !important; font-size: .82rem !important;
+    }
+    .nav__cta:hover { background: var(--accent-dim) !important; }
 
-							<div class="field half">
-							<label for="email">Email</label>
-							<input type="email" name="email" id="email" required />
-							</div>
+    /* Mobile nav */
+    .nav__toggle { display: none; background: none; border: none; color: var(--text); cursor: pointer; padding: 8px; }
+    .nav__toggle svg { width: 24px; height: 24px; }
 
-							<div class="field">
-							<label for="message">Message</label>
-							<textarea name="message" id="message" rows="6" required></textarea>
-							</div>
+    @media (max-width: 768px) {
+      .nav__toggle { display: block; }
+      .nav__links {
+        display: none; flex-direction: column; position: absolute;
+        top: 64px; left: 0; right: 0; background: rgba(12,10,8,.96);
+        backdrop-filter: blur(18px);
+        border-bottom: 1px solid var(--border);
+        padding: 12px 20px;
+      }
+      .nav__links.open { display: flex; }
+      .nav__links a { padding: 12px 14px; width: 100%; }
+    }
 
-							<!-- Optional reCAPTCHA widget -->
-							<!--
-							<div class="field">
-							<div class="g-recaptcha" data-sitekey="YOUR_SITE_KEY"></div>
-							</div>
-							-->
-						</div>
+    /* ── Hero ── */
+    .hero {
+      padding: 140px 0 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(255,176,32,.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero h1 {
+      font-family: var(--font-mono); font-size: clamp(2.2rem, 5vw, 3.6rem);
+      font-weight: 700; letter-spacing: -.03em; line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .hero h1 span { color: var(--accent); }
+    .hero p:not(.hero__price) {
+      font-size: 1.1rem; color: var(--text-dim); max-width: 520px;
+      margin: 0 auto 32px;
+    }
+    .hero__btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px; border-radius: var(--radius); font-weight: 700;
+      font-size: .92rem; transition: all .2s; border: none; cursor: pointer;
+      font-family: var(--font-body);
+    }
+    .btn--primary { background: var(--accent); color: var(--bg); }
+    .btn--primary:hover { background: var(--accent-dim); color: var(--bg); opacity: 1; }
+    .btn--outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
+    .btn--outline:hover { border-color: var(--text-dim); opacity: 1; }
 
-						<ul class="actions special">
-							<li>
-							<input type="submit" value="Send Message" class="primary" />
-							</li>
-						</ul>
-						</form>
-					</div>
-					</section>
+    .hero__price {
+      margin-top: 30px; font-family: var(--font-mono); font-size: .85rem;
+      color: var(--text-dim);
+    }
+    .hero__price strong { color: var(--text); font-size: 1.1rem; }
 
-					<!-- Optional reCAPTCHA script -->
-					<!-- <script src="https://www.google.com/recaptcha/api.js" async defer></script> -->
+    /* ── Section generic ── */
+    section { padding: 80px 0; }
+    .section-label {
+      font-family: var(--font-mono); font-size: .72rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .12em; color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700;
+      letter-spacing: -.02em; line-height: 1.2; margin-bottom: 16px;
+    }
+    .section-desc { color: var(--text-dim); max-width: 560px; margin-bottom: 40px; }
 
-				
+    /* ── Features grid ── */
+    .features { border-top: 1px solid var(--border); }
+    .features__grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1px; background: var(--border); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden; margin-top: 48px;
+    }
+    .feature-card {
+      background: var(--surface); padding: 32px 28px;
+    }
+    .feature-card__icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 16px; font-size: 1.2rem;
+      background: rgba(255,176,32,.08); color: var(--accent);
+    }
+    .feature-card h3 {
+      font-size: .95rem; font-weight: 700; margin-bottom: 8px;
+    }
+    .feature-card p { font-size: .85rem; color: var(--text-dim); line-height: 1.55; }
 
-			</div>
+    /* ── Specs ── */
+    .specs { border-top: 1px solid var(--border); }
+    .specs__table {
+      width: 100%; border-collapse: collapse; margin-top: 32px;
+      font-size: .88rem;
+    }
+    .specs__table tr { border-bottom: 1px solid var(--border); }
+    .specs__table td {
+      padding: 14px 0;
+    }
+    .specs__table td:first-child {
+      color: var(--text-dim); font-family: var(--font-mono); font-size: .8rem;
+      width: 200px; letter-spacing: .02em;
+    }
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+    /* ── Docs Sections ── */
+    .docs { border-top: 1px solid var(--border); }
+    .docs-grid {
+      display: grid; grid-template-columns: 240px 1fr; gap: 48px; margin-top: 40px;
+    }
+    @media (max-width: 768px) { .docs-grid { grid-template-columns: 1fr; gap: 24px; } }
 
-	</body>
+    .docs-nav { position: sticky; top: 88px; align-self: start; }
+    .docs-nav a {
+      display: block; font-size: .82rem; color: var(--text-dim);
+      padding: 8px 16px; border-left: 2px solid var(--border);
+      transition: all .2s; margin-bottom: 2px;
+    }
+    .docs-nav a:hover, .docs-nav a.active {
+      color: var(--accent); border-color: var(--accent); opacity: 1;
+    }
 
+    .docs-content h2 {
+      font-size: 1.4rem; font-weight: 700; margin-top: 56px; margin-bottom: 16px;
+      padding-top: 24px; border-top: 1px solid var(--border);
+      letter-spacing: -.01em;
+    }
+    .docs-content h2:first-child { margin-top: 0; border-top: none; padding-top: 0; }
+    .docs-content h3 {
+      font-size: 1.05rem; font-weight: 700; margin-top: 32px; margin-bottom: 10px;
+    }
+    .docs-content p { color: var(--text-dim); margin-bottom: 16px; max-width: 640px; }
+    .docs-content strong { color: var(--text); }
+    .docs-content ul, .docs-content ol {
+      margin-bottom: 16px; padding-left: 20px; color: var(--text-dim);
+    }
+    .docs-content li { margin-bottom: 6px; }
+    .docs-content li::marker { color: var(--accent); }
+
+    .callout {
+      background: var(--surface-2); border-left: 3px solid var(--accent);
+      padding: 16px 20px; border-radius: 0 var(--radius) var(--radius) 0;
+      margin: 20px 0; font-size: .88rem;
+    }
+    .callout--warn { border-color: var(--red); }
+    .callout--info { border-color: var(--purple); }
+    .callout p { margin-bottom: 0; }
+
+    .led-demo {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 8px 16px; border-radius: 100px; font-size: .82rem;
+      font-family: var(--font-mono); margin: 4px 0;
+    }
+    .led-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+    }
+    .led-dot--red { background: var(--red); box-shadow: 0 0 8px var(--red); }
+    .led-dot--green { background: var(--green); box-shadow: 0 0 8px var(--green); }
+    .led-dot--purple { background: var(--purple); box-shadow: 0 0 8px var(--purple); }
+
+    .calib-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0;
+    }
+    @media (max-width: 560px) { .calib-grid { grid-template-columns: 1fr; } }
+    .calib-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 24px;
+    }
+    .calib-card h4 {
+      font-size: .9rem; font-weight: 700; margin-bottom: 8px;
+    }
+    .calib-card p { font-size: .82rem; }
+
+    .accuracy-scale {
+      display: flex; align-items: center; gap: 16px; margin: 12px 0;
+      font-family: var(--font-mono); font-size: .8rem;
+    }
+    .accuracy-bar {
+      flex: 1; height: 6px; border-radius: 3px;
+      background: linear-gradient(90deg, var(--green), var(--accent), var(--red));
+    }
+
+    /* ── Contact ── */
+    .contact { border-top: 1px solid var(--border); }
+    .contact__inner { max-width: 100%; }
+    .contact__link {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 1rem; font-weight: 500; margin-top: 8px;
+      color: var(--accent);
+    }
+    .contact__form { margin-top: 32px; }
+    .contact__form .form-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;
+    }
+    @media (max-width: 560px) { .contact__form .form-row { grid-template-columns: 1fr; } }
+    .contact__form label {
+      display: block; font-size: .82rem; font-weight: 500;
+      color: var(--text-dim); margin-bottom: 6px;
+    }
+    .contact__form input,
+    .contact__form textarea {
+      width: 100%; padding: 12px 14px; border-radius: 8px;
+      border: 1px solid var(--border); background: var(--surface);
+      color: var(--text); font-family: var(--font-body); font-size: .9rem;
+      transition: border-color .2s;
+    }
+    .contact__form input:focus,
+    .contact__form textarea:focus {
+      outline: none; border-color: var(--accent);
+    }
+    .contact__form textarea { resize: vertical; min-height: 120px; }
+    .contact__form .btn { margin-top: 8px; width: 100%; justify-content: center; }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border); padding: 32px 0;
+      font-size: .78rem; color: var(--text-dim);
+    }
+    footer .container {
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+    }
+    footer a { color: var(--text-dim); }
+    footer a:hover { color: var(--accent); }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── Hero entrance ── */
+    .hero .section-label { animation: fadeUp .7s .05s ease both; }
+    .hero h1             { animation: fadeUp .7s .15s ease both; }
+    .hero > .container > p:not(.section-label):not(.hero__price) { animation: fadeUp .7s .25s ease both; }
+    .hero__btns          { animation: fadeUp .7s .35s ease both; }
+    .hero__price         { animation: fadeUp .7s .45s ease both; }
+
+    /* ── Product showcase ── */
+    .product-showcase {
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .product-showcase__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    @media (max-width: 768px) {
+      .product-showcase__inner { grid-template-columns: 1fr; gap: 40px; }
+    }
+    .product-showcase__img-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .product-showcase__img-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -20px;
+      background: radial-gradient(ellipse at center, rgba(255,176,32,.10) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .product-showcase__img-wrap img {
+      width: 100%;
+      max-width: 520px;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 24px 48px rgba(0,0,0,.7));
+    }
+    .product-showcase__text .section-desc { margin-bottom: 32px; }
+    .product-showcase__stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .stat-item {
+      padding: 20px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+    .stat-item__value {
+      font-family: var(--font-mono);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-item__label {
+      font-size: .78rem;
+      color: var(--text-dim);
+      line-height: 1.4;
+    }
+
+    /* ── Button layout diagram ── */
+    .button-diagram {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+      max-width: 320px; margin: 16px 0;
+    }
+    .button-diagram__btn {
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 14px 8px; text-align: center;
+      font-family: var(--font-mono); font-size: .75rem;
+    }
+    .button-diagram__btn span {
+      display: block; font-size: 1.1rem; font-weight: 700; color: var(--accent);
+      margin-bottom: 4px;
+    }
+    .button-diagram__btn small { color: var(--text-dim); font-size: .68rem; }
+  </style>
+</head>
+<body>
+
+  <!-- ════ NAV ════ -->
+  <nav class="nav" role="navigation">
+    <div class="nav__inner">
+      <a href="#" class="nav__logo"><img src="logo.png" alt="DiscoX logo" /><span>Disco<span>X</span></span></a>
+      <button class="nav__toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav__links').classList.toggle('open')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="nav__links">
+        <a href="#features">Features</a>
+        <a href="#specs">Specs</a>
+        <a href="#docs">User Guide</a>
+        <a href="#calibration">Calibration</a>
+        <a href="#contact">Contact</a>
+        <a href="https://buy.stripe.com/7sYdRae3DfaQ8ykgmba7C01" class="nav__cta">Order Now</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ════ HERO ════ -->
+  <header class="hero">
+    <div class="container">
+      <p class="section-label" style="margin-bottom:20px">An Open Source Project</p>
+      <h1>The Disco<span>X</span><br />Cave Survey Device</h1>
+      <p>A tough, water resistant survey device built for modern caving. Connects to survey apps TopoDroid &amp; SexyTopo. Fully repairable. Fully yours.</p>
+      <div class="hero__btns">
+        <a href="https://buy.stripe.com/7sYdRae3DfaQ8ykgmba7C01" class="btn btn--primary">Order Now — £450</a>
+        <a href="#docs" class="btn btn--outline">Read the User Guide</a>
+      </div>
+      <p class="hero__price">Built on the open-source <a href="https://stic.readthedocs.io/" target="_blank">SAP6 platform</a></p>
+    </div>
+  </header>
+
+  <!-- ════ FEATURES ════ -->
+  <section class="features" id="features">
+    <div class="container">
+      <p class="section-label">Built for Cavers</p>
+      <h2 class="section-title">Everything you need, even a disco mode...</h2>
+      <p class="section-desc">Designed from the ground up for wet, muddy, and unforgiving cave environments — with repairability and simplicity at its core.</p>
+
+      <div class="features__grid">
+        <div class="feature-card fade-in">
+          <div class="feature-card__icon">💧</div>
+          <h3>Water Resistant Design</h3>
+          <p>A completely sealed polycarbonate &amp; PETG case with an internal epoxy coating protects electronics from water. Great for surveying wet passages.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <div class="feature-card__icon">🔧</div>
+          <h3>Fully Repairable</h3>
+          <p>Every component can be made, sourced, salvaged, 3D printed, or laser cut. No proprietary lock-in — just fix it and get back to surveying.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <div class="feature-card__icon">📲</div>
+          <h3>Bluetooth Paperless Survey</h3>
+          <p>Connects wirelessly to TopoDroid and SexyTopo. Take readings and send them straight to your phone — zero paper, fewer errors.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <div class="feature-card__icon">🎯</div>
+          <h3>Onboard Calibration</h3>
+          <p>An intuitive calibration algorithm runs entirely on the device — no second device needed.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <div class="feature-card__icon">⚠️</div>
+          <h3>Anomaly Detection</h3>
+          <p>Readings are automatically checked for magnetic interference from helmet lights, watches, or bolts. Get alerted before bad data enters your survey.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <div class="feature-card__icon">🟢</div>
+          <h3>RGB Status LED</h3>
+          <p>A colour-coded LED band shows device state at a glance — red for stabilising, green for reading taken, purple for leg detected. Plus a dedicated disco button.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <div class="feature-card__icon">📡</div>
+          <h3>Extended Bluetooth Range</h3>
+          <p>Long range Bluetooth delivers over 20m line of sight range, keeping you connected at a distance.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <div class="feature-card__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <!-- USB-C connector body -->
+              <rect x="4" y="9" width="16" height="6" rx="3"/>
+              <!-- Left contact pins -->
+              <line x1="4" y1="11" x2="1" y2="11"/>
+              <line x1="4" y1="13" x2="1" y2="13"/>
+              <!-- Right contact pins -->
+              <line x1="20" y1="11" x2="23" y2="11"/>
+              <line x1="20" y1="13" x2="23" y2="13"/>
+              <!-- Center slot (reversible indicator) -->
+              <line x1="9" y1="12" x2="15" y2="12"/>
+            </svg>
+          </div>
+          <h3>Sealed USB-C Port</h3>
+          <p>A resin-capped USB-C port isolates internals while providing easy access for charging and programming settings.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <div class="feature-card__icon">⚙️</div>
+          <h3>Configurable Settings</h3>
+          <p>Tweak settings via the onboard menu or plug in and edit the <code>settings.json</code> file directly on your PC.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <div class="feature-card__icon">🔋</div>
+          <h3>Reliable Battery Monitoring</h3>
+          <p>A dedicated battery monitoring chip gives you accurate charge levels — no guessing when you're deep underground.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <div class="feature-card__icon">🛡️</div>
+          <h3>Gorilla Glass &amp; Quartz</h3>
+          <p>Scratch-resistant Gorilla Glass display cover and quartz glass laser protector handle the scrapes and bumps of cave life.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <div class="feature-card__icon">&lt;/&gt;</div>
+          <h3>Open Source &amp; Reprogrammable</h3>
+          <p>Can be built with C++ or optionally CircuitPython. Inspect the code, modify behaviour, all on your own terms.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ PRODUCT SHOWCASE ════ -->
+  <section class="product-showcase">
+    <div class="container">
+      <div class="product-showcase__inner">
+        <div class="product-showcase__img-wrap fade-in">
+          <img src="Picture1_vivid.png" alt="DiscoX cave survey device" />
+        </div>
+        <div class="product-showcase__text fade-in">
+          <p class="section-label">The Device</p>
+          <h2 class="section-title">Manufactured in the UK</h2>
+          <p class="section-desc">Sealed, rugged, and repairable — the DiscoX is a precision cave survey instrument that goes where your survey takes you, and keeps working when conditions turn rough.</p>
+          <div class="product-showcase__stats">
+            <div class="stat-item">
+              <div class="stat-item__value">250g</div>
+              <div class="stat-item__label">Device weight</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-item__value">38x170x62mm</div>
+              <div class="stat-item__label">Device dimensions</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-item__value">1.5"</div>
+              <div class="stat-item__label">Screen Size</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-item__value">£450</div>
+              <div class="stat-item__label">Fully assembled &amp; tested</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ SPECS ════ -->
+  <section class="specs" id="specs">
+    <div class="container">
+      <p class="section-label">Technical Specifications</p>
+      <h2 class="section-title">What's inside</h2>
+      <p class="section-desc">A breakdown of the sensor modules and components that make the DiscoX a reliable cave survey instrument.</p>
+
+      <table class="specs__table">
+        <tr><td>Range</td><td>Up to 100 m (ideal conditions)</td></tr>
+        <tr><td>Connectivity</td><td>Bluetooth — TopoDroid V6 &amp; SexyTopo</td></tr>
+        <tr><td>Interface</td><td>4 membrane buttons, 128×128 px screen</td></tr>
+        <tr><td>Display Cover</td><td>Gorilla Glass</td></tr>
+        <tr><td>Laser Cover</td><td>Quartz Glass</td></tr>
+        <tr><td>Processor</td><td>M4 microcontroller</td></tr>
+        <tr><td>Battery</td><td>1200 mAh · ~125 mA average draw</td></tr>
+        <tr><td>Charging</td><td>USB-C (resin-sealed port)</td></tr>
+        <tr><td>Case</td><td>Polycarbonate + PETG, internal epoxy coating</td></tr>
+        <tr><td>Water Resistance</td><td>Sealed design — theoretically waterproof but not guaranteed for submersion</td></tr>
+        <tr><td>Status Indicator</td><td>RGB LED band</td></tr>
+        <tr><td>Software</td><td>Python-based, open source (SAP6)</td></tr>
+        <tr><td>Repairability</td><td>Fully modular — 3D printable, laser cuttable &amp; all parts available</td></tr>
+        <tr><td>Price</td><td>£450</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ════ USER GUIDE ════ -->
+  <section class="docs" id="docs">
+    <div class="container">
+      <p class="section-label">Documentation</p>
+      <h2 class="section-title">User Guide</h2>
+      <p class="section-desc">Everything you need to know to operate your DiscoX. These instructions cover the latest C++ firmware.</p>
+
+      <div class="docs-grid">
+        <!-- Sidebar Nav -->
+        <nav class="docs-nav" aria-label="Documentation navigation">
+          <a href="#doc-buttons">Buttons</a>
+          <a href="#doc-readings">Taking Readings</a>
+          <a href="#doc-display">Display</a>
+          <a href="#doc-disco">Disco Mode</a>
+          <a href="#doc-bluetooth">Bluetooth &amp; Memory</a>
+          <a href="#doc-settings">Settings</a>
+          <a href="#calibration">Calibration</a>
+        </nav>
+
+        <!-- Docs Content -->
+        <div class="docs-content">
+
+          <!-- Buttons -->
+          <h2 id="doc-buttons">Buttons</h2>
+          <p>The DiscoX has four buttons labelled 1–4 on the top of the device, plus a <strong>Fire trigger</strong> button (D4) recessed into the body for single-handed operation — all accessible even with gloves.</p>
+
+          <div class="button-diagram">
+            <div class="button-diagram__btn"><span>1</span>Measure<br/><small>Menu: Up</small></div>
+            <div class="button-diagram__btn"><span>2</span>Measure<br/><small>Menu: Down</small></div>
+            <div class="button-diagram__btn"><span>3</span>Menu<br/><small>Menu: Select</small></div>
+            <div class="button-diagram__btn"><span>4</span>Power off</div>
+          </div>
+
+          <p>In <strong>normal mode</strong>:</p>
+          <ul>
+            <li><strong>Button 1</strong> — take a measurement, or wake the laser if it has timed out</li>
+            <li><strong>Button 2</strong> — short press: take a measurement; <strong>hold 2 s</strong>: toggle disco/rave mode on or off</li>
+            <li><strong>Button 3</strong> — open the settings menu</li>
+            <li><strong>Button 4</strong> — power off</li>
+            <li><strong>Fire button</strong> — identical to Button 1; useful for single-handed operation</li>
+          </ul>
+
+          <p>In <strong>menu mode</strong>, Buttons 1/2/3 become scroll-up, scroll-down, and select. Button 4 still powers off.</p>
+
+          <!-- Taking Readings -->
+          <h2 id="doc-readings">Taking Readings</h2>
+          <p>Press <strong>Button 1</strong>, <strong>Button 2</strong> (short press) to take a reading. The device waits until the sensors have settled before accepting a shot — press or hold the buttonand keep the DiscoX steady.</p>
+
+          <p>The NeoPixel LED shows what's happening:</p>
+          <div style="display:flex; flex-direction:column; gap:8px; margin:16px 0;">
+            <div class="led-demo" style="background:rgba(255,77,77,.1);">
+              <span class="led-dot led-dot--red"></span> <strong>Red</strong> — Stabilising. Hold the device steady.
+            </div>
+            <div class="led-demo" style="background:rgba(46,204,113,.1);">
+              <span class="led-dot led-dot--green"></span> <strong>Green</strong> — Stable. Shot recorded and sent.
+            </div>
+            <div class="led-demo" style="background:rgba(166,107,255,.1);">
+              <span class="led-dot led-dot--purple"></span> <strong>Purple</strong> — Leg detected (3 beeps).
+            </div>
+          </div>
+
+          <p>After a shot the display <strong>freezes</strong> on the recorded reading and the laser turns off. Press any measure button again to turn the laser back on then press again to take a reading.</p>
+
+          <h3>Leg Detection</h3>
+          <p>When three consecutive shots match in bearing, clino, and distance (within configurable tolerances), the DiscoX recognises a complete survey leg. The LED pulses purple, the laser flashes on and off in quick succession, and the buzzer beeps three times. The display stays frozen on the leg data until you press a measure button to continue.</p>
+
+          <h3>Laser Wake</h3>
+          <p>If the laser has auto-timed-out, pressing any measure button re-enables it with a short beep before taking the shot.</p>
+
+          <!-- Display -->
+          <h2 id="doc-display">Display</h2>
+          <p>The 128×128 pixel OLED screen shows three values from your most recent stable shot:</p>
+          <ul>
+            <li><strong>Distance</strong> (top) — in metres to 2 decimal places</li>
+            <li><strong>Azimuth</strong> (middle) — compass bearing in degrees</li>
+            <li><strong>Inclination</strong> (bottom) — clino angle in degrees</li>
+          </ul>
+          <p>The <strong>top-left</strong> shows <code>BT</code> when Bluetooth is connected, with a count of pending (unsent) readings beside it. The <strong>top-right</strong> shows a proportional battery bar — no guessing when you're underground.</p>
+
+          <!-- Disco Mode -->
+          <h2 id="doc-disco">Disco Mode</h2>
+          <p>Hold <strong>Button 2 for 2 seconds</strong> to toggle disco/rave mode. The laser shuts off and the NeoPixel cycles through colours. <strong>Shake the device</strong> to kick into wild mode — faster cycling and full brightness.</p>
+          <p>Hold Button 2 again for 2 seconds to exit. The laser restarts and the device returns to normal operation.</p>
+
+          <!-- Bluetooth & Memory -->
+          <h2 id="doc-bluetooth">Bluetooth &amp; Memory</h2>
+          <p>The DiscoX works with current versions of <strong>SexyTopo</strong> and <strong>TopoDroid</strong> via a long range C++ implementation of the SAP6 BLE protocol. The device advertises continuously, so nearby phones and tablets will discover it automatically.</p>
+          <p>Once connected, the device flashes blue and a <strong>BT</strong> label appears in the top-left of the screen and live readings are sent directly to your device.</p>
+
+          <div class="callout callout--warn">
+            <p><strong>Note:</strong> <p>Each DiscoX ships with a unique Bluetooth name in the format <code>SAP6_[Nickname]</code> — for example <code>SAP6_Dragon</code>. The name can be changed via the settings file (see Settings below). If you'd like a specific name, let me know before assembly.</p></p>
+          </div>
+
+          <!-- Settings -->
+          <h2 id="doc-settings">Settings</h2>
+          <p>All common settings are accessible from the onboard menu — press <strong>Button 3</strong> to open it.</p>
+
+          <h3>Onboard Menu</h3>
+          <ul>
+            <li><strong>Enter Calibration</strong> — run Long or Short calibration, perform a Mag Field Check, or view the last calibration results</li>
+            <li><strong>Anomaly Detection</strong> — toggle warnings for nearby metallic objects (helmet lights, SRT kit, bolts) on or off</li>
+            <li><strong>Laser Timeout</strong> — how long the laser stays on when idle: 30 sec · 60 sec · 2 min · 5 min · 15 min · 30 min</li>
+            <li><strong>Auto Shutdown</strong> — idle shutdown timer: 5 · 10 · 15 · 30 · 60 min · 2 hr</li>
+            <li><strong>Delete Saved Shots</strong> — wipe any pending readings stored in flash</li>
+            <li><strong>Update / Settings</strong> — access firmware update and advanced config (see below)</li>
+            <li><strong>Play Snake</strong> — a hidden bonus for when you're waiting at the surface</li>
+          </ul>
+
+          <h3>Advanced Settings (config.json)</h3>
+          <p>Go to <strong>Menu → Update / Settings → Edit Settings File</strong>. The DiscoX reboots into USB drive mode and appears as a drive called <strong>DISCOX</strong> on your PC. Open <code>config.json</code>, edit the values you want, save, eject the drive, then hold the power button to restart.</p>
+          <p>Advanced options include stability tolerances, leg detection thresholds, sensor averaging, BLE device name, and calibration consistency parameters.</p>
+
+          <h3>Firmware Update</h3>
+          <p>Go to <strong>Menu → Update / Settings → Update Firmware</strong>. The device enters the UF2 bootloader and appears as a removable drive. Drag and drop the new <code>.uf2</code> file onto the drive — the DiscoX reboots automatically when flashing is complete.</p>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ CALIBRATION ════ -->
+  <section class="docs" id="calibration" style="border-top: 1px solid var(--border);">
+    <div class="container">
+      <p class="section-label">Calibration</p>
+      <h2 class="section-title">Keeping your DiscoX accurate</h2>
+      <p class="section-desc">Calibrate whenever you survey in a new area or if readings seem off. Run a Mag Field Check before each trip to quickly verify accuracy at your survey site.</p>
+
+      <p style="color:var(--text-dim); margin-bottom:24px;">To start: press <strong>Button 3</strong> to open the menu → <strong>Enter Calibration</strong> → choose a calibration type.</p>
+
+      <div class="calib-grid" style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));">
+        <div class="calib-card">
+          <span class="tag">80 readings</span>
+          <h4 style="margin-top:12px;">Long Calibration</h4>
+          <p style="color:var(--text-dim); font-size:.85rem; margin-top:8px;">
+            The most accurate option. Runs in two phases automatically.
+          </p>
+          <p style="color:var(--text-dim); font-size:.85rem; margin-top:8px;">
+            <strong>Phase 1 — Ellipsoid (56 readings):</strong> Aim the DiscoX in a wide variety of directions and orientations. Spread points evenly across the sphere — think of pointing the tip towards every part of a globe's surface. A coverage bar on screen shows which zones have been sampled.
+          </p>
+          <p style="color:var(--text-dim); font-size:.85rem; margin-top:8px;">
+            <strong>Phase 2 — Alignment (24 readings):</strong> Take 3 sets of 8 readings. Each set aims at one fixed point; barrel-roll the device ~45° between shots. Choose 3 fixed points roughly <strong>90° apart</strong> (e.g. ahead, to the right, vertically up). The device beeps 3 times when it's time to move to the next direction.
+          </p>
+          <p style="color:var(--text-dim); font-size:.82rem; margin-top:12px;"><strong>B1:</strong> record shot &nbsp;·&nbsp; <strong>B3:</strong> undo last point</p>
+          <p style="color:var(--text-dim); font-size:.82rem;">Hold <strong>B1+B2</strong> to save &nbsp;·&nbsp; Hold <strong>B2</strong> to discard</p>
+        </div>
+
+        <div class="calib-card">
+          <span class="tag">24 readings</span>
+          <h4 style="margin-top:12px;">Short Calibration</h4>
+          <p style="color:var(--text-dim); font-size:.85rem; margin-top:8px;">
+            A faster option for a quick field recalibration.
+          </p>
+          <p style="color:var(--text-dim); font-size:.85rem; margin-top:8px;">
+            Take <strong>3 sets of 8 readings</strong>. For each set, barrel-roll the laser around a single fixed point, rotating ~45° between shots. The 3 fixed points should be roughly <strong>90° apart</strong> — for example: ahead, to the right, and vertically up.
+          </p>
+          <p style="color:var(--text-dim); font-size:.85rem; margin-top:8px;">
+            The same 24 readings are used for both ellipsoid and alignment fitting, so this is quicker but less thorough than the Long Calibration.
+          </p>
+          <p style="color:var(--text-dim); font-size:.82rem; margin-top:12px;"><strong>B1:</strong> record shot &nbsp;·&nbsp; <strong>B3:</strong> undo last point</p>
+          <p style="color:var(--text-dim); font-size:.82rem;">Hold <strong>B1+B2</strong> to save &nbsp;·&nbsp; Hold <strong>B2</strong> to discard</p>
+        </div>
+
+        <div class="calib-card">
+          <span class="tag">Field Check</span>
+          <h4 style="margin-top:12px;">Mag Field Check</h4>
+          <p style="color:var(--text-dim); font-size:.85rem; margin-top:8px;">
+            Verifies calibration accuracy in the field without re-running a full calibration.
+          </p>
+          <p style="color:var(--text-dim); font-size:.85rem; margin-top:8px;">
+            Shoot a fixed target, walk to it, and shoot back. Repeat for <strong>3 or more pairs</strong> in different directions. The device records each pair's bearing error and calculates an overall correction amplitude.
+          </p>
+          <p style="color:var(--text-dim); font-size:.85rem; margin-top:8px;">
+            A consistently high amplitude suggests it's time for a full Long Calibration.
+          </p>
+          <p style="color:var(--text-dim); font-size:.82rem; margin-top:12px;"><strong>B1:</strong> take shot &nbsp;·&nbsp; <strong>B2:</strong> finish early (after 2+ pairs)</p>
+        </div>
+      </div>
+
+      <div style="margin-top:32px;">
+        <h3 style="font-size:1rem; margin-bottom:12px;">Calibration Quality Metrics</h3>
+        <p style="color:var(--text-dim); margin-bottom:8px;">After calibration the screen shows three quality scores. Lower is better in all cases. View them again any time via <strong>Menu → Enter Calibration → View Last Cal</strong>.</p>
+        <ul style="color:var(--text-dim); font-size:.88rem; margin-bottom:16px; padding-left:20px;">
+          <li><strong style="color:var(--text);">Mag</strong> — magnetometer ellipsoid fit uniformity (lower values = better)</li>
+          <li><strong style="color:var(--text);">Grav</strong> — accelerometer ellipsoid fit uniformity (lower values = better)</li>
+          <li><strong style="color:var(--text);">Acc</strong> — final accuracy in degrees (the most important number)</li>
+        </ul>
+        <div class="accuracy-scale">
+          <span style="color:var(--green);">Excellent &lt; 0.25°</span>
+          <div class="accuracy-bar"></div>
+          <span style="color:var(--red);">Acceptable &lt; 0.5°</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ CONTACT ════ -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="contact__inner">
+        <p class="section-label">Get in Touch</p>
+        <h2 class="section-title">Questions? Want to reserve a DiscoX?</h2>
+        <p class="section-desc">Whether you're interested in ordering, need spare parts, or want a custom Bluetooth name — drop me a line.</p>
+
+        <form class="contact__form" action="https://formspree.io/f/mvgwqgyq" method="POST">
+          <div class="form-row">
+            <div>
+              <label for="name">Name</label>
+              <input type="text" name="name" id="name" required />
+            </div>
+            <div>
+              <label for="email">Email</label>
+              <input type="email" name="email" id="email" required />
+            </div>
+          </div>
+          <div style="margin-bottom:16px;">
+            <label for="message">Message</label>
+            <textarea name="message" id="message" rows="6" required></textarea>
+          </div>
+          <button type="submit" class="btn btn--primary">Send Message</button>
+        </form>
+
+        <div style="margin-top:24px;">
+          <a href="https://github.com/blhall195/Mr_Zappy" target="_blank" class="contact__link" style="color:var(--text-dim);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            View source on GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ FOOTER ════ -->
+  <footer>
+    <div class="container">
+      <span>© 2025 DiscoX. Built on the <a href="https://stic.readthedocs.io/" target="_blank">SAP6</a> open source platform.</span>
+      <span>
+        <a href="#features">Features</a> · <a href="#specs">Specs</a> · <a href="#docs">User Guide</a> · <a href="#calibration">Calibration</a>
+      </span>
+    </div>
+  </footer>
+
+  <!-- ════ SCRIPTS ════ -->
+  <script>
+    // Intersection Observer for fade-in
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Active docs nav link on scroll
+    const docSections = document.querySelectorAll('.docs-content h2[id]');
+    const docLinks = document.querySelectorAll('.docs-nav a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      docSections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 120) current = s.id;
+      });
+      docLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+      });
+    });
+
+    // Close mobile nav on link click
+    document.querySelectorAll('.nav__links a').forEach(a => {
+      a.addEventListener('click', () => document.querySelector('.nav__links').classList.remove('open'));
+    });
+  </script>
+
+</body>
 </html>
-
