@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order — DiscoX</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & Variables ── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0c0a08;
+      --surface: #141210;
+      --surface-2: #1d1a16;
+      --border: #2e2820;
+      --text: #ede8e0;
+      --text-dim: #9a8e7e;
+      --accent: #ffb020;
+      --accent-dim: #cc8d1a;
+      --red: #ff4d4d;
+      --green: #2ecc71;
+      --purple: #a66bff;
+      --font-body: 'DM Sans', sans-serif;
+      --font-mono: 'Space Mono', monospace;
+      --max-w: 1120px;
+      --radius: 10px;
+    }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection { background: var(--accent); color: var(--bg); }
+
+    img { max-width: 100%; display: block; }
+    a { color: var(--accent); text-decoration: none; transition: opacity .2s; }
+    a:hover { opacity: .8; }
+
+    /* ── Utility ── */
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 28px; }
+    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+
+    /* ── Nav ── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(12,10,8,.82);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav__inner {
+      max-width: var(--max-w); margin: 0 auto; padding: 0 28px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .nav__logo {
+      font-family: var(--font-mono); font-weight: 700; font-size: 1.1rem;
+      color: var(--text); letter-spacing: -.02em;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .nav__logo img { height: 36px; width: auto; display: block; }
+    .nav__logo span span { color: var(--accent); }
+    .nav__links { display: flex; gap: 6px; align-items: center; }
+    .nav__links a {
+      font-size: .82rem; font-weight: 500; color: var(--text-dim);
+      padding: 6px 14px; border-radius: 8px; transition: all .2s;
+    }
+    .nav__links a:hover { color: var(--text); background: var(--surface-2); opacity: 1; }
+    .nav__cta {
+      background: var(--accent) !important; color: var(--bg) !important;
+      font-weight: 700 !important; border-radius: 8px !important;
+      padding: 8px 18px !important; font-size: .82rem !important;
+    }
+    .nav__cta:hover { background: var(--accent-dim) !important; }
+
+    /* Mobile nav */
+    .nav__toggle { display: none; background: none; border: none; color: var(--text); cursor: pointer; padding: 8px; }
+    .nav__toggle svg { width: 24px; height: 24px; }
+
+    @media (max-width: 768px) {
+      .nav__toggle { display: block; }
+      .nav__links {
+        display: none; flex-direction: column; position: absolute;
+        top: 64px; left: 0; right: 0; background: rgba(12,10,8,.96);
+        backdrop-filter: blur(18px);
+        border-bottom: 1px solid var(--border);
+        padding: 12px 20px;
+      }
+      .nav__links.open { display: flex; }
+      .nav__links a { padding: 12px 14px; width: 100%; }
+    }
+
+    /* ── Page header ── */
+    .page-header {
+      padding: 140px 0 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-header::before {
+      content: '';
+      position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(255,176,32,.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .page-header h1 {
+      font-family: var(--font-mono); font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700; letter-spacing: -.03em; line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .page-header h1 span { color: var(--accent); }
+    .page-header p {
+      font-size: 1.05rem; color: var(--text-dim); max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* ── Section generic ── */
+    .section-label {
+      font-family: var(--font-mono); font-size: .72rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .12em; color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700;
+      letter-spacing: -.02em; line-height: 1.2; margin-bottom: 16px;
+    }
+    .section-desc { color: var(--text-dim); max-width: 560px; margin-bottom: 40px; }
+
+    /* ── Order options grid ── */
+    .order-options {
+      padding: 40px 0 80px;
+    }
+    .order-options__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+    @media (max-width: 768px) {
+      .order-options__grid { grid-template-columns: 1fr; }
+    }
+
+    .order-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 40px 32px;
+    }
+    .order-card__icon {
+      width: 56px; height: 56px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px; font-size: 1.6rem;
+      background: rgba(255,176,32,.08); color: var(--accent);
+    }
+    .order-card h2 {
+      font-size: 1.2rem; font-weight: 700; margin-bottom: 8px;
+    }
+    .order-card p {
+      font-size: .9rem; color: var(--text-dim); line-height: 1.55;
+      margin-bottom: 24px;
+    }
+    .order-card .price {
+      font-family: var(--font-mono); font-size: 1.4rem; font-weight: 700;
+      color: var(--accent); margin-bottom: 24px;
+    }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px; border-radius: var(--radius); font-weight: 700;
+      font-size: .92rem; transition: all .2s; border: none; cursor: pointer;
+      font-family: var(--font-body);
+    }
+    .btn--primary { background: var(--accent); color: var(--bg); }
+    .btn--primary:hover { background: var(--accent-dim); color: var(--bg); opacity: 1; }
+    .btn--full { width: 100%; justify-content: center; }
+
+    /* ── Contact form ── */
+    .contact__form { margin-top: 0; }
+    .contact__form .form-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;
+    }
+    @media (max-width: 560px) { .contact__form .form-row { grid-template-columns: 1fr; } }
+    .contact__form label {
+      display: block; font-size: .82rem; font-weight: 500;
+      color: var(--text-dim); margin-bottom: 6px;
+    }
+    .contact__form input,
+    .contact__form textarea {
+      width: 100%; padding: 12px 14px; border-radius: 8px;
+      border: 1px solid var(--border); background: var(--surface-2);
+      color: var(--text); font-family: var(--font-body); font-size: .9rem;
+      transition: border-color .2s;
+    }
+    .contact__form input:focus,
+    .contact__form textarea:focus {
+      outline: none; border-color: var(--accent);
+    }
+    .contact__form textarea { resize: vertical; min-height: 120px; }
+    .contact__form .btn { margin-top: 8px; }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border); padding: 32px 0;
+      font-size: .78rem; color: var(--text-dim);
+    }
+    footer .container {
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+    }
+    footer a { color: var(--text-dim); }
+    footer a:hover { color: var(--accent); }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .page-header .section-label { animation: fadeUp .7s .05s ease both; }
+    .page-header h1             { animation: fadeUp .7s .15s ease both; }
+    .page-header p              { animation: fadeUp .7s .25s ease both; }
+    .fade-in {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+  <!-- ════ NAV ════ -->
+  <nav class="nav" role="navigation">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo"><img src="logo.png" alt="DiscoX logo" /><span>Disco<span>X</span></span></a>
+      <button class="nav__toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav__links').classList.toggle('open')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="nav__links">
+        <a href="index.html">Home</a>
+        <a href="index.html#features">Features</a>
+        <a href="index.html#specs">Specs</a>
+        <a href="user-guide.html">User Guide</a>
+        <a href="user-guide.html#calibration">Calibration</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="order.html" class="nav__cta">Order Now</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ════ HEADER ════ -->
+  <header class="page-header">
+    <div class="container">
+      <p class="section-label">Order Your DiscoX</p>
+      <h1>Ready to go <span>surveying</span>?</h1>
+      <p>Choose your ordering option below. UK customers can pay directly online. For international orders, get in touch and we'll sort out shipping.</p>
+    </div>
+  </header>
+
+  <!-- ════ ORDER OPTIONS ════ -->
+  <section class="order-options">
+    <div class="container">
+      <div class="order-options__grid">
+
+        <!-- International Orders -->
+        <div class="order-card fade-in">
+          <div class="order-card__icon">🌍</div>
+          <h2>International Orders</h2>
+          <p>Shipping outside the UK? Fill out the form below and I'll get back to you with shipping costs and payment details for your location.</p>
+
+          <form class="contact__form" action="https://formspree.io/f/mvgwqgyq" method="POST">
+            <input type="hidden" name="_subject" value="International DiscoX Order Enquiry" />
+            <div class="form-row">
+              <div>
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name" required />
+              </div>
+              <div>
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" required />
+              </div>
+            </div>
+            <div style="margin-bottom:16px;">
+              <label for="country">Country</label>
+              <input type="text" name="country" id="country" required placeholder="e.g. France, USA, Australia" />
+            </div>
+            <div style="margin-bottom:16px;">
+              <label for="message">Message</label>
+              <textarea name="message" id="message" rows="4" placeholder="Any questions or details about your order..."></textarea>
+            </div>
+            <button type="submit" class="btn btn--primary btn--full">Send Enquiry</button>
+          </form>
+        </div>
+
+        <!-- UK Orders -->
+        <div class="order-card fade-in">
+          <div class="order-card__icon">🇬🇧</div>
+          <h2>UK Orders</h2>
+          <p>Order directly and pay securely via Stripe. Price includes UK shipping. Your DiscoX will be assembled, tested, and dispatched from the UK.</p>
+          <div class="price">£450</div>
+          <a href="https://buy.stripe.com/00wfZie3DgeU7ugd9Za7C03" class="btn btn--primary btn--full">Pay Now via Stripe</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ FOOTER ════ -->
+  <footer>
+    <div class="container">
+      <span>&copy; 2026 DiscoX. Built on the <a href="https://stic.readthedocs.io/" target="_blank">SAP6</a> open source platform.</span>
+      <span>
+        <a href="index.html#features">Features</a> · <a href="index.html#specs">Specs</a> · <a href="user-guide.html">User Guide</a> · <a href="user-guide.html#calibration">Calibration</a>
+      </span>
+    </div>
+  </footer>
+
+  <!-- ════ SCRIPTS ════ -->
+  <script>
+    // Intersection Observer for fade-in
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Close mobile nav on link click
+    document.querySelectorAll('.nav__links a').forEach(a => {
+      a.addEventListener('click', () => {
+        document.querySelector('.nav__links').classList.remove('open');
+      });
+    });
+  </script>
+
+</body>
+</html>
