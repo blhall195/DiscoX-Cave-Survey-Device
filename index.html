@@ -206,9 +206,13 @@
     .docs-grid {
       display: grid; grid-template-columns: 240px 1fr; gap: 48px; margin-top: 40px;
     }
-    @media (max-width: 768px) { .docs-grid { grid-template-columns: 1fr; gap: 24px; } }
 
     .docs-nav { position: sticky; top: 88px; align-self: start; }
+
+    @media (max-width: 768px) {
+      .docs-grid { grid-template-columns: 1fr; gap: 24px; }
+      .docs-nav { position: static; }
+    }
     .docs-nav a {
       display: block; font-size: .82rem; color: var(--text-dim);
       padding: 8px 16px; border-left: 2px solid var(--border);
@@ -397,6 +401,9 @@
       color: var(--text-dim);
       line-height: 1.4;
     }
+    @media (max-width: 768px) {
+      .stat-item__value--dims { font-size: 1.1rem; }
+    }
 
     /* ── Button layout diagram ── */
     .button-diagram {
@@ -518,7 +525,7 @@
         <div class="feature-card fade-in">
           <div class="feature-card__icon">🔋</div>
           <h3>Reliable Battery Monitoring</h3>
-          <p>A dedicated battery monitoring chip gives you accurate charge levels — no guessing when you're deep underground.</p>
+          <p>A dedicated battery monitoring chip gives you accurate charge levels.</p>
         </div>
         <div class="feature-card fade-in">
           <div class="feature-card__icon">🛡️</div>
@@ -551,7 +558,7 @@
               <div class="stat-item__label">Device weight</div>
             </div>
             <div class="stat-item">
-              <div class="stat-item__value">38x170x62mm</div>
+              <div class="stat-item__value stat-item__value--dims">38x170x62mm</div>
               <div class="stat-item__label">Device dimensions</div>
             </div>
             <div class="stat-item">
