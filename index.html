@@ -403,6 +403,7 @@
     }
     @media (max-width: 768px) {
       .stat-item__value--dims { font-size: 1.1rem; }
+      .hide-mobile { display: none; }
     }
 
     /* ── Button layout diagram ── */
@@ -456,6 +457,40 @@
     </div>
   </header>
 
+  <!-- ════ PRODUCT SHOWCASE ════ -->
+  <section class="product-showcase">
+    <div class="container">
+      <div class="product-showcase__inner">
+        <div class="product-showcase__img-wrap fade-in">
+          <img src="Picture1_vivid.png" alt="DiscoX cave survey device" />
+        </div>
+        <div class="product-showcase__text fade-in">
+          <p class="section-label">The Device</p>
+          <h2 class="section-title">Manufactured in the UK</h2>
+          <p class="section-desc">Sealed, rugged, and repairable — the DiscoX is a precision cave survey instrument that goes where your survey takes you.</p>
+          <div class="product-showcase__stats">
+            <div class="stat-item">
+              <div class="stat-item__value">250g</div>
+              <div class="stat-item__label">Device weight</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-item__value stat-item__value--dims">38x170x62mm</div>
+              <div class="stat-item__label">Device dimensions</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-item__value">1.5"</div>
+              <div class="stat-item__label">Screen Size</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-item__value">£450</div>
+              <div class="stat-item__label">Fully assembled &amp; tested</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ════ FEATURES ════ -->
   <section class="features" id="features">
     <div class="container">
@@ -464,7 +499,7 @@
       <p class="section-desc">Designed from the ground up for wet, muddy, and unforgiving cave environments — with repairability and simplicity at its core.</p>
 
       <div class="features__grid">
-        <div class="feature-card fade-in">
+        <div class="feature-card fade-in hide-mobile">
           <div class="feature-card__icon">💧</div>
           <h3>Water Resistant Design</h3>
           <p>A completely sealed polycarbonate &amp; PETG case with an internal epoxy coating protects electronics from water. Great for surveying wet passages.</p>
@@ -517,7 +552,7 @@
           <h3>Sealed USB-C Port</h3>
           <p>A resin-capped USB-C port isolates internals while providing easy access for charging and programming settings.</p>
         </div>
-        <div class="feature-card fade-in">
+        <div class="feature-card fade-in hide-mobile">
           <div class="feature-card__icon">⚙️</div>
           <h3>Configurable Settings</h3>
           <p>Tweak settings via the onboard menu or plug in and edit the <code>settings.json</code> file directly on your PC.</p>
@@ -532,44 +567,10 @@
           <h3>Gorilla Glass &amp; Quartz</h3>
           <p>Scratch-resistant Gorilla Glass display cover and quartz glass laser protector handle the scrapes and bumps of cave life.</p>
         </div>
-        <div class="feature-card fade-in">
+        <div class="feature-card fade-in hide-mobile">
           <div class="feature-card__icon">&lt;/&gt;</div>
           <h3>Open Source &amp; Reprogrammable</h3>
           <p>Can be built with C++ or optionally CircuitPython. Inspect the code, modify behaviour, all on your own terms.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ════ PRODUCT SHOWCASE ════ -->
-  <section class="product-showcase">
-    <div class="container">
-      <div class="product-showcase__inner">
-        <div class="product-showcase__img-wrap fade-in">
-          <img src="Picture1_vivid.png" alt="DiscoX cave survey device" />
-        </div>
-        <div class="product-showcase__text fade-in">
-          <p class="section-label">The Device</p>
-          <h2 class="section-title">Manufactured in the UK</h2>
-          <p class="section-desc">Sealed, rugged, and repairable — the DiscoX is a precision cave survey instrument that goes where your survey takes you, and keeps working when conditions turn rough.</p>
-          <div class="product-showcase__stats">
-            <div class="stat-item">
-              <div class="stat-item__value">250g</div>
-              <div class="stat-item__label">Device weight</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-item__value stat-item__value--dims">38x170x62mm</div>
-              <div class="stat-item__label">Device dimensions</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-item__value">1.5"</div>
-              <div class="stat-item__label">Screen Size</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-item__value">£450</div>
-              <div class="stat-item__label">Fully assembled &amp; tested</div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -801,8 +802,8 @@
     <div class="container">
       <div class="contact__inner">
         <p class="section-label">Get in Touch</p>
-        <h2 class="section-title">Questions? Want to reserve a DiscoX?</h2>
-        <p class="section-desc">Whether you're interested in ordering, need spare parts, or want a custom Bluetooth name — drop me a line.</p>
+        <h2 class="section-title">Questions?</h2>
+        <p class="section-desc">Whether you're interested in ordering, need spare parts, or have more queries — drop me a line.</p>
 
         <form class="contact__form" action="https://formspree.io/f/mvgwqgyq" method="POST">
           <div class="form-row">
@@ -835,7 +836,7 @@
   <!-- ════ FOOTER ════ -->
   <footer>
     <div class="container">
-      <span>© 2025 DiscoX. Built on the <a href="https://stic.readthedocs.io/" target="_blank">SAP6</a> open source platform.</span>
+      <span>© 2026 DiscoX. Built on the <a href="https://stic.readthedocs.io/" target="_blank">SAP6</a> open source platform.</span>
       <span>
         <a href="#features">Features</a> · <a href="#specs">Specs</a> · <a href="#docs">User Guide</a> · <a href="#calibration">Calibration</a>
       </span>
