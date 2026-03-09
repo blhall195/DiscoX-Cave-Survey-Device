@@ -393,7 +393,7 @@
           <ul>
             <li><strong>stability_tolerance</strong> (default&nbsp;<code>0.4</code>) — how many degrees the sensor readings must converge within before a shot is accepted. Lower = stricter, steadier hold required.</li>
             <li><strong>stability_buffer_length</strong> (default&nbsp;<code>3</code>) — number of consecutive stable samples required before accepting a reading.</li>
-            <li><strong>ema_alpha</strong> (default&nbsp;<code>0.5</code>) — exponential moving average smoothing factor for live sensor data. Lower values give smoother (but slower-reacting) readings; higher values are more responsive but noisier.</li>
+            <li><strong>ema_alpha</strong> (default&nbsp;<code>0.3</code>) — exponential moving average smoothing factor for live sensor data. Lower values give smoother (but slower-reacting) readings; higher values are more responsive but noisier.</li>
             <li><strong>laser_distance_offset</strong> (default&nbsp;<code>0.162</code>) — length of the device in metres, subtracted from the raw laser distance so the reading is station-to-station.</li>
           </ul>
 
