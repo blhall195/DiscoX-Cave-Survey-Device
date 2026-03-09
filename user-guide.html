@@ -387,7 +387,52 @@
 
           <h3>Advanced Settings (config.json)</h3>
           <p>Go to <strong>Menu → Update / Settings → Edit Settings File</strong>. The DiscoX reboots into USB drive mode and appears as a drive called <strong>DISCOX</strong> on your PC. Open <code>config.json</code>, edit the values you want, save, eject the drive, then hold the power button to restart.</p>
-          <p>Advanced options include stability tolerances, leg detection thresholds, sensor averaging, BLE device name, and calibration consistency parameters.</p>
+          <p>Any setting you omit from the file will use its default value. Below is a full reference:</p>
+
+          <h4 style="margin-top:24px; color:var(--accent);">Measurement &amp; Stability</h4>
+          <ul>
+            <li><strong>stability_tolerance</strong> (default&nbsp;<code>0.4</code>) — how many degrees the sensor readings must converge within before a shot is accepted. Lower = stricter, steadier hold required.</li>
+            <li><strong>stability_buffer_length</strong> (default&nbsp;<code>3</code>) — number of consecutive stable samples required before accepting a reading.</li>
+            <li><strong>ema_alpha</strong> (default&nbsp;<code>0.5</code>) — exponential moving average smoothing factor for live sensor data. Lower values give smoother (but slower-reacting) readings; higher values are more responsive but noisier.</li>
+            <li><strong>laser_distance_offset</strong> (default&nbsp;<code>0.162</code>) — length of the device in metres, subtracted from the raw laser distance so the reading is station-to-station.</li>
+          </ul>
+
+          <h4 style="margin-top:24px; color:var(--accent);">Leg Detection</h4>
+          <ul>
+            <li><strong>leg_angle_tolerance</strong> (default&nbsp;<code>1.7</code>) — maximum difference in degrees between three consecutive shots' bearing/clino for them to count as the same leg.</li>
+            <li><strong>leg_distance_tolerance</strong> (default&nbsp;<code>0.05</code>) — maximum difference in metres between three consecutive distance readings for leg detection.</li>
+            <li><strong>laser_wibble</strong> (default&nbsp;<code>true</code>) — when a leg is detected, blink the laser on and off in quick succession as a visual confirmation.</li>
+          </ul>
+
+          <h4 style="margin-top:24px; color:var(--accent);">Anomaly Detection</h4>
+          <ul>
+            <li><strong>anomaly_detection</strong> (default&nbsp;<code>false</code>) — enable or disable warnings when nearby metallic objects may be distorting the magnetic field.</li>
+            <li><strong>mag_tolerance</strong> (default&nbsp;<code>10.0</code>) — magnetometer field-strength tolerance in degrees. Readings outside this window from the expected local field trigger a warning.</li>
+            <li><strong>grav_tolerance</strong> (default&nbsp;<code>10.0</code>) — accelerometer magnitude tolerance in degrees.</li>
+            <li><strong>dip_tolerance</strong> (default&nbsp;<code>10.0</code>) — magnetic dip angle tolerance in degrees.</li>
+          </ul>
+
+          <h4 style="margin-top:24px; color:var(--accent);">Calibration</h4>
+          <ul>
+            <li><strong>cal_mag_consistency</strong> (default&nbsp;<code>0.5</code>) — angular consistency window in degrees for the magnetometer during calibration. Tighter values demand steadier holds per calibration point.</li>
+            <li><strong>cal_grav_consistency</strong> (default&nbsp;<code>0.4</code>) — angular consistency window in degrees for the accelerometer during calibration.</li>
+            <li><strong>cal_buffer_length</strong> (default&nbsp;<code>5</code>) — number of samples in the calibration consistency window.</li>
+            <li><strong>cal_settle_ms</strong> (default&nbsp;<code>250</code>) — milliseconds the device must remain stable before a calibration point is accepted.</li>
+            <li><strong>cal_ema_alpha</strong> (default&nbsp;<code>0.3</code>) — EMA smoothing factor used during calibration. Lower = smoother with more lag.</li>
+            <li><strong>cal_timeout_ms</strong> (default&nbsp;<code>3000</code>) — maximum milliseconds to wait for stability before a calibration point is force-accepted.</li>
+          </ul>
+
+          <h4 style="margin-top:24px; color:var(--accent);">Timers &amp; Display</h4>
+          <ul>
+            <li><strong>auto_shutdown_timeout</strong> (default&nbsp;<code>1800</code>) — seconds of inactivity before automatic power-off. 1800 = 30 minutes.</li>
+            <li><strong>laser_timeout</strong> (default&nbsp;<code>120</code>) — seconds of inactivity before the laser turns off to save power. 120 = 2 minutes.</li>
+            <li><strong>screen_brightness</strong> (default&nbsp;<code>255</code>) — OLED contrast level, 0–255.</li>
+          </ul>
+
+          <h4 style="margin-top:24px; color:var(--accent);">Bluetooth</h4>
+          <ul>
+            <li><strong>ble_name</strong> (default&nbsp;<code>"SAP6_Unicorn"</code>) — the Bluetooth device name advertised to survey apps. Maximum 20 characters.</li>
+          </ul>
 
           <h3>Firmware Update</h3>
           <p>Go to <strong>Menu → Update / Settings → Update Firmware</strong>. The device enters the UF2 bootloader and appears as a removable drive. Drag and drop the new <code>.uf2</code> file onto the drive — the DiscoX reboots automatically when flashing is complete.</p>
