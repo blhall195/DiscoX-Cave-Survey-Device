@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Order — DiscoX</title>
+  <title>Firmware — DiscoX</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
@@ -136,43 +136,60 @@
     }
     .section-desc { color: var(--text-dim); max-width: 560px; margin-bottom: 40px; }
 
-    /* ── Order options grid ── */
-    .order-options {
+    /* ── Firmware layout ── */
+    .firmware-section {
       padding: 40px 0 80px;
     }
-    .order-options__grid {
+    .firmware-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 32px;
-      align-items: start;
+      align-items: stretch;
     }
     @media (max-width: 768px) {
-      .order-options__grid { grid-template-columns: 1fr; }
+      .firmware-grid { grid-template-columns: 1fr; }
     }
 
-    .order-card {
+    .firmware-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 40px 32px;
     }
-    .order-card__icon {
+    .firmware-card__icon {
       width: 56px; height: 56px; border-radius: 14px;
       display: flex; align-items: center; justify-content: center;
       margin-bottom: 20px; font-size: 1.6rem;
       background: rgba(255,176,32,.08); color: var(--accent);
     }
-    .order-card h2 {
+    .firmware-card h2 {
       font-size: 1.2rem; font-weight: 700; margin-bottom: 8px;
     }
-    .order-card p {
+    .firmware-card p {
       font-size: .9rem; color: var(--text-dim); line-height: 1.55;
       margin-bottom: 24px;
     }
-    .order-card .price {
-      font-family: var(--font-mono); font-size: 1.4rem; font-weight: 700;
-      color: var(--accent); margin-bottom: 24px;
+
+    /* ── Steps list ── */
+    .steps { list-style: none; counter-reset: step; margin-bottom: 28px; }
+    .steps li {
+      counter-increment: step;
+      position: relative;
+      padding-left: 40px;
+      margin-bottom: 20px;
+      font-size: .9rem;
+      color: var(--text-dim);
+      line-height: 1.55;
     }
+    .steps li::before {
+      content: counter(step);
+      position: absolute; left: 0; top: 0;
+      width: 28px; height: 28px; border-radius: 8px;
+      background: rgba(255,176,32,.1); color: var(--accent);
+      font-family: var(--font-mono); font-weight: 700; font-size: .8rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .steps li strong { color: var(--text); }
 
     /* ── Buttons ── */
     .btn {
@@ -184,30 +201,6 @@
     .btn--primary { background: var(--accent); color: var(--bg); }
     .btn--primary:hover { background: var(--accent-dim); color: var(--bg); opacity: 1; }
     .btn--full { width: 100%; justify-content: center; }
-
-    /* ── Contact form ── */
-    .contact__form { margin-top: 0; }
-    .contact__form .form-row {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;
-    }
-    @media (max-width: 560px) { .contact__form .form-row { grid-template-columns: 1fr; } }
-    .contact__form label {
-      display: block; font-size: .82rem; font-weight: 500;
-      color: var(--text-dim); margin-bottom: 6px;
-    }
-    .contact__form input,
-    .contact__form textarea {
-      width: 100%; padding: 12px 14px; border-radius: 8px;
-      border: 1px solid var(--border); background: var(--surface-2);
-      color: var(--text); font-family: var(--font-body); font-size: .9rem;
-      transition: border-color .2s;
-    }
-    .contact__form input:focus,
-    .contact__form textarea:focus {
-      outline: none; border-color: var(--accent);
-    }
-    .contact__form textarea { resize: vertical; min-height: 120px; }
-    .contact__form .btn { margin-top: 8px; }
 
     /* ── Footer ── */
     footer {
@@ -260,54 +253,44 @@
   <!-- ════ HEADER ════ -->
   <header class="page-header">
     <div class="container">
-      <p class="section-label">Order Your DiscoX</p>
-      <h1>Ready to go <span>surveying</span>?</h1>
-      <p>Choose your ordering option below. UK customers can pay directly online. For international orders, get in touch and we'll sort out shipping.</p>
+      <p class="section-label">Firmware Update</p>
+      <h1>Keep your DiscoX <span>up to date</span></h1>
+      <p>Download the latest firmware and follow the simple steps below to update your device.</p>
     </div>
   </header>
 
-  <!-- ════ ORDER OPTIONS ════ -->
-  <section class="order-options">
+  <!-- ════ FIRMWARE CONTENT ════ -->
+  <section class="firmware-section">
     <div class="container">
-      <div class="order-options__grid">
+      <div class="firmware-grid">
 
-        <!-- International Orders -->
-        <div class="order-card fade-in">
-          <div class="order-card__icon">🌍</div>
-          <h2>International Orders</h2>
-          <p>Shipping outside the UK? Fill out the form below and I'll get back to you with shipping costs and payment details for your location.</p>
+        <!-- Instructions -->
+        <div class="firmware-card fade-in">
+          <div class="firmware-card__icon">📋</div>
+          <h2>How to Update</h2>
+          <p>Updating your DiscoX firmware is quick and easy. Follow these steps:</p>
 
-          <form class="contact__form" action="https://formspree.io/f/mvgwqgyq" method="POST">
-            <input type="hidden" name="_subject" value="International DiscoX Order Enquiry" />
-            <div class="form-row">
-              <div>
-                <label for="name">Name</label>
-                <input type="text" name="name" id="name" required />
-              </div>
-              <div>
-                <label for="email">Email</label>
-                <input type="email" name="email" id="email" required />
-              </div>
-            </div>
-            <div style="margin-bottom:16px;">
-              <label for="country">Country</label>
-              <input type="text" name="country" id="country" required placeholder="e.g. France, USA, Australia" />
-            </div>
-            <div style="margin-bottom:16px;">
-              <label for="message">Message</label>
-              <textarea name="message" id="message" rows="4" placeholder="Any questions or details about your order..."></textarea>
-            </div>
-            <button type="submit" class="btn btn--primary btn--full">Send Enquiry</button>
-          </form>
+          <ol class="steps">
+            <li>On your DiscoX, navigate to <strong>"Update Firmware"</strong> in the device menu and select it.</li>
+            <li>Connect your DiscoX to your PC using a <strong>USB-C cable</strong>. A new drive will appear in your file explorer.</li>
+            <li><strong>Download the firmware file</strong> using the button on this page.</li>
+            <li><strong>Drag and drop</strong> the downloaded <strong>firmware.uf2</strong> file into the explorer window that appeared.</li>
+            <li>Your DiscoX will <strong>automatically reboot</strong> with the new firmware once the file has finished copying.</li>
+          </ol>
+
+          <p>That's it — your device is now running the latest firmware.</p>
         </div>
 
-        <!-- UK Orders -->
-        <div class="order-card fade-in">
-          <div class="order-card__icon">🇬🇧</div>
-          <h2>UK Orders</h2>
-          <p>Order directly and pay securely via Stripe. Price includes UK shipping. Your DiscoX will be assembled, tested, and dispatched from the UK.</p>
-          <div class="price">£450</div>
-          <a href="https://buy.stripe.com/00wfZie3DgeU7ugd9Za7C03" class="btn btn--primary btn--full">Pay Now via Stripe</a>
+        <!-- Download -->
+        <div class="firmware-card fade-in">
+          <div class="firmware-card__icon">⬇️</div>
+          <h2>Latest Firmware (09/03/2026)</h2>
+          <p>Download the latest firmware file for your DiscoX. This file is in UF2 format and is ready to be copied directly to your device.</p>
+
+          <a href="firmware.uf2" download class="btn btn--primary btn--full">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download firmware.uf2
+          </a>
         </div>
 
       </div>
