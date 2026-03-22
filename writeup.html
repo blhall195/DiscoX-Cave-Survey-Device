@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device Comparison: Methodology and Results — DiscoX</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0c0a08;
+            --surface: #141210;
+            --surface-2: #1d1a16;
+            --border: #2e2820;
+            --text: #ede8e0;
+            --text-dim: #9a8e7e;
+            --accent: #ffb020;
+            --accent-dim: #cc8d1a;
+            --rank1: #2ecc71;
+            --rank2: #27ae60;
+            --rank3: #f39c12;
+            --rank4: #e67e22;
+            --rank5: #e74c3c;
+            --font-body: 'DM Sans', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+            --max-w: 860px;
+            --radius: 10px;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.75;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::selection { background: var(--accent); color: var(--bg); }
+
+        img { max-width: 100%; display: block; }
+        a { color: var(--accent); text-decoration: none; transition: opacity .2s; }
+        a:hover { opacity: .8; }
+
+        .container {
+            max-width: var(--max-w);
+            margin: 0 auto;
+            padding: 0 28px;
+        }
+
+        /* ── Nav ── */
+        .nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            background: rgba(12,10,8,.82);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav__inner {
+            max-width: 1120px; margin: 0 auto; padding: 0 28px;
+            display: flex; align-items: center; justify-content: space-between;
+            height: 64px;
+        }
+        .nav__logo {
+            font-family: var(--font-mono); font-weight: 700; font-size: 1.1rem;
+            color: var(--text); letter-spacing: -.02em;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .nav__logo img { height: 36px; width: auto; display: block; }
+        .nav__logo span span { color: var(--accent); }
+        .nav__links { display: flex; gap: 6px; align-items: center; }
+        .nav__links a {
+            font-size: .82rem; font-weight: 500; color: var(--text-dim);
+            padding: 6px 14px; border-radius: 8px; transition: all .2s;
+        }
+        .nav__links a:hover { color: var(--text); background: var(--surface-2); opacity: 1; }
+        .nav__cta {
+            background: var(--accent) !important; color: var(--bg) !important;
+            font-weight: 700 !important; border-radius: 8px !important;
+            padding: 8px 18px !important; font-size: .82rem !important;
+        }
+        .nav__cta:hover { background: var(--accent-dim) !important; }
+        .nav__toggle { display: none; background: none; border: none; color: var(--text); cursor: pointer; padding: 8px; }
+        .nav__toggle svg { width: 24px; height: 24px; }
+
+        @media (max-width: 768px) {
+            .nav__toggle { display: block; }
+            .nav__links {
+                display: none; flex-direction: column; position: absolute;
+                top: 64px; left: 0; right: 0; background: rgba(12,10,8,.96);
+                backdrop-filter: blur(18px);
+                border-bottom: 1px solid var(--border);
+                padding: 12px 20px;
+            }
+            .nav__links.open { display: flex; }
+            .nav__links a { padding: 12px 14px; width: 100%; }
+        }
+
+        /* ── Article ── */
+        .article {
+            padding: 120px 0 80px;
+        }
+
+        .article h1 {
+            font-family: var(--font-mono);
+            font-size: clamp(1.6rem, 4vw, 2.2rem);
+            font-weight: 700;
+            letter-spacing: -.03em;
+            line-height: 1.2;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+        .article h1 span { color: var(--accent); }
+
+        .article__subtitle {
+            font-size: .9rem;
+            color: var(--text-dim);
+            margin-bottom: 40px;
+            font-family: var(--font-mono);
+            font-size: .75rem;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+        }
+
+        .article h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-top: 48px;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+            font-family: var(--font-mono);
+            letter-spacing: -.01em;
+        }
+
+        .article p {
+            margin-bottom: 16px;
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        .article ol {
+            margin: 16px 0 16px 24px;
+            color: var(--text);
+        }
+        .article ol li {
+            margin-bottom: 8px;
+            line-height: 1.7;
+        }
+
+        .article strong {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .article em {
+            color: var(--text-dim);
+        }
+
+        /* ── Equation ── */
+        .equation {
+            margin: 32px 0;
+            padding: 24px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            text-align: center;
+        }
+        .equation .katex { color: var(--text); }
+
+        /* ── Table ── */
+        .table-wrapper {
+            margin: 24px 0;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: .9rem;
+        }
+
+        caption {
+            font-style: italic;
+            color: var(--text-dim);
+            margin-bottom: 12px;
+            text-align: left;
+            font-size: .82rem;
+        }
+
+        thead th {
+            background: var(--surface-2);
+            color: var(--accent);
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 700;
+            font-size: .78rem;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+            font-family: var(--font-mono);
+            border-bottom: 2px solid var(--accent);
+        }
+
+        tbody td {
+            padding: 10px 16px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        tbody tr:nth-child(odd) {
+            background: var(--surface);
+        }
+
+        tbody tr:hover {
+            background: var(--surface-2);
+        }
+
+        .rank-badge {
+            display: inline-block;
+            width: 1.6rem;
+            height: 1.6rem;
+            line-height: 1.6rem;
+            text-align: center;
+            border-radius: 50%;
+            color: var(--bg);
+            font-weight: 700;
+            font-size: .8rem;
+            font-family: var(--font-mono);
+        }
+
+        .rank-1 { background: var(--rank1); }
+        .rank-2 { background: var(--rank2); }
+        .rank-3 { background: var(--rank3); }
+        .rank-4 { background: var(--rank4); }
+        .rank-5 { background: var(--rank5); }
+
+        .error-val {
+            font-family: var(--font-mono);
+            font-size: .88rem;
+        }
+
+        /* ── Figure ── */
+        .figure {
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .figure img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+
+        .figure figcaption {
+            font-style: italic;
+            color: var(--text-dim);
+            margin-top: 12px;
+            font-size: .85rem;
+            line-height: 1.5;
+        }
+
+        /* ── Footer ── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 32px 0;
+            font-size: .78rem;
+            color: var(--text-dim);
+        }
+        footer .container {
+            max-width: 1120px;
+            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+        }
+        footer a { color: var(--text-dim); }
+        footer a:hover { color: var(--accent); }
+
+        /* ── Print ── */
+        @media print {
+            body { background: #fff; color: #222; }
+            .nav, footer { display: none; }
+            .article { padding-top: 20px; }
+            .article h1 { color: #222; }
+            .article h2 { color: #1a5276; }
+            .article strong { color: #1a5276; }
+            thead th { background: #1a5276; color: #fff; }
+            .equation { background: #f5f5f5; border-color: #ddd; }
+            .figure img { box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ════ NAV ════ -->
+    <nav class="nav" role="navigation">
+        <div class="nav__inner">
+            <a href="index.html" class="nav__logo"><img src="logo.png" alt="DiscoX logo" /><span>Disco<span>X</span></span></a>
+            <button class="nav__toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav__links').classList.toggle('open')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+            <div class="nav__links">
+                <a href="index.html">Home</a>
+                <a href="index.html#features">Features</a>
+                <a href="index.html#specs">Specs</a>
+                <a href="user-guide.html">User Guide</a>
+                <a href="user-guide.html#calibration">Calibration</a>
+                <a href="firmware.html">Firmware</a>
+                <a href="index.html#contact">Contact</a>
+                <a href="order.html" class="nav__cta">Order Now</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ════ ARTICLE ════ -->
+    <article class="article">
+        <div class="container">
+
+            <p class="article__subtitle">Giants Hole, Derbyshire — 28 February 2026</p>
+            <h1>Device <span>Comparison</span>: Methodology and Results</h1>
+
+            <h2>Methodology</h2>
+
+            <p>A comparative accuracy test of five cave survey instruments was conducted on 28 February 2026 in the entrance series of Giants Hole, Derbyshire. A traverse of 14 legs was marked with tipex on the cave walls to provide fixed reference points throughout the experiment, totalling approximately 100 m.</p>
+
+            <p>Five devices were tested:</p>
+
+            <ol>
+                <li><strong>Shetland Attack Pony (SAP)</strong> — a purpose-built electronic cave survey instrument;</li>
+                <li><strong>DistoX2</strong> — a modified Leica Disto with integrated compass and clinometer;</li>
+                <li><strong>Cavway</strong> — a modern survey device from China;</li>
+                <li><strong>DiscoX (short calibration)</strong> — a SAP-based unit calibrated using a short calibration routine;</li>
+                <li><strong>DiscoX (long calibration)</strong> — the same SAP-based unit calibrated using a full (long) calibration routine.</li>
+            </ol>
+
+            <p>The inclusion of both short and long calibration variants of the same DiscoX device allowed the effect of calibration rigour to be assessed independently of hardware differences.</p>
+
+            <p>Three survey teams each traversed the same route sequentially, with the SAP team surveying first. For each leg, every device recorded both a foresight and a backsight reading, each comprising distance (m), compass bearing (&deg;), and clinometer angle (&deg;). This yielded ten independent measurements per leg (five devices &times; two directions), providing a robust basis for comparison.</p>
+
+            <h2>Analysis</h2>
+
+            <p>The raw polar measurements (distance, compass, clino) from each device were converted to Cartesian displacement vectors (&Delta;x, &Delta;y, &Delta;z) for each leg. This transformation allows direct spatial comparison between instruments, avoiding the difficulty of combining angular and linear errors in polar coordinates.</p>
+
+            <p>Since no independent ground-truth survey of the traverse was available, a consensus reference position was established for each leg by computing the trimmed mean of all ten Cartesian vectors. The trimmed mean reduces the influence of any single outlying measurement, providing a more robust estimate of the true displacement than a simple arithmetic mean.</p>
+
+            <p>The accuracy of each device on each leg was then quantified as the three-dimensional Euclidean distance between its Cartesian vector and the trimmed mean reference:</p>
+
+            <div class="equation" id="equation"></div>
+
+            <p>where (<em>&Delta;x<sub>i</sub></em>, <em>&Delta;y<sub>i</sub></em>, <em>&Delta;z<sub>i</sub></em>) is the displacement vector from device <em>i</em> and (<em>&Delta;x&#x0304;</em>, <em>&Delta;y&#x0304;</em>, <em>&Delta;z&#x0304;</em>) is the trimmed mean. This per-leg error was computed separately for foresight and backsight readings. The mean error across all 14 legs provides an overall accuracy metric for each device and direction.</p>
+
+            <h2>Results</h2>
+
+            <p>Table 1 summarises the mean error for each device, separated by foresight and backsight, and ranked by overall (combined) mean error.</p>
+
+            <div class="table-wrapper">
+                <table>
+                    <caption>Table 1. Mean error by device, ranked by overall accuracy.</caption>
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Device</th>
+                            <th>Foresight Error (m)</th>
+                            <th>Backsight Error (m)</th>
+                            <th>Overall Mean Error (m)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="rank-badge rank-1">1</span></td>
+                            <td>Cavway</td>
+                            <td class="error-val">0.042</td>
+                            <td class="error-val">0.045</td>
+                            <td class="error-val"><strong>0.043</strong></td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-badge rank-2">2</span></td>
+                            <td>DiscoX (short calibration)</td>
+                            <td class="error-val">0.050</td>
+                            <td class="error-val">0.040</td>
+                            <td class="error-val"><strong>0.045</strong></td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-badge rank-3">3</span></td>
+                            <td>DiscoX (long calibration)</td>
+                            <td class="error-val">0.072</td>
+                            <td class="error-val">0.078</td>
+                            <td class="error-val"><strong>0.075</strong></td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-badge rank-4">4</span></td>
+                            <td>DistoX2</td>
+                            <td class="error-val">0.060</td>
+                            <td class="error-val">0.092</td>
+                            <td class="error-val"><strong>0.076</strong></td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-badge rank-5">5</span></td>
+                            <td>SAP</td>
+                            <td class="error-val">0.098</td>
+                            <td class="error-val">0.083</td>
+                            <td class="error-val"><strong>0.091</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p>The Cavway and the short-calibration DiscoX achieved the best accuracy, with mean errors of approximately 4&ndash;5 cm from the consensus position. These two devices also exhibited the most consistent performance across legs, with the lowest spread of per-leg errors (Figure 1, bottom panel).</p>
+
+            <p>The DistoX2 and long-calibration DiscoX occupied a middle tier at approximately 7.5 cm mean error. Notably, the DistoX2 showed a pronounced asymmetry between foresight and backsight accuracy (6.0 cm vs 9.2 cm), suggesting a possible calibration or systematic bias in one direction.</p>
+
+            <p>The SAP recorded the largest mean error at 9.1 cm, with its foresight readings (9.8 cm) being notably less accurate than its backsights (8.3 cm).</p>
+
+            <p>The difference between the simple arithmetic mean and the trimmed mean was small for all legs (typically &lt; 2.5 cm), indicating that no single device produced extreme outliers and that the consensus reference is well-constrained.</p>
+
+            <p>An unexpected finding was that the short calibration routine produced more accurate results than the long calibration on the same DiscoX hardware (4.5 cm vs 7.5 cm). This warrants further investigation, as it may reflect the specific calibration conditions on the day rather than a general superiority of the short routine.</p>
+
+            <figure class="figure">
+                <img src="device_comparison.png" alt="Device comparison charts showing overall accuracy ranking, foresight vs backsight accuracy, and distribution of errors across all 14 legs">
+                <figcaption>Figure 1. Comparative accuracy of five cave survey devices across 14 legs. Top-left: overall ranking by mean error. Top-right: foresight vs backsight mean error. Bottom: box plot of per-leg errors with individual data points overlaid.</figcaption>
+            </figure>
+
+            <h2>Discussion</h2>
+
+            <p>All five devices produced mean errors below 10 cm per leg, which is within acceptable tolerances for typical cave survey work. However, the two-fold difference in accuracy between the best-performing device (Cavway, 4.3 cm) and the worst (SAP, 9.1 cm) is significant, particularly for surveys where cumulative error over many legs is a concern.</p>
+
+            <p>The sequential survey design means that the results may be partially confounded by team and operator effects — the teams were not randomised across devices. The SAP result in particular should be interpreted with caution, as it was surveyed first (before teams had fully warmed up to the station locations) and was operated by a different individual to the other devices. A fully controlled study would randomise device&ndash;operator pairings and survey order.</p>
+
+            <p>The use of a consensus trimmed mean as the reference position, rather than an independent high-precision survey, is a limitation. However, with ten independent measurements per leg, the trimmed mean provides a reasonable approximation of the true displacement, and any bias it introduces would affect all devices equally.</p>
+
+        </div>
+    </article>
+
+    <!-- ════ FOOTER ════ -->
+    <footer>
+        <div class="container">
+            <span>&copy; 2026 DiscoX. Built on the <a href="https://stic.readthedocs.io/" target="_blank">SAP6</a> open source platform.</span>
+            <span>
+                <a href="index.html#features">Features</a> &middot; <a href="index.html#specs">Specs</a> &middot; <a href="user-guide.html">User Guide</a> &middot; <a href="user-guide.html#calibration">Calibration</a>
+            </span>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (typeof katex !== 'undefined') {
+                katex.render(
+                    "\\varepsilon = \\sqrt{(\\Delta x_i - \\overline{\\Delta x})^2 + (\\Delta y_i - \\overline{\\Delta y})^2 + (\\Delta z_i - \\overline{\\Delta z})^2}",
+                    document.getElementById("equation"),
+                    { displayMode: true, throwOnError: false }
+                );
+            }
+        });
+    </script>
+
+</body>
+</html>
