@@ -3,229 +3,475 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Firmware — DiscoX</title>
+  <title>Firmware — DiscoX Cave Survey Device</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
   <style>
-    /* ── Reset & Variables ── */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg: #0c0a08;
-      --surface: #141210;
-      --surface-2: #1d1a16;
-      --border: #2e2820;
-      --text: #ede8e0;
-      --text-dim: #9a8e7e;
-      --accent: #ffb020;
-      --accent-dim: #cc8d1a;
-      --red: #ff4d4d;
-      --green: #2ecc71;
-      --purple: #a66bff;
-      --font-body: 'DM Sans', sans-serif;
-      --font-mono: 'Space Mono', monospace;
-      --max-w: 1120px;
-      --radius: 10px;
+      --accent-hue: 38;
+      --accent-chroma: 0.18;
+      --bg: #0a0907;
+      --bg-2: #121010;
+      --surface: #17140f;
+      --surface-2: #1f1b14;
+      --border: #2b251b;
+      --border-2: #3a3225;
+      --text: #f0ebdf;
+      --text-mid: #b5a88f;
+      --text-dim: #8a7e68;
+      --accent: oklch(0.78 var(--accent-chroma) var(--accent-hue));
+      --accent-2: oklch(0.62 var(--accent-chroma) var(--accent-hue));
+      --accent-soft: oklch(0.78 var(--accent-chroma) var(--accent-hue) / 0.12);
+      --accent-glow: oklch(0.78 var(--accent-chroma) var(--accent-hue) / 0.22);
+      --red: #ff5a4a;
+      --green: #5edc9e;
+      --blue: #6fb5ff;
+      --purple: #c08bff;
+      --font-sans: 'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      --font-display: 'Space Grotesk', 'Inter Tight', sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+      --max-w: 1200px;
+      --radius: 6px;
+      --radius-lg: 14px;
     }
 
-    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
-
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
     body {
-      font-family: var(--font-body);
+      font-family: var(--font-sans);
       background: var(--bg);
       color: var(--text);
       line-height: 1.65;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
-
-    ::selection { background: var(--accent); color: var(--bg); }
-
+    ::selection { background: var(--accent); color: #000; }
     img { max-width: 100%; display: block; }
     a { color: var(--accent); text-decoration: none; transition: opacity .2s; }
-    a:hover { opacity: .8; }
+    a:hover { opacity: .85; }
 
-    /* ── Utility ── */
-    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 28px; }
-    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 32px; position: relative; }
 
-    /* ── Nav ── */
+    code {
+      font-family: var(--font-mono); font-size: .85em;
+      background: var(--surface-2); padding: 2px 6px; border-radius: 4px;
+      color: var(--accent); border: 1px solid var(--border);
+    }
+    pre {
+      font-family: var(--font-mono); font-size: .82rem;
+      background: var(--bg-2); border: 1px solid var(--border);
+      padding: 16px 18px; border-radius: var(--radius);
+      color: var(--text); overflow-x: auto; line-height: 1.55;
+      margin: 14px 0 18px;
+    }
+    pre code { background: transparent; border: none; padding: 0; color: var(--text); }
+
+    .mono-label {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: .18em; color: var(--text-dim);
+    }
+    .mono-label::before {
+      content: ''; width: 24px; height: 1px; background: var(--accent);
+    }
+
+    /* ============ NAV ============ */
     .nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(12,10,8,.82);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
+      background: rgba(10,9,7,.75);
+      backdrop-filter: blur(20px) saturate(140%);
+      -webkit-backdrop-filter: blur(20px) saturate(140%);
       border-bottom: 1px solid var(--border);
     }
     .nav__inner {
-      max-width: var(--max-w); margin: 0 auto; padding: 0 28px;
+      max-width: var(--max-w); margin: 0 auto; padding: 0 32px;
       display: flex; align-items: center; justify-content: space-between;
-      height: 64px;
+      height: 68px;
     }
     .nav__logo {
-      font-family: var(--font-mono); font-weight: 700; font-size: 1.1rem;
+      font-family: var(--font-display); font-weight: 600; font-size: 1.15rem;
       color: var(--text); letter-spacing: -.02em;
-      display: flex; align-items: center; gap: 8px;
+      display: flex; align-items: center; gap: 10px;
     }
-    .nav__logo img { height: 36px; width: auto; display: block; }
-    .nav__logo span span { color: var(--accent); }
-    .nav__links { display: flex; gap: 6px; align-items: center; }
+    .nav__logo img { height: 30px; width: auto; display: block; }
+    .nav__logo em { font-style: normal; color: var(--accent); }
+    .nav__links { display: flex; gap: 2px; align-items: center; }
     .nav__links a {
-      font-size: .82rem; font-weight: 500; color: var(--text-dim);
-      padding: 6px 14px; border-radius: 8px; transition: all .2s;
+      font-size: .86rem; font-weight: 500; color: var(--text-mid);
+      padding: 8px 14px; border-radius: 6px; transition: all .2s;
     }
     .nav__links a:hover { color: var(--text); background: var(--surface-2); opacity: 1; }
+    .nav__links a.active { color: var(--accent); }
     .nav__cta {
-      background: var(--accent) !important; color: var(--bg) !important;
-      font-weight: 700 !important; border-radius: 8px !important;
-      padding: 8px 18px !important; font-size: .82rem !important;
+      background: var(--accent) !important; color: #000 !important;
+      font-weight: 600 !important; padding: 9px 18px !important;
+      margin-left: 6px; display: inline-flex !important; align-items: center; gap: 8px;
     }
-    .nav__cta:hover { background: var(--accent-dim) !important; }
+    .nav__cta:hover { background: var(--accent-2) !important; }
 
-    /* Mobile nav */
     .nav__toggle { display: none; background: none; border: none; color: var(--text); cursor: pointer; padding: 8px; }
-    .nav__toggle svg { width: 24px; height: 24px; }
-
-    @media (max-width: 768px) {
+    .nav__toggle svg { width: 22px; height: 22px; }
+    @media (max-width: 920px) {
       .nav__toggle { display: block; }
       .nav__links {
         display: none; flex-direction: column; position: absolute;
-        top: 64px; left: 0; right: 0; background: rgba(12,10,8,.96);
+        top: 68px; left: 0; right: 0; background: rgba(10,9,7,.96);
         backdrop-filter: blur(18px);
         border-bottom: 1px solid var(--border);
-        padding: 12px 20px;
+        padding: 16px 20px 20px;
+        align-items: stretch;
       }
       .nav__links.open { display: flex; }
       .nav__links a { padding: 12px 14px; width: 100%; }
+      .nav__cta { margin: 8px 0 0; justify-content: center; }
     }
 
-    /* ── Page header ── */
+    /* ============ PAGE HEADER ============ */
     .page-header {
       padding: 140px 0 60px;
-      text-align: center;
       position: relative;
       overflow: hidden;
+      border-bottom: 1px solid var(--border);
     }
     .page-header::before {
-      content: '';
-      position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(255,176,32,.06) 0%, transparent 70%);
+      content: ''; position: absolute; inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.02) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(ellipse at 50% 100%, #000 10%, transparent 70%);
+      -webkit-mask-image: radial-gradient(ellipse at 50% 100%, #000 10%, transparent 70%);
       pointer-events: none;
     }
-    .page-header h1 {
-      font-family: var(--font-mono); font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 700; letter-spacing: -.03em; line-height: 1.15;
-      margin-bottom: 16px;
+    .page-header__inner {
+      display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; align-items: end;
+      position: relative;
     }
-    .page-header h1 span { color: var(--accent); }
-    .page-header p {
-      font-size: 1.05rem; color: var(--text-dim); max-width: 520px;
-      margin: 0 auto;
+    @media (max-width: 820px) { .page-header__inner { grid-template-columns: 1fr; } }
+    .page-header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 5.2vw, 4rem);
+      font-weight: 500; letter-spacing: -.035em; line-height: 1.02;
+      margin: 16px 0 14px;
+    }
+    .page-header h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
+    .page-header p { color: var(--text-mid); max-width: 560px; font-size: 1.05rem; }
+
+    .toc-card {
+      background: var(--surface); border: 1px solid var(--border);
+      padding: 22px; border-radius: var(--radius-lg);
+      font-family: var(--font-mono); font-size: .82rem;
+      line-height: 1.9;
+    }
+    .toc-card h4 {
+      font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--text-dim); margin-bottom: 12px; font-weight: 500;
+    }
+    .toc-card a { color: var(--text); display: flex; justify-content: space-between; }
+    .toc-card a span:last-child { color: var(--text-dim); }
+    .toc-card a:hover { color: var(--accent); opacity: 1; }
+
+    /* ============ DOCS ============ */
+    .docs { padding: 80px 0; }
+    .docs-grid { display: grid; grid-template-columns: 240px 1fr; gap: 64px; }
+    @media (max-width: 920px) { .docs-grid { grid-template-columns: 1fr; gap: 32px; } }
+
+    .docs-nav { position: sticky; top: 90px; align-self: start; padding: 6px 0; }
+    .docs-nav__label {
+      font-family: var(--font-mono); font-size: 10.5px;
+      text-transform: uppercase; letter-spacing: .14em;
+      color: var(--text-dim); padding: 0 0 12px 18px;
+      border-bottom: 1px dashed var(--border-2); margin-bottom: 8px;
+    }
+    .docs-nav a {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-mono); font-size: .78rem;
+      color: var(--text-mid);
+      padding: 8px 16px 8px 18px;
+      border-left: 1px solid var(--border);
+      transition: all .2s; letter-spacing: .02em;
+    }
+    .docs-nav a::before {
+      content: attr(data-n);
+      color: var(--text-dim); font-size: 10px; min-width: 20px;
+    }
+    .docs-nav a:hover, .docs-nav a.active {
+      color: var(--accent); border-left-color: var(--accent); opacity: 1;
+      background: var(--accent-soft);
+    }
+    .docs-nav a:hover::before, .docs-nav a.active::before { color: var(--accent); }
+    @media (max-width: 920px) {
+      .docs-nav { position: static; }
+      .docs-nav a { border-left: none; border-bottom: 1px solid var(--border); padding: 10px 4px; }
     }
 
-    /* ── Section generic ── */
-    .section-label {
-      font-family: var(--font-mono); font-size: .72rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: .12em; color: var(--accent);
+    .docs-content { max-width: 760px; }
+    .docs-section { padding-top: 56px; margin-top: 56px; border-top: 1px solid var(--border); }
+    .docs-section:first-child { padding-top: 0; margin-top: 0; border-top: none; }
+    .docs-section__num {
+      font-family: var(--font-mono); font-size: 10.5px;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 10px;
+    }
+    .docs-content h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 2.6vw, 2rem);
+      font-weight: 500; letter-spacing: -.025em;
+      line-height: 1.1; margin-bottom: 16px;
+    }
+    .docs-content h3 {
+      font-family: var(--font-display);
+      font-size: 1.1rem; font-weight: 500;
+      margin: 36px 0 10px; letter-spacing: -.01em;
+    }
+    .docs-content p { color: var(--text-mid); margin-bottom: 14px; }
+    .docs-content strong { color: var(--text); font-weight: 600; }
+    .docs-content ul, .docs-content ol {
+      margin-bottom: 16px; padding-left: 4px; color: var(--text-mid);
+      list-style: none;
+    }
+    .docs-content li {
+      margin-bottom: 10px; padding-left: 22px; position: relative;
+      line-height: 1.65;
+    }
+    .docs-content li::before {
+      content: ''; position: absolute; left: 6px; top: 12px;
+      width: 6px; height: 1px; background: var(--accent);
+    }
+    .docs-content ol { counter-reset: li; }
+    .docs-content ol li::before {
+      content: counter(li, decimal-leading-zero);
+      counter-increment: li;
+      font-family: var(--font-mono); font-size: 10px;
+      color: var(--accent); background: transparent;
+      width: auto; height: auto; top: 4px; left: 0;
+    }
+    .docs-content ol li { padding-left: 32px; margin-bottom: 12px; }
+
+    /* Callout */
+    .cb {
+      display: flex; gap: 14px;
+      background: var(--surface); border: 1px solid var(--border);
+      padding: 18px 20px; border-radius: var(--radius);
+      margin: 20px 0;
+      border-left: 3px solid var(--accent);
+      font-size: .92rem;
+    }
+    .cb--warn { border-left-color: var(--red); }
+    .cb--info { border-left-color: var(--blue); }
+    .cb__icon { flex-shrink: 0; width: 18px; height: 18px; margin-top: 2px; color: var(--accent); }
+    .cb--warn .cb__icon { color: var(--red); }
+    .cb--info .cb__icon { color: var(--blue); }
+    .cb__title {
+      font-family: var(--font-mono); font-size: 10.5px;
+      text-transform: uppercase; letter-spacing: .14em;
+      color: var(--text); margin-bottom: 6px; font-weight: 500;
+    }
+    .cb__body p { margin: 0; color: var(--text-mid); font-size: .9rem; }
+
+    /* ====== Update mode hero card ====== */
+    .update-hero {
+      display: grid; grid-template-columns: 1.1fr 1fr; gap: 28px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 28px;
+      margin: 22px 0 28px; align-items: center;
+      position: relative; overflow: hidden;
+    }
+    .update-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 100% 0%, var(--accent-glow) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    @media (max-width: 720px) { .update-hero { grid-template-columns: 1fr; } }
+    .update-hero__copy { position: relative; }
+    .update-hero__tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--accent); padding: 4px 10px;
+      background: var(--accent-soft); border-radius: 100px;
       margin-bottom: 12px;
     }
-    .section-title {
-      font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700;
-      letter-spacing: -.02em; line-height: 1.2; margin-bottom: 16px;
+    .update-hero h3 {
+      font-family: var(--font-display); font-size: 1.4rem;
+      font-weight: 500; margin: 0 0 6px; letter-spacing: -.015em;
     }
-    .section-desc { color: var(--text-dim); max-width: 560px; margin-bottom: 40px; }
+    .update-hero p { font-size: .9rem; color: var(--text-mid); margin: 0; }
 
-    /* ── Firmware layout ── */
-    .firmware-section {
-      padding: 40px 0 80px;
+    /* Device mock — bootloader screen */
+    .boot-mock {
+      background: var(--bg-2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 18px;
+      font-family: var(--font-mono);
+      position: relative;
     }
-    .firmware-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 32px;
-      align-items: stretch;
+    .boot-mock__bar {
+      display: flex; justify-content: space-between;
+      font-size: 9px; color: var(--text-dim);
+      letter-spacing: .12em; text-transform: uppercase;
+      margin-bottom: 12px;
     }
-    @media (max-width: 768px) {
-      .firmware-grid { grid-template-columns: 1fr; }
+    .boot-mock__screen {
+      background: #000; border: 1px solid var(--border-2);
+      border-radius: 4px; padding: 16px 14px;
+      color: var(--green); font-size: .72rem; line-height: 1.5;
+      box-shadow: inset 0 0 24px rgba(94,220,158,.05);
     }
+    .boot-mock__screen .ln-y { color: var(--accent); }
+    .boot-mock__screen .ln-d { color: var(--text-dim); }
+    .boot-mock__screen .blink { animation: blink 1s steps(1) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
 
-    .firmware-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 40px 32px;
+    /* Steps grid */
+    .steps {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+      margin: 24px 0 8px;
     }
-    .firmware-card__icon {
-      width: 56px; height: 56px; border-radius: 14px;
+    @media (max-width: 720px) { .steps { grid-template-columns: 1fr; } }
+    .step {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 18px 18px 16px;
+      position: relative;
+    }
+    .step__n {
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: .14em; color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .step__t {
+      font-family: var(--font-display); font-size: 1rem; font-weight: 500;
+      color: var(--text); margin-bottom: 6px; letter-spacing: -.005em;
+    }
+    .step__d { font-size: .85rem; color: var(--text-mid); margin: 0; line-height: 1.55; }
+
+    /* Method tabs */
+    .methods {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+      margin: 18px 0 8px;
+    }
+    @media (max-width: 720px) { .methods { grid-template-columns: 1fr; } }
+    .method {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 22px;
+    }
+    .method__hd {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 10px;
+    }
+    .method__pill {
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--accent); padding: 3px 9px;
+      background: var(--accent-soft); border-radius: 100px;
+    }
+    .method h4 {
+      font-family: var(--font-display); font-size: 1.05rem;
+      font-weight: 500; color: var(--text); letter-spacing: -.01em;
+      text-transform: none;
+    }
+    .method p { font-size: .88rem; color: var(--text-mid); margin: 0 0 8px; }
+
+    /* Drag-drop visual */
+    .dropzone {
+      margin: 22px 0 8px; padding: 24px;
+      border: 1.5px dashed var(--border-2); border-radius: var(--radius-lg);
+      background:
+        repeating-linear-gradient(45deg,
+          transparent 0 8px,
+          rgba(255,255,255,0.012) 8px 16px);
+      display: grid; grid-template-columns: auto 1fr auto; gap: 18px;
+      align-items: center;
+    }
+    .dropzone__file {
+      font-family: var(--font-mono); font-size: .78rem;
+      padding: 10px 14px; border: 1px solid var(--border);
+      background: var(--surface); border-radius: var(--radius);
+      color: var(--accent);
+    }
+    .dropzone__arrow {
+      color: var(--text-dim);
+      display: flex; align-items: center; gap: 4px;
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: .14em; text-transform: uppercase;
+    }
+    .dropzone__arrow span { flex: 1; height: 1px; background: var(--border-2); min-width: 24px; }
+    .dropzone__drive {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px; border: 1px solid var(--border);
+      background: var(--bg); border-radius: var(--radius);
+    }
+    .dropzone__drive .icon {
+      width: 22px; height: 22px; border-radius: 4px;
+      background: var(--accent); color: #000;
       display: flex; align-items: center; justify-content: center;
-      margin-bottom: 20px; font-size: 1.6rem;
-      background: rgba(255,176,32,.08); color: var(--accent);
+      font-family: var(--font-mono); font-size: 10px; font-weight: 700;
     }
-    .firmware-card h2 {
-      font-size: 1.2rem; font-weight: 700; margin-bottom: 8px;
+    .dropzone__drive .name {
+      font-family: var(--font-mono); font-size: .82rem;
+      color: var(--text); letter-spacing: .04em;
     }
-    .firmware-card p {
-      font-size: .9rem; color: var(--text-dim); line-height: 1.55;
+    .dropzone__drive .sub {
+      font-family: var(--font-mono); font-size: 9.5px;
+      color: var(--text-dim); letter-spacing: .12em;
+    }
+    @media (max-width: 720px) {
+      .dropzone { grid-template-columns: 1fr; text-align: left; }
+      .dropzone__arrow { transform: rotate(90deg); justify-self: start; }
+    }
+
+    /* CTA download row */
+    .download-row {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      margin: 18px 0 6px;
+    }
+    .btn-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 16px; border-radius: var(--radius);
+      font-family: var(--font-sans); font-size: .85rem; font-weight: 600;
+      transition: all .18s;
+    }
+    .btn-link--primary { background: var(--accent); color: #000; }
+    .btn-link--primary:hover { background: var(--accent-2); opacity: 1; }
+    .btn-link--outline {
+      background: transparent; color: var(--text);
+      border: 1px solid var(--border-2);
+    }
+    .btn-link--outline:hover { border-color: var(--text-mid); opacity: 1; background: var(--surface); }
+
+    /* ============ FOOTER ============ */
+    footer {
+      border-top: 1px solid var(--border); padding: 48px 0 32px;
+      font-size: .82rem; color: var(--text-dim);
+      background: var(--bg);
+    }
+    .footer__top {
+      display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px;
+      padding-bottom: 32px; border-bottom: 1px solid var(--border);
       margin-bottom: 24px;
     }
-
-    /* ── Steps list ── */
-    .steps { list-style: none; counter-reset: step; margin-bottom: 28px; }
-    .steps li {
-      counter-increment: step;
-      position: relative;
-      padding-left: 40px;
-      margin-bottom: 20px;
-      font-size: .9rem;
-      color: var(--text-dim);
-      line-height: 1.55;
+    @media (max-width: 680px) { .footer__top { grid-template-columns: 1fr; } }
+    .footer__brand-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-display); font-weight: 600; font-size: 1.05rem;
+      color: var(--text); margin-bottom: 10px;
     }
-    .steps li::before {
-      content: counter(step);
-      position: absolute; left: 0; top: 0;
-      width: 28px; height: 28px; border-radius: 8px;
-      background: rgba(255,176,32,.1); color: var(--accent);
-      font-family: var(--font-mono); font-weight: 700; font-size: .8rem;
-      display: flex; align-items: center; justify-content: center;
+    .footer__brand-logo img { height: 26px; }
+    .footer__brand-logo em { font-style: normal; color: var(--accent); }
+    .footer__brand p { font-size: .85rem; max-width: 320px; }
+    .footer__col h4 {
+      font-family: var(--font-mono); font-size: 10.5px;
+      text-transform: uppercase; letter-spacing: .14em;
+      color: var(--text); margin-bottom: 14px; font-weight: 500;
     }
-    .steps li strong { color: var(--text); }
-
-    /* ── Buttons ── */
-    .btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 14px 28px; border-radius: var(--radius); font-weight: 700;
-      font-size: .92rem; transition: all .2s; border: none; cursor: pointer;
-      font-family: var(--font-body);
+    .footer__col a { display: block; color: var(--text-dim); margin-bottom: 8px; font-size: .85rem; }
+    .footer__col a:hover { color: var(--accent); }
+    .footer__bottom {
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+      font-family: var(--font-mono); font-size: 11px; color: var(--text-dim);
+      letter-spacing: .06em;
     }
-    .btn--primary { background: var(--accent); color: var(--bg); }
-    .btn--primary:hover { background: var(--accent-dim); color: var(--bg); opacity: 1; }
-    .btn--full { width: 100%; justify-content: center; }
-
-    /* ── Footer ── */
-    footer {
-      border-top: 1px solid var(--border); padding: 32px 0;
-      font-size: .78rem; color: var(--text-dim);
-    }
-    footer .container {
-      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
-    }
-    footer a { color: var(--text-dim); }
-    footer a:hover { color: var(--accent); }
-
-    /* ── Animations ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .page-header .section-label { animation: fadeUp .7s .05s ease both; }
-    .page-header h1             { animation: fadeUp .7s .15s ease both; }
-    .page-header p              { animation: fadeUp .7s .25s ease both; }
-    .fade-in {
-      opacity: 0; transform: translateY(24px);
-      transition: opacity .6s ease, transform .6s ease;
-    }
-    .fade-in.visible { opacity: 1; transform: translateY(0); }
   </style>
 </head>
 <body>
@@ -233,7 +479,7 @@
   <!-- ════ NAV ════ -->
   <nav class="nav" role="navigation">
     <div class="nav__inner">
-      <a href="index.html" class="nav__logo"><img src="logo.png" alt="DiscoX logo" /><span>Disco<span>X</span></span></a>
+      <a href="index.html" class="nav__logo"><img src="logo.png" alt="DiscoX logo" /><span>Disco<em>X</em></span></a>
       <button class="nav__toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav__links').classList.toggle('open')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
@@ -242,57 +488,243 @@
         <a href="index.html#features">Features</a>
         <a href="index.html#specs">Specs</a>
         <a href="user-guide.html">User Guide</a>
-        <a href="user-guide.html#calibration">Calibration</a>
-        <a href="firmware.html">Firmware</a>
+        <a href="firmware.html" class="active">Firmware</a>
         <a href="index.html#contact">Contact</a>
-        <a href="order.html" class="nav__cta">Order Now</a>
+        <a href="order.html" class="nav__cta">Order</a>
       </div>
     </div>
   </nav>
 
-  <!-- ════ HEADER ════ -->
+  <!-- ════ PAGE HEADER ════ -->
   <header class="page-header">
     <div class="container">
-      <p class="section-label">Firmware Update</p>
-      <h1>Keep your DiscoX <span>up to date</span></h1>
-      <p>Download the latest firmware and follow the simple steps below to update your device.</p>
+      <div class="page-header__inner">
+        <div>
+          <p class="mono-label">Documentation · v1</p>
+          <h1>Firmware <em>updates</em>.</h1>
+          <p>Flashing the latest DiscoX firmware takes about a minute. This page walks you through entering Firmware Update Mode and dropping a new <code>.uf2</code> file onto the device.</p>
+        </div>
+        <div class="toc-card">
+          <h4>On this page</h4>
+          <a href="#latest"><span>Latest firmware</span><span>01</span></a>
+          <a href="#update-mode"><span>Entering update mode</span><span>02</span></a>
+          <a href="#flashing"><span>Flashing the .uf2</span><span>03</span></a>
+          <a href="#troubleshooting"><span>Troubleshooting</span><span>04</span></a>
+          <a href="#changelog"><span>Changelog</span><span>05</span></a>
+        </div>
+      </div>
     </div>
   </header>
 
-  <!-- ════ FIRMWARE CONTENT ════ -->
-  <section class="firmware-section">
+  <!-- ════ DOCS ════ -->
+  <section class="docs">
     <div class="container">
-      <div class="firmware-grid">
+      <div class="docs-grid">
 
-        <!-- Instructions -->
-        <div class="firmware-card fade-in">
-          <div class="firmware-card__icon">📋</div>
-          <h2>How to Update</h2>
-          <p>Updating your DiscoX firmware is quick and easy. Follow these steps:</p>
+        <!-- Side nav -->
+        <nav class="docs-nav" aria-label="Firmware navigation">
+          <div class="docs-nav__label">Contents</div>
+          <a href="#latest"          data-n="01">Latest</a>
+          <a href="#update-mode"     data-n="02">Update mode</a>
+          <a href="#flashing"        data-n="03">Flashing</a>
+          <a href="#troubleshooting" data-n="04">Troubleshoot</a>
+          <a href="#changelog"       data-n="05">Changelog</a>
+        </nav>
 
-          <ol class="steps">
-            <li>On your DiscoX, navigate to <strong>"Update Firmware"</strong> in the device menu and select it.</li>
-            <li>Connect your DiscoX to your PC using a <strong>USB-C cable</strong>. A new drive will appear in your file explorer.</li>
-            <li><strong>Download the firmware file</strong> using the button on this page.</li>
-            <li><strong>Drag and drop</strong> the downloaded <strong>firmware.uf2</strong> file into the explorer window that appeared.</li>
-            <li>Your DiscoX will <strong>automatically reboot</strong> with the new firmware once the file has finished copying.</li>
-          </ol>
+        <div class="docs-content">
 
-          <p>That's it — your device is now running the latest firmware.</p>
+          <!-- ── 01 LATEST ── -->
+          <article class="docs-section" id="latest">
+            <div class="docs-section__num">01 · Current release</div>
+            <h2>Latest firmware</h2>
+            <p>The DiscoX runs an open-source C++ firmware built on the SAP6 platform. New releases ship roughly monthly with bug fixes, calibration improvements, and the occasional new feature.</p>
+
+            <div class="download-row">
+              <a href="#" class="btn-link btn-link--primary">
+                Download discox-v1.4.2.uf2
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v14M6 13l6 6 6-6M5 21h14"/></svg>
+              </a>
+              <a href="https://github.com/blhall195/Mr_Zappy/releases" target="_blank" class="btn-link btn-link--outline">
+                All releases on GitHub
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
+              </a>
+            </div>
+
+            <p style="font-family: var(--font-mono); font-size: .8rem; color: var(--text-dim); letter-spacing: .04em; margin-top: 8px;">
+              v1.4.2 · released 2026-04-12 · sha256 <code>9f3c…b21a</code>
+            </p>
+          </article>
+
+          <!-- ── 02 UPDATE MODE ── -->
+          <article class="docs-section" id="update-mode">
+            <div class="docs-section__num">02 · Bootloader</div>
+            <h2>Entering Firmware Update Mode</h2>
+            <p>Firmware Update Mode (also called <strong>UF2 bootloader mode</strong>) is what makes the DiscoX appear on your computer as a USB drive named <code>DISCOX</code>. While in this mode the device is waiting for a new firmware file — drag one on, and it flashes itself.</p>
+
+            <div class="update-hero">
+              <div class="update-hero__copy">
+                <span class="update-hero__tag">● Bootloader</span>
+                <h3>The device looks like a USB drive</h3>
+                <p>When the DiscoX is in Firmware Update Mode, the screen shows a steady bootloader prompt and your computer mounts a removable drive called <code>DISCOX</code>.</p>
+              </div>
+              <div class="boot-mock" aria-hidden="true">
+                <div class="boot-mock__bar">
+                  <span>· DiscoX</span>
+                  <span>USB · Boot</span>
+                </div>
+                <div class="boot-mock__screen">
+                  <div class="ln-y">Entered Bootloader</div>
+                  <div>&nbsp;</div>
+                  <div>Plug device into PC and</div>
+                  <div>flash new firmware (.uf2)</div>
+                  <div>&nbsp;</div>
+                  <div class="ln-d">Load new firmware or hold</div>
+                  <div class="ln-d">power button to exit.<span class="blink">_</span></div>
+                </div>
+              </div>
+            </div>
+
+            <h3>Method A — From the menu (recommended)</h3>
+            <p>If your DiscoX is already running working firmware, this is the easiest path. No buttons gymnastics required.</p>
+            <ol>
+              <li>Power the device on and wait for the home screen.</li>
+              <li>Press <strong>Button 3</strong> to open the menu.</li>
+              <li>Scroll to <strong>Update / Settings</strong> and select with Button 3.</li>
+              <li>Select <strong>Update Firmware</strong>.</li>
+              <li>The device reboots and the screen shows the bootloader prompt.</li>
+              <li>Plug in USB-C — a drive named <code>DISCOX</code> will appear on your computer.</li>
+            </ol>
+
+            <h3>Method B — Double-press reset (recovery)</h3>
+            <p>Use this if the firmware is unresponsive, the menu won't open, or a previous flash was interrupted. The device's reset is reachable through the USB-C port without opening the case.</p>
+            <ol>
+              <li>Connect the DiscoX to your computer with a USB-C data cable.</li>
+              <li><strong>Quickly double-press</strong> the reset button on the mainboard (or, on assembled units, double-tap Button 4 within 0.5s while plugged in).</li>
+              <li>The status LED settles to a steady amber/red glow — that's the bootloader signal.</li>
+              <li>The screen shows <code>DISCOX BOOTLOADER</code> and the <code>DISCOX</code> drive mounts.</li>
+            </ol>
+
+            <div class="cb cb--info">
+              <svg class="cb__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/>
+              </svg>
+              <div class="cb__body">
+                <div class="cb__title">Tip · Use a data cable</div>
+                <p>A surprising number of USB-C cables are charge-only. If the device powers on but no drive appears, swap the cable before assuming anything is wrong.</p>
+              </div>
+            </div>
+
+            <h3>How to tell you're in update mode</h3>
+            <ul>
+              <li>The screen shows <strong>DISCOX BOOTLOADER</strong> with a version line.</li>
+              <li>The status LED holds a steady colour (no breathing or pulsing).</li>
+              <li>A removable drive called <strong><code>DISCOX</code></strong> has mounted on your computer.</li>
+              <li>The laser is off and buttons no longer take readings.</li>
+            </ul>
+          </article>
+
+          <!-- ── 03 FLASHING ── -->
+          <article class="docs-section" id="flashing">
+            <div class="docs-section__num">03 · Drag &amp; drop</div>
+            <h2>Flashing the <code>.uf2</code></h2>
+            <p>With the device in Firmware Update Mode and the <code>DISCOX</code> drive mounted, you're ready to flash.</p>
+
+            <div class="dropzone" aria-hidden="true">
+              <div class="dropzone__file">discox-v1.4.2.uf2</div>
+              <div class="dropzone__arrow"><span></span>drop<span></span></div>
+              <div class="dropzone__drive">
+                <span class="icon">D</span>
+                <div>
+                  <div class="name">DISCOX</div>
+                  <div class="sub">USB · 1.0 MB</div>
+                </div>
+              </div>
+            </div>
+
+            <ol>
+              <li>Download the latest <code>.uf2</code> file from the link above.</li>
+              <li>Open the <code>DISCOX</code> drive in Finder, Explorer, or your file manager.</li>
+              <li>Drag the <code>.uf2</code> onto the drive (or copy &amp; paste — either works).</li>
+              <li>The drive will dismount on its own as flashing starts. <strong>Don't unplug.</strong></li>
+              <li>After 5–15 seconds the device reboots into normal firmware and the home screen returns.</li>
+              <li>Open <strong>Menu → About</strong> to confirm the version number matches what you flashed.</li>
+            </ol>
+
+            <div class="cb cb--warn">
+              <svg class="cb__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3l10 17H2L12 3z"/><path d="M12 10v5"/><circle cx="12" cy="17.5" r=".8" fill="currentColor"/>
+              </svg>
+              <div class="cb__body">
+                <div class="cb__title">Don't interrupt the flash</div>
+                <p>Once the drive disappears, the chip is rewriting its own firmware. Pulling the cable mid-flash can leave the device in a half-written state — recoverable via Method B above, but easier just to wait the few seconds it takes.</p>
+              </div>
+            </div>
+          </article>
+
+          <!-- ── 04 TROUBLESHOOTING ── -->
+          <article class="docs-section" id="troubleshooting">
+            <div class="docs-section__num">04 · If something's off</div>
+            <h2>Troubleshooting</h2>
+
+            <div class="methods">
+              <div class="method">
+                <div class="method__hd">
+                  <span class="method__pill">No drive</span>
+                </div>
+                <h4>The DISCOX drive doesn't appear</h4>
+                <p>Try a different USB-C cable — many are charge-only. If you're sure the cable is fine, use Method B (double-press reset) to force the bootloader.</p>
+              </div>
+              <div class="method">
+                <div class="method__hd">
+                  <span class="method__pill">Stuck</span>
+                </div>
+                <h4>Device won't boot after flashing</h4>
+                <p>Hold the power button for 10 seconds to fully power down, then plug back in and re-enter update mode via Method B. Re-flash the latest known-good <code>.uf2</code>.</p>
+              </div>
+              <div class="method">
+                <div class="method__hd">
+                  <span class="method__pill">Wrong file</span>
+                </div>
+                <h4>Drive ejects with a FAIL.TXT</h4>
+                <p>The bootloader rejected the file. Make sure you downloaded the <code>.uf2</code> for DiscoX (not a generic SAP6 build) and that the file isn't corrupted — re-download and try again.</p>
+              </div>
+              <div class="method">
+                <div class="method__hd">
+                  <span class="method__pill">Settings</span>
+                </div>
+                <h4>My config.json was wiped</h4>
+                <p>Major firmware updates can reset the settings file to defaults. Your calibration is preserved separately. Re-edit <code>config.json</code> via <strong>Menu → Update / Settings → Edit Settings File</strong>.</p>
+              </div>
+            </div>
+          </article>
+
+          <!-- ── 05 CHANGELOG ── -->
+          <article class="docs-section" id="changelog">
+            <div class="docs-section__num">05 · What's new</div>
+            <h2>Changelog</h2>
+
+            <h3>v1.4.2 — 2026-04-12</h3>
+            <ul>
+              <li>Improved leg detection at near-vertical clinos.</li>
+              <li>BLE reconnection is faster after the phone wakes from sleep.</li>
+              <li>Fixed an edge case where Mag Field Check could overflow on &gt;9 pairs.</li>
+            </ul>
+
+            <h3>v1.4.0 — 2026-03-04</h3>
+            <ul>
+              <li>New <strong>Mag Field Check</strong> mode — verify cal accuracy without re-running a full calibration.</li>
+              <li>Auto-shutdown timer is now configurable in 6 steps.</li>
+              <li>Disco mode adds a "wild" sub-mode triggered by shaking the device.</li>
+            </ul>
+
+            <h3>v1.3.5 — 2026-01-22</h3>
+            <ul>
+              <li>Battery monitor IC support — proportional battery bar replaces the 3-segment indicator.</li>
+              <li>Lowered laser-distance offset default to <code>0.162</code> for production runs after the v3 case.</li>
+            </ul>
+          </article>
+
         </div>
-
-        <!-- Download -->
-        <div class="firmware-card fade-in">
-          <div class="firmware-card__icon">⬇️</div>
-          <h2>Latest Firmware (09/03/2026)</h2>
-          <p>Download the latest firmware file for your DiscoX. This file is in UF2 format and is ready to be copied directly to your device.</p>
-
-          <a href="firmware.uf2" download class="btn btn--primary btn--full">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Download firmware.uf2
-          </a>
-        </div>
-
       </div>
     </div>
   </section>
@@ -300,28 +732,63 @@
   <!-- ════ FOOTER ════ -->
   <footer>
     <div class="container">
-      <span>&copy; 2026 DiscoX. Built on the <a href="https://stic.readthedocs.io/" target="_blank">SAP6</a> open source platform.</span>
-      <span>
-        <a href="index.html#features">Features</a> · <a href="index.html#specs">Specs</a> · <a href="user-guide.html">User Guide</a> · <a href="user-guide.html#calibration">Calibration</a>
-      </span>
+      <div class="footer__top">
+        <div class="footer__brand">
+          <div class="footer__brand-logo"><img src="logo.png" alt="" /> <span>Disco<em>X</em></span></div>
+          <p>A cave survey device built for modern caving. Hand-built in the UK, fully repairable, fully yours.</p>
+        </div>
+        <div class="footer__col">
+          <h4>Product</h4>
+          <a href="index.html#features">Features</a>
+          <a href="index.html#accuracy">Accuracy</a>
+          <a href="index.html#specs">Specs</a>
+          <a href="order.html">Order</a>
+        </div>
+        <div class="footer__col">
+          <h4>Resources</h4>
+          <a href="user-guide.html">User guide</a>
+          <a href="firmware.html">Firmware</a>
+          <a href="https://github.com/blhall195/Mr_Zappy" target="_blank">GitHub</a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© 2026 DISCOX · BUILT ON <a href="https://stic.readthedocs.io/" target="_blank">SAP6</a></span>
+        <span>MADE IN THE UNITED KINGDOM</span>
+      </div>
     </div>
   </footer>
 
-  <!-- ════ SCRIPTS ════ -->
   <script>
-    // Intersection Observer for fade-in
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-    }, { threshold: 0.15 });
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    // Active nav highlighting
+    const sections = document.querySelectorAll('.docs-section[id]');
+    const navLinks = document.querySelectorAll('.docs-nav a');
+    function updateActive() {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY + 120 >= s.offsetTop) current = s.id;
+      });
+      navLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+      });
+    }
+    window.addEventListener('scroll', updateActive, { passive: true });
+    updateActive();
 
-    // Close mobile nav on link click
-    document.querySelectorAll('.nav__links a').forEach(a => {
-      a.addEventListener('click', () => {
+    // Mobile nav + smooth scroll
+    document.querySelectorAll('.nav__links a, .docs-nav a, .toc-card a').forEach(a => {
+      a.addEventListener('click', (e) => {
         document.querySelector('.nav__links').classList.remove('open');
+        const href = a.getAttribute('href');
+        if (href && href.startsWith('#')) {
+          const target = document.getElementById(href.slice(1));
+          if (target) {
+            e.preventDefault();
+            const navH = document.querySelector('.nav').offsetHeight;
+            window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - navH - 12, behavior: 'smooth' });
+          }
+        }
       });
     });
   </script>
-
 </body>
 </html>

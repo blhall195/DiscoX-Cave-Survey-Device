@@ -6,249 +6,431 @@
   <title>User Guide — DiscoX Cave Survey Device</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
   <style>
-    /* ── Reset & Variables ── */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg: #0c0a08;
-      --surface: #141210;
-      --surface-2: #1d1a16;
-      --border: #2e2820;
-      --text: #ede8e0;
-      --text-dim: #9a8e7e;
-      --accent: #ffb020;
-      --accent-dim: #cc8d1a;
-      --red: #ff4d4d;
-      --green: #2ecc71;
-      --purple: #a66bff;
-      --font-body: 'DM Sans', sans-serif;
-      --font-mono: 'Space Mono', monospace;
-      --max-w: 1120px;
-      --radius: 10px;
+      --accent-hue: 38;
+      --accent-chroma: 0.18;
+      --bg: #0a0907;
+      --bg-2: #121010;
+      --surface: #17140f;
+      --surface-2: #1f1b14;
+      --border: #2b251b;
+      --border-2: #3a3225;
+      --text: #f0ebdf;
+      --text-mid: #b5a88f;
+      --text-dim: #8a7e68;
+      --accent: oklch(0.78 var(--accent-chroma) var(--accent-hue));
+      --accent-2: oklch(0.62 var(--accent-chroma) var(--accent-hue));
+      --accent-soft: oklch(0.78 var(--accent-chroma) var(--accent-hue) / 0.12);
+      --accent-glow: oklch(0.78 var(--accent-chroma) var(--accent-hue) / 0.22);
+      --red: #ff5a4a;
+      --green: #5edc9e;
+      --blue: #6fb5ff;
+      --purple: #c08bff;
+      --font-sans: 'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      --font-display: 'Space Grotesk', 'Inter Tight', sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+      --max-w: 1200px;
+      --radius: 6px;
+      --radius-lg: 14px;
     }
 
-    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
-
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
     body {
-      font-family: var(--font-body);
+      font-family: var(--font-sans);
       background: var(--bg);
       color: var(--text);
       line-height: 1.65;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
-
-    ::selection { background: var(--accent); color: var(--bg); }
-
+    ::selection { background: var(--accent); color: #000; }
     img { max-width: 100%; display: block; }
     a { color: var(--accent); text-decoration: none; transition: opacity .2s; }
-    a:hover { opacity: .8; }
+    a:hover { opacity: .85; }
 
-    /* ── Utility ── */
-    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 28px; }
-    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
-    .tag {
-      display: inline-block;
-      font-family: var(--font-mono);
-      font-size: .7rem;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      padding: 4px 10px;
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      color: var(--text-dim);
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 32px; position: relative; }
+
+    code {
+      font-family: var(--font-mono); font-size: .85em;
+      background: var(--surface-2); padding: 2px 6px; border-radius: 4px;
+      color: var(--accent); border: 1px solid var(--border);
     }
 
-    /* ── Nav ── */
+    .mono-label {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: .18em; color: var(--text-dim);
+    }
+    .mono-label::before {
+      content: ''; width: 24px; height: 1px; background: var(--accent);
+    }
+
+    /* ============ NAV ============ */
     .nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(12,10,8,.82);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
+      background: rgba(10,9,7,.75);
+      backdrop-filter: blur(20px) saturate(140%);
+      -webkit-backdrop-filter: blur(20px) saturate(140%);
       border-bottom: 1px solid var(--border);
     }
     .nav__inner {
-      max-width: var(--max-w); margin: 0 auto; padding: 0 28px;
+      max-width: var(--max-w); margin: 0 auto; padding: 0 32px;
       display: flex; align-items: center; justify-content: space-between;
-      height: 64px;
+      height: 68px;
     }
     .nav__logo {
-      font-family: var(--font-mono); font-weight: 700; font-size: 1.1rem;
+      font-family: var(--font-display); font-weight: 600; font-size: 1.15rem;
       color: var(--text); letter-spacing: -.02em;
-      display: flex; align-items: center; gap: 8px;
+      display: flex; align-items: center; gap: 10px;
     }
-    .nav__logo img { height: 36px; width: auto; display: block; }
-    .nav__logo span span { color: var(--accent); }
-    .nav__links { display: flex; gap: 6px; align-items: center; }
+    .nav__logo img { height: 30px; width: auto; display: block; }
+    .nav__logo em { font-style: normal; color: var(--accent); }
+    .nav__links { display: flex; gap: 2px; align-items: center; }
     .nav__links a {
-      font-size: .82rem; font-weight: 500; color: var(--text-dim);
-      padding: 6px 14px; border-radius: 8px; transition: all .2s;
+      font-size: .86rem; font-weight: 500; color: var(--text-mid);
+      padding: 8px 14px; border-radius: 6px; transition: all .2s;
     }
     .nav__links a:hover { color: var(--text); background: var(--surface-2); opacity: 1; }
     .nav__links a.active { color: var(--accent); }
     .nav__cta {
-      background: var(--accent) !important; color: var(--bg) !important;
-      font-weight: 700 !important; border-radius: 8px !important;
-      padding: 8px 18px !important; font-size: .82rem !important;
+      background: var(--accent) !important; color: #000 !important;
+      font-weight: 600 !important; padding: 9px 18px !important;
+      margin-left: 6px; display: inline-flex !important; align-items: center; gap: 8px;
     }
-    .nav__cta:hover { background: var(--accent-dim) !important; }
+    .nav__cta:hover { background: var(--accent-2) !important; }
 
-    /* Mobile nav */
     .nav__toggle { display: none; background: none; border: none; color: var(--text); cursor: pointer; padding: 8px; }
-    .nav__toggle svg { width: 24px; height: 24px; }
-
-    @media (max-width: 768px) {
+    .nav__toggle svg { width: 22px; height: 22px; }
+    @media (max-width: 920px) {
       .nav__toggle { display: block; }
       .nav__links {
         display: none; flex-direction: column; position: absolute;
-        top: 64px; left: 0; right: 0; background: rgba(12,10,8,.96);
+        top: 68px; left: 0; right: 0; background: rgba(10,9,7,.96);
         backdrop-filter: blur(18px);
         border-bottom: 1px solid var(--border);
-        padding: 12px 20px;
+        padding: 16px 20px 20px;
+        align-items: stretch;
       }
       .nav__links.open { display: flex; }
       .nav__links a { padding: 12px 14px; width: 100%; }
+      .nav__cta { margin: 8px 0 0; justify-content: center; }
     }
 
-    /* ── Page header ── */
+    /* ============ PAGE HEADER ============ */
     .page-header {
-      padding: 120px 0 60px;
+      padding: 140px 0 60px;
+      position: relative;
+      overflow: hidden;
       border-bottom: 1px solid var(--border);
     }
-    .page-header .section-label {
-      font-family: var(--font-mono); font-size: .72rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: .12em; color: var(--accent);
-      margin-bottom: 12px;
+    .page-header::before {
+      content: ''; position: absolute; inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.02) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(ellipse at 50% 100%, #000 10%, transparent 70%);
+      -webkit-mask-image: radial-gradient(ellipse at 50% 100%, #000 10%, transparent 70%);
+      pointer-events: none;
     }
+    .page-header__inner {
+      display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; align-items: end;
+      position: relative;
+    }
+    @media (max-width: 820px) { .page-header__inner { grid-template-columns: 1fr; } }
     .page-header h1 {
-      font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700;
-      letter-spacing: -.02em; line-height: 1.2; margin-bottom: 16px;
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 5.2vw, 4rem);
+      font-weight: 500; letter-spacing: -.035em; line-height: 1.02;
+      margin: 16px 0 14px;
     }
-    .page-header p {
-      color: var(--text-dim); max-width: 560px; font-size: 1rem;
-    }
+    .page-header h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
+    .page-header p { color: var(--text-mid); max-width: 560px; font-size: 1.05rem; }
 
-    /* ── Section generic ── */
-    section { padding: 80px 0; }
-    .section-label {
-      font-family: var(--font-mono); font-size: .72rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: .12em; color: var(--accent);
-      margin-bottom: 12px;
+    .toc-card {
+      background: var(--surface); border: 1px solid var(--border);
+      padding: 22px; border-radius: var(--radius-lg);
+      font-family: var(--font-mono); font-size: .82rem;
+      line-height: 1.9;
     }
-    .section-title {
-      font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700;
-      letter-spacing: -.02em; line-height: 1.2; margin-bottom: 16px;
+    .toc-card h4 {
+      font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--text-dim); margin-bottom: 12px; font-weight: 500;
     }
-    .section-desc { color: var(--text-dim); max-width: 560px; margin-bottom: 40px; }
+    .toc-card a { color: var(--text); display: flex; justify-content: space-between; }
+    .toc-card a span:last-child { color: var(--text-dim); }
+    .toc-card a:hover { color: var(--accent); opacity: 1; }
 
-    /* ── Docs Sections ── */
-    .docs { border-top: 1px solid var(--border); }
+    /* ============ DOCS LAYOUT ============ */
+    .docs { padding: 80px 0; }
     .docs-grid {
-      display: grid; grid-template-columns: 240px 1fr; gap: 48px; margin-top: 40px;
+      display: grid; grid-template-columns: 240px 1fr; gap: 64px;
+    }
+    @media (max-width: 920px) {
+      .docs-grid { grid-template-columns: 1fr; gap: 32px; }
     }
 
-    .docs-nav { position: sticky; top: 88px; align-self: start; }
-
-    @media (max-width: 768px) {
-      .docs-grid { grid-template-columns: 1fr; gap: 24px; }
-      .docs-nav { position: static; }
+    .docs-nav {
+      position: sticky; top: 90px; align-self: start;
+      padding: 6px 0;
+    }
+    .docs-nav__label {
+      font-family: var(--font-mono); font-size: 10.5px;
+      text-transform: uppercase; letter-spacing: .14em;
+      color: var(--text-dim); padding: 0 0 12px 18px;
+      border-bottom: 1px dashed var(--border-2); margin-bottom: 8px;
     }
     .docs-nav a {
-      display: block; font-size: .82rem; color: var(--text-dim);
-      padding: 8px 16px; border-left: 2px solid var(--border);
-      transition: all .2s; margin-bottom: 2px;
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-mono); font-size: .78rem;
+      color: var(--text-mid);
+      padding: 8px 16px 8px 18px;
+      border-left: 1px solid var(--border);
+      transition: all .2s;
+      letter-spacing: .02em;
+    }
+    .docs-nav a::before {
+      content: attr(data-n);
+      color: var(--text-dim); font-size: 10px;
+      min-width: 20px;
     }
     .docs-nav a:hover, .docs-nav a.active {
-      color: var(--accent); border-color: var(--accent); opacity: 1;
+      color: var(--accent); border-left-color: var(--accent); opacity: 1;
+      background: var(--accent-soft);
+    }
+    .docs-nav a:hover::before, .docs-nav a.active::before { color: var(--accent); }
+
+    @media (max-width: 920px) {
+      .docs-nav { position: static; }
+      .docs-nav a { border-left: none; border-bottom: 1px solid var(--border); padding: 10px 4px; }
     }
 
+    /* ============ DOCS CONTENT ============ */
+    .docs-content { max-width: 760px; }
+    .docs-section { padding-top: 56px; margin-top: 56px; border-top: 1px solid var(--border); position: relative; }
+    .docs-section:first-child { padding-top: 0; margin-top: 0; border-top: none; }
+
+    .docs-section__num {
+      font-family: var(--font-mono); font-size: 10.5px;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 10px;
+    }
     .docs-content h2 {
-      font-size: 1.4rem; font-weight: 700; margin-top: 56px; margin-bottom: 16px;
-      padding-top: 24px; border-top: 1px solid var(--border);
-      letter-spacing: -.01em;
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 2.6vw, 2rem);
+      font-weight: 500; letter-spacing: -.025em;
+      line-height: 1.1; margin-bottom: 16px;
     }
-    .docs-content h2:first-child { margin-top: 0; border-top: none; padding-top: 0; }
     .docs-content h3 {
-      font-size: 1.05rem; font-weight: 700; margin-top: 32px; margin-bottom: 10px;
+      font-family: var(--font-display);
+      font-size: 1.1rem; font-weight: 500;
+      margin: 36px 0 10px; letter-spacing: -.01em;
     }
-    .docs-content p { color: var(--text-dim); margin-bottom: 16px; max-width: 640px; }
-    .docs-content strong { color: var(--text); }
+    .docs-content h4 {
+      font-family: var(--font-mono); font-size: 10.5px;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--accent); margin: 28px 0 12px; font-weight: 500;
+    }
+    .docs-content p { color: var(--text-mid); margin-bottom: 14px; }
+    .docs-content strong { color: var(--text); font-weight: 600; }
     .docs-content ul, .docs-content ol {
-      margin-bottom: 16px; padding-left: 20px; color: var(--text-dim);
+      margin-bottom: 16px; padding-left: 4px; color: var(--text-mid);
+      list-style: none;
     }
-    .docs-content li { margin-bottom: 6px; }
-    .docs-content li::marker { color: var(--accent); }
+    .docs-content li {
+      margin-bottom: 8px; padding-left: 22px; position: relative;
+      line-height: 1.65;
+    }
+    .docs-content li::before {
+      content: ''; position: absolute; left: 6px; top: 12px;
+      width: 6px; height: 1px; background: var(--accent);
+    }
+    .docs-content ol { counter-reset: li; }
+    .docs-content ol li::before {
+      content: counter(li, decimal-leading-zero);
+      counter-increment: li;
+      font-family: var(--font-mono); font-size: 10px;
+      color: var(--accent); background: transparent;
+      width: auto; height: auto; top: 4px; left: 0;
+    }
+    .docs-content ol li { padding-left: 28px; }
 
-    .callout {
-      background: var(--surface-2); border-left: 3px solid var(--accent);
-      padding: 16px 20px; border-radius: 0 var(--radius) var(--radius) 0;
-      margin: 20px 0; font-size: .88rem;
-    }
-    .callout--warn { border-color: var(--red); }
-    .callout--info { border-color: var(--purple); }
-    .callout p { margin-bottom: 0; }
-
-    .led-demo {
-      display: inline-flex; align-items: center; gap: 10px;
-      padding: 8px 16px; border-radius: 100px; font-size: .82rem;
-      font-family: var(--font-mono); margin: 4px 0;
-    }
-    .led-dot {
-      width: 10px; height: 10px; border-radius: 50%;
-    }
-    .led-dot--red { background: var(--red); box-shadow: 0 0 8px var(--red); }
-    .led-dot--green { background: var(--green); box-shadow: 0 0 8px var(--green); }
-    .led-dot--purple { background: var(--purple); box-shadow: 0 0 8px var(--purple); }
-
-    .calib-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0;
-    }
-    @media (max-width: 560px) { .calib-grid { grid-template-columns: 1fr; } }
-    .calib-card {
+    /* Callouts */
+    .cb {
+      display: flex; gap: 14px;
       background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 24px;
+      padding: 18px 20px; border-radius: var(--radius);
+      margin: 20px 0;
+      border-left: 3px solid var(--accent);
+      font-size: .92rem;
     }
-    .calib-card h4 {
-      font-size: .9rem; font-weight: 700; margin-bottom: 8px;
+    .cb--warn { border-left-color: var(--red); }
+    .cb--info { border-left-color: var(--blue); }
+    .cb__icon {
+      flex-shrink: 0; width: 18px; height: 18px; margin-top: 2px;
+      color: var(--accent);
     }
-    .calib-card p { font-size: .82rem; }
+    .cb--warn .cb__icon { color: var(--red); }
+    .cb--info .cb__icon { color: var(--blue); }
+    .cb__body { flex: 1; }
+    .cb__title {
+      font-family: var(--font-mono); font-size: 10.5px;
+      text-transform: uppercase; letter-spacing: .14em;
+      color: var(--text); margin-bottom: 6px; font-weight: 500;
+    }
+    .cb__body p { margin: 0; color: var(--text-mid); font-size: .9rem; }
 
-    .accuracy-scale {
-      display: flex; align-items: center; gap: 16px; margin: 12px 0;
-      font-family: var(--font-mono); font-size: .8rem;
+    /* LED states */
+    .led-list { display: flex; flex-direction: column; gap: 10px; margin: 18px 0; }
+    .led-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 18px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius);
     }
-    .accuracy-bar {
-      flex: 1; height: 6px; border-radius: 3px;
-      background: linear-gradient(90deg, var(--green), var(--accent), var(--red));
+    .led-item__dot {
+      width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0;
     }
+    .led-item--red   .led-item__dot { background: var(--red);    box-shadow: 0 0 12px var(--red); }
+    .led-item--green .led-item__dot { background: var(--green);  box-shadow: 0 0 12px var(--green); }
+    .led-item--purple .led-item__dot { background: var(--purple); box-shadow: 0 0 12px var(--purple); }
+    .led-item__label {
+      font-family: var(--font-mono); font-size: 10.5px;
+      text-transform: uppercase; letter-spacing: .14em;
+      min-width: 80px; color: var(--text);
+    }
+    .led-item__desc { font-size: .9rem; color: var(--text-mid); }
 
-    /* ── Button layout diagram ── */
+    /* Button diagram */
     .button-diagram {
       display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
-      max-width: 320px; margin: 16px 0;
+      margin: 20px 0 8px;
+      padding: 20px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
     }
-    .button-diagram__btn {
-      background: var(--surface-2); border: 1px solid var(--border);
-      border-radius: 8px; padding: 14px 8px; text-align: center;
-      font-family: var(--font-mono); font-size: .75rem;
+    .btn-dia {
+      background: var(--bg-2); border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 10px 14px; text-align: center;
+      position: relative;
     }
-    .button-diagram__btn span {
-      display: block; font-size: 1.1rem; font-weight: 700; color: var(--accent);
-      margin-bottom: 4px;
+    .btn-dia__n {
+      font-family: var(--font-display); font-size: 1.8rem;
+      font-weight: 500; color: var(--accent); line-height: 1;
+      margin-bottom: 8px; letter-spacing: -.02em;
     }
-    .button-diagram__btn small { color: var(--text-dim); font-size: .68rem; }
+    .btn-dia__lbl {
+      font-family: var(--font-mono); font-size: 10px;
+      text-transform: uppercase; letter-spacing: .12em;
+      color: var(--text); margin-bottom: 4px;
+    }
+    .btn-dia__sub { font-family: var(--font-mono); font-size: 9.5px; color: var(--text-dim); letter-spacing: .08em; }
 
-    /* ── Footer ── */
+    /* Calibration cards */
+    .calib-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+      margin: 24px 0;
+    }
+    @media (max-width: 820px) { .calib-grid { grid-template-columns: 1fr; } }
+    .calib-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 24px;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .calib-card__tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--accent);
+      align-self: flex-start;
+      padding: 4px 10px;
+      background: var(--accent-soft); border-radius: 100px;
+    }
+    .calib-card h4 {
+      font-family: var(--font-display); font-size: 1.1rem;
+      font-weight: 500; color: var(--text);
+      text-transform: none; letter-spacing: -.01em;
+      margin: 4px 0 8px;
+    }
+    .calib-card p { font-size: .88rem; color: var(--text-mid); margin-bottom: 10px; line-height: 1.55; }
+    .calib-card .keys {
+      margin-top: auto; padding-top: 12px;
+      border-top: 1px dashed var(--border-2);
+      font-family: var(--font-mono); font-size: .75rem;
+      color: var(--text-dim); line-height: 1.7;
+    }
+    .calib-card .keys b { color: var(--accent); font-weight: 500; }
+
+    /* Accuracy scale */
+    .accuracy-scale {
+      display: flex; align-items: center; gap: 14px;
+      margin: 16px 0;
+      font-family: var(--font-mono); font-size: .75rem;
+      letter-spacing: .06em;
+    }
+    .accuracy-bar {
+      flex: 1; height: 8px; border-radius: 4px;
+      background: linear-gradient(90deg, var(--green), oklch(0.8 0.18 90), var(--red));
+      border: 1px solid var(--border);
+    }
+
+    /* Setting table */
+    .setting-table {
+      width: 100%; border-collapse: collapse;
+      border-top: 1px solid var(--border);
+      font-size: .88rem;
+      margin-bottom: 12px;
+    }
+    .setting-table tr { border-bottom: 1px solid var(--border); transition: background .15s; }
+    .setting-table tr:hover { background: var(--surface); }
+    .setting-table td { padding: 12px 14px 12px 0; vertical-align: top; }
+    .setting-table td:first-child {
+      font-family: var(--font-mono); color: var(--accent);
+      font-size: .82rem; width: 240px; padding-left: 4px;
+    }
+    .setting-table td:first-child small {
+      display: block; color: var(--text-dim); font-size: 10px;
+      margin-top: 2px; letter-spacing: .04em;
+    }
+    .setting-table td:last-child { color: var(--text-mid); }
+
+    /* ============ FOOTER ============ */
     footer {
-      border-top: 1px solid var(--border); padding: 32px 0;
-      font-size: .78rem; color: var(--text-dim);
+      border-top: 1px solid var(--border); padding: 48px 0 32px;
+      font-size: .82rem; color: var(--text-dim);
+      background: var(--bg);
     }
-    footer .container {
-      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+    .footer__top {
+      display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px;
+      padding-bottom: 32px; border-bottom: 1px solid var(--border);
+      margin-bottom: 24px;
     }
-    footer a { color: var(--text-dim); }
-    footer a:hover { color: var(--accent); }
+    @media (max-width: 680px) { .footer__top { grid-template-columns: 1fr; } }
+    .footer__brand-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-display); font-weight: 600; font-size: 1.05rem;
+      color: var(--text); margin-bottom: 10px;
+    }
+    .footer__brand-logo img { height: 26px; }
+    .footer__brand-logo em { font-style: normal; color: var(--accent); }
+    .footer__brand p { font-size: .85rem; max-width: 320px; }
+    .footer__col h4 {
+      font-family: var(--font-mono); font-size: 10.5px;
+      text-transform: uppercase; letter-spacing: .14em;
+      color: var(--text); margin-bottom: 14px; font-weight: 500;
+    }
+    .footer__col a { display: block; color: var(--text-dim); margin-bottom: 8px; font-size: .85rem; }
+    .footer__col a:hover { color: var(--accent); }
+    .footer__bottom {
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+      font-family: var(--font-mono); font-size: 11px; color: var(--text-dim);
+      letter-spacing: .06em;
+    }
   </style>
 </head>
 <body>
@@ -256,7 +438,7 @@
   <!-- ════ NAV ════ -->
   <nav class="nav" role="navigation">
     <div class="nav__inner">
-      <a href="index.html" class="nav__logo"><img src="logo.png" alt="DiscoX logo" /><span>Disco<span>X</span></span></a>
+      <a href="index.html" class="nav__logo"><img src="logo.png" alt="DiscoX logo" /><span>Disco<em>X</em></span></a>
       <button class="nav__toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav__links').classList.toggle('open')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
@@ -265,10 +447,9 @@
         <a href="index.html#features">Features</a>
         <a href="index.html#specs">Specs</a>
         <a href="user-guide.html" class="active">User Guide</a>
-        <a href="#calibration">Calibration</a>
         <a href="firmware.html">Firmware</a>
         <a href="index.html#contact">Contact</a>
-        <a href="order.html" class="nav__cta">Order Now</a>
+        <a href="order.html" class="nav__cta">Order</a>
       </div>
     </div>
   </nav>
@@ -276,242 +457,286 @@
   <!-- ════ PAGE HEADER ════ -->
   <header class="page-header">
     <div class="container">
-      <p class="section-label">Documentation</p>
-      <h1>User Guide</h1>
-      <p>Everything you need to know to operate your DiscoX. These instructions cover the latest C++ firmware.</p>
+      <div class="page-header__inner">
+        <div>
+          <p class="mono-label">Documentation · v1</p>
+          <h1>User <em>guide</em>.</h1>
+          <p>Everything you need to operate your DiscoX. Written for the latest C++ firmware — bookmark this page and it'll stay current.</p>
+        </div>
+        <div class="toc-card">
+          <h4>On this page</h4>
+          <a href="#buttons"><span>Buttons</span><span>01</span></a>
+          <a href="#readings"><span>Taking readings</span><span>02</span></a>
+          <a href="#display"><span>Display</span><span>03</span></a>
+          <a href="#disco"><span>Disco mode</span><span>04</span></a>
+          <a href="#bluetooth"><span>Bluetooth</span><span>05</span></a>
+          <a href="#settings"><span>Settings</span><span>06</span></a>
+          <a href="#calibration"><span>Calibration</span><span>07</span></a>
+        </div>
+      </div>
     </div>
   </header>
 
-  <!-- ════ USER GUIDE ════ -->
-  <section class="docs" id="docs" style="border-top: none; padding-top: 0;">
+  <!-- ════ DOCS ════ -->
+  <section class="docs">
     <div class="container">
       <div class="docs-grid">
-        <!-- Sidebar Nav -->
+
+        <!-- Side nav -->
         <nav class="docs-nav" aria-label="Documentation navigation">
-          <a href="#doc-buttons">Buttons</a>
-          <a href="#doc-readings">Taking Readings</a>
-          <a href="#doc-display">Display</a>
-          <a href="#doc-disco">Disco Mode</a>
-          <a href="#doc-bluetooth">Bluetooth &amp; Memory</a>
-          <a href="#doc-settings">Settings</a>
-          <a href="#calibration">Calibration</a>
+          <div class="docs-nav__label">Contents</div>
+          <a href="#buttons"    data-n="01">Buttons</a>
+          <a href="#readings"   data-n="02">Readings</a>
+          <a href="#display"    data-n="03">Display</a>
+          <a href="#disco"      data-n="04">Disco mode</a>
+          <a href="#bluetooth"  data-n="05">Bluetooth</a>
+          <a href="#settings"   data-n="06">Settings</a>
+          <a href="#calibration" data-n="07">Calibration</a>
         </nav>
 
-        <!-- Docs Content -->
         <div class="docs-content">
 
-          <!-- Buttons -->
-          <h2 id="doc-buttons">Buttons</h2>
-          <p>The DiscoX has four buttons labelled 1–4 on the top of the device — all accessible even with gloves.</p>
+          <!-- ── 01 BUTTONS ── -->
+          <article class="docs-section" id="buttons">
+            <div class="docs-section__num">01 · Controls</div>
+            <h2>Buttons</h2>
+            <p>The DiscoX has four buttons across the top of the device — all operable with gloved hands.</p>
 
-          <div class="button-diagram">
-            <div class="button-diagram__btn"><span>1</span>Measure<br/><small>Menu: Up</small></div>
-            <div class="button-diagram__btn"><span>2</span>Measure<br/><small>Menu: Down</small></div>
-            <div class="button-diagram__btn"><span>3</span>Menu<br/><small>Menu: Select</small></div>
-            <div class="button-diagram__btn"><span>4</span>Power off</div>
-          </div>
-
-          <p>In <strong>normal mode</strong>:</p>
-          <ul>
-            <li><strong>Button 1</strong> — take a measurement, or wake the laser if it has timed out</li>
-            <li><strong>Button 2</strong> — short press: take a measurement; <strong>hold 2 s</strong>: toggle disco/rave mode on or off</li>
-            <li><strong>Button 3</strong> — open the settings menu</li>
-            <li><strong>Button 4</strong> — power off</li>
-          </ul>
-
-          <p>In <strong>menu mode</strong>, Buttons 1/2/3 become scroll-up, scroll-down, and select. Button 4 still powers off.</p>
-
-          <!-- Taking Readings -->
-          <h2 id="doc-readings">Taking Readings</h2>
-          <p>Press <strong>Button 1</strong>, <strong>Button 2</strong> (short press) to take a reading. The device waits until the sensors have settled before accepting a shot — press or hold the button and keep the DiscoX steady.</p>
-
-          <p>The NeoPixel LED shows what's happening:</p>
-          <div style="display:flex; flex-direction:column; gap:8px; margin:16px 0;">
-            <div class="led-demo" style="background:rgba(255,77,77,.1);">
-              <span class="led-dot led-dot--red"></span> <strong>Red</strong> — Stabilising. Hold the device steady.
+            <div class="button-diagram">
+              <div class="btn-dia">
+                <div class="btn-dia__n">1</div>
+                <div class="btn-dia__lbl">Measure</div>
+                <div class="btn-dia__sub">menu: up</div>
+              </div>
+              <div class="btn-dia">
+                <div class="btn-dia__n">2</div>
+                <div class="btn-dia__lbl">Measure</div>
+                <div class="btn-dia__sub">menu: down</div>
+              </div>
+              <div class="btn-dia">
+                <div class="btn-dia__n">3</div>
+                <div class="btn-dia__lbl">Menu</div>
+                <div class="btn-dia__sub">menu: select</div>
+              </div>
+              <div class="btn-dia">
+                <div class="btn-dia__n">4</div>
+                <div class="btn-dia__lbl">Power</div>
+                <div class="btn-dia__sub">on/off</div>
+              </div>
             </div>
-            <div class="led-demo" style="background:rgba(46,204,113,.1);">
-              <span class="led-dot led-dot--green"></span> <strong>Green</strong> — Stable. Shot recorded and sent.
+
+            <h3>In normal mode</h3>
+            <ul>
+              <li><strong>Button 1</strong> — take a measurement, or wake the laser if it's timed out.</li>
+              <li><strong>Button 2</strong> — short press: take a measurement. Hold 2s: toggle Disco mode.</li>
+              <li><strong>Button 3</strong> — open the settings menu.</li>
+              <li><strong>Button 4</strong> — power on/off.</li>
+            </ul>
+            <p>In <strong>menu mode</strong>, Buttons 1/2/3 become scroll-up, scroll-down, and select. Button 4 still powers the device off.</p>
+          </article>
+
+          <!-- ── 02 READINGS ── -->
+          <article class="docs-section" id="readings">
+            <div class="docs-section__num">02 · Field operation</div>
+            <h2>Taking readings</h2>
+            <p>Press <strong>Button 1</strong> or <strong>Button 2</strong> (short press) to take a reading. The device waits until the sensors have settled before accepting a shot — hold the device still during readings.</p>
+
+            <h3>LED states</h3>
+            <div class="led-list">
+              <div class="led-item led-item--red">
+                <span class="led-item__dot"></span>
+                <span class="led-item__label">Red</span>
+                <span class="led-item__desc">Stabilising — hold the device steady.</span>
+              </div>
+              <div class="led-item led-item--green">
+                <span class="led-item__dot"></span>
+                <span class="led-item__label">Green</span>
+                <span class="led-item__desc">Stable — shot recorded and sent.</span>
+              </div>
+              <div class="led-item led-item--purple">
+                <span class="led-item__dot"></span>
+                <span class="led-item__label">Purple</span>
+                <span class="led-item__desc">Leg detected — three beeps confirm.</span>
+              </div>
             </div>
-            <div class="led-demo" style="background:rgba(166,107,255,.1);">
-              <span class="led-dot led-dot--purple"></span> <strong>Purple</strong> — Leg detected (3 beeps).
+
+            <p>After a shot the display freezes on the recorded reading and the laser turns off. Press any measure button to re-enable the laser, then press again to take the next reading.</p>
+
+            <h3>Leg detection</h3>
+            <p>When three consecutive shots agree in bearing, clino, and distance (within configurable tolerances), the DiscoX recognises a complete survey leg. The LED pulses purple, the laser flashes briefly, and the buzzer beeps three times. The display stays frozen on the leg data until you press a measure button to continue.</p>
+
+            <h3>Laser wake</h3>
+            <p>If the laser has auto-timed-out, pressing any measure button re-enables it with a short beep before taking the shot.</p>
+          </article>
+
+          <!-- ── 03 DISPLAY ── -->
+          <article class="docs-section" id="display">
+            <div class="docs-section__num">03 · On-screen</div>
+            <h2>Display</h2>
+            <p>The <strong>128×128 pixel OLED</strong> shows three values from your most recent stable shot:</p>
+            <ul>
+              <li><strong>Distance</strong> (top) — in metres, to two decimal places.</li>
+              <li><strong>Azimuth</strong> (middle) — compass bearing, in degrees.</li>
+              <li><strong>Inclination</strong> (bottom) — clino angle, in degrees.</li>
+            </ul>
+            <p>The <strong>top-left</strong> shows <code>BT</code> when Bluetooth is connected, with a count of pending (unsent) readings beside it. The <strong>top-right</strong> shows a proportional battery bar — no guessing when you're underground.</p>
+          </article>
+
+          <!-- ── 04 DISCO ── -->
+          <article class="docs-section" id="disco">
+            <div class="docs-section__num">04 · For the survey party</div>
+            <h2>Disco mode</h2>
+            <p>Hold <strong>Button 2 for 2 seconds</strong> to toggle disco/rave mode. The laser shuts off and the NeoPixel cycles through colours. <strong>Shake the device</strong> to kick into wild mode — faster cycling, full brightness.</p>
+            <p>Hold Button 2 again for 2 seconds to exit. The laser restarts and the device returns to normal operation.</p>
+          </article>
+
+          <!-- ── 05 BLUETOOTH ── -->
+          <article class="docs-section" id="bluetooth">
+            <div class="docs-section__num">05 · Connectivity</div>
+            <h2>Bluetooth &amp; memory</h2>
+            <p>The DiscoX works with current versions of <strong>SexyTopo</strong> and <strong>TopoDroid</strong> via a long-range C++ implementation of the SAP6 BLE protocol. The device advertises continuously, so nearby phones and tablets will discover it automatically.</p>
+            <p>Once connected, the device flashes blue, a <code>BT</code> label appears in the top-left of the screen, and live readings are pushed directly to your survey app.</p>
+
+            <div class="cb cb--warn">
+              <svg class="cb__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3l10 17H2L12 3z"/><path d="M12 10v5"/><circle cx="12" cy="17.5" r=".8" fill="currentColor"/>
+              </svg>
+              <div class="cb__body">
+                <div class="cb__title">Note · BLE naming</div>
+                <p>Each DiscoX ships with a unique Bluetooth name in the format <code>SAP6_[Nickname]</code> — for example <code>SAP6_Dragon</code>. Change it via the settings file (see below), or request a specific name before assembly.</p>
+              </div>
             </div>
-          </div>
+          </article>
 
-          <p>After a shot the display <strong>freezes</strong> on the recorded reading and the laser turns off. Press any measure button again to turn the laser back on then press again to take a reading.</p>
+          <!-- ── 06 SETTINGS ── -->
+          <article class="docs-section" id="settings">
+            <div class="docs-section__num">06 · Configuration</div>
+            <h2>Settings</h2>
+            <p>All common settings are accessible from the onboard menu — press <strong>Button 3</strong> to open it.</p>
 
-          <h3>Leg Detection</h3>
-          <p>When three consecutive shots match in bearing, clino, and distance (within configurable tolerances), the DiscoX recognises a complete survey leg. The LED pulses purple, the laser flashes on and off in quick succession, and the buzzer beeps three times. The display stays frozen on the leg data until you press a measure button to continue.</p>
+            <h3>Onboard menu</h3>
+            <ul>
+              <li><strong>Enter Calibration</strong> — run Long or Short calibration, perform a Mag Field Check, or view last results.</li>
+              <li><strong>Anomaly Detection</strong> — toggle warnings for nearby metallic objects (helmet lights, SRT kit, bolts).</li>
+              <li><strong>Laser Timeout</strong> — 30s · 60s · 2m · 5m · 15m · 30m.</li>
+              <li><strong>Auto Shutdown</strong> — 5 · 10 · 15 · 30 · 60 min · 2h.</li>
+              <li><strong>Delete Saved Shots</strong> — wipe any pending readings stored in flash.</li>
+              <li><strong>Update / Settings</strong> — firmware update and advanced config.</li>
+              <li><strong>Play Snake</strong> — hidden bonus for when you're waiting at the surface.</li>
+            </ul>
 
-          <h3>Laser Wake</h3>
-          <p>If the laser has auto-timed-out, pressing any measure button re-enables it with a short beep before taking the shot.</p>
+            <h3>Advanced: <code>config.json</code></h3>
+            <p>Go to <strong>Menu → Update / Settings → Edit Settings File</strong>. The DiscoX reboots into USB drive mode and appears as a drive called <code>DISCOX</code>. Open <code>config.json</code>, edit values, save, eject, then hold the power button to restart. Any setting you omit uses its default.</p>
 
-          <!-- Display -->
-          <h2 id="doc-display">Display</h2>
-          <p>The 128×128 pixel OLED screen shows three values from your most recent stable shot:</p>
-          <ul>
-            <li><strong>Distance</strong> (top) — in metres to 2 decimal places</li>
-            <li><strong>Azimuth</strong> (middle) — compass bearing in degrees</li>
-            <li><strong>Inclination</strong> (bottom) — clino angle in degrees</li>
-          </ul>
-          <p>The <strong>top-left</strong> shows <code>BT</code> when Bluetooth is connected, with a count of pending (unsent) readings beside it. The <strong>top-right</strong> shows a proportional battery bar — no guessing when you're underground.</p>
+            <h4>Measurement &amp; stability</h4>
+            <table class="setting-table">
+              <tr><td>stability_tolerance<small>default 0.4</small></td><td>Degrees the sensors must converge within before a shot is accepted. Lower = stricter.</td></tr>
+              <tr><td>stability_buffer_length<small>default 3</small></td><td>Consecutive stable samples required before accepting a reading.</td></tr>
+              <tr><td>ema_alpha<small>default 0.3</small></td><td>Exponential moving average smoothing. Lower = smoother but slower-reacting.</td></tr>
+              <tr><td>laser_distance_offset<small>default 0.162</small></td><td>Device length in metres, subtracted from raw laser distance so readings are station-to-station.</td></tr>
+            </table>
 
-          <!-- Disco Mode -->
-          <h2 id="doc-disco">Disco Mode</h2>
-          <p>Hold <strong>Button 2 for 2 seconds</strong> to toggle disco/rave mode. The laser shuts off and the NeoPixel cycles through colours. <strong>Shake the device</strong> to kick into wild mode — faster cycling and full brightness.</p>
-          <p>Hold Button 2 again for 2 seconds to exit. The laser restarts and the device returns to normal operation.</p>
+            <h4>Leg detection</h4>
+            <table class="setting-table">
+              <tr><td>leg_angle_tolerance<small>default 1.7</small></td><td>Max difference in degrees between three consecutive shots' bearing/clino to count as the same leg.</td></tr>
+              <tr><td>leg_distance_tolerance<small>default 0.05</small></td><td>Max difference in metres between three distance readings for leg detection.</td></tr>
+              <tr><td>laser_wibble<small>default true</small></td><td>Blink the laser on/off in quick succession when a leg is detected.</td></tr>
+            </table>
 
-          <!-- Bluetooth & Memory -->
-          <h2 id="doc-bluetooth">Bluetooth &amp; Memory</h2>
-          <p>The DiscoX works with current versions of <strong>SexyTopo</strong> and <strong>TopoDroid</strong> via a long range C++ implementation of the SAP6 BLE protocol. The device advertises continuously, so nearby phones and tablets will discover it automatically.</p>
-          <p>Once connected, the device flashes blue and a <strong>BT</strong> label appears in the top-left of the screen and live readings are sent directly to your device.</p>
+            <h4>Anomaly detection</h4>
+            <table class="setting-table">
+              <tr><td>anomaly_detection<small>default false</small></td><td>Enable warnings when nearby metallic objects may be distorting the magnetic field.</td></tr>
+              <tr><td>mag_tolerance<small>default 10.0</small></td><td>Magnetometer field-strength tolerance in degrees from expected local field.</td></tr>
+              <tr><td>grav_tolerance<small>default 10.0</small></td><td>Accelerometer magnitude tolerance in degrees.</td></tr>
+              <tr><td>dip_tolerance<small>default 10.0</small></td><td>Magnetic dip-angle tolerance in degrees.</td></tr>
+            </table>
 
-          <div class="callout callout--warn">
-            <p><strong>Note:</strong> <p>Each DiscoX ships with a unique Bluetooth name in the format <code>SAP6_[Nickname]</code> — for example <code>SAP6_Dragon</code>. The name can be changed via the settings file (see Settings below). If you'd like a specific name, let me know before assembly.</p></p>
-          </div>
+            <h4>Calibration</h4>
+            <table class="setting-table">
+              <tr><td>cal_mag_consistency<small>default 0.5</small></td><td>Angular consistency window in degrees for the magnetometer during calibration.</td></tr>
+              <tr><td>cal_grav_consistency<small>default 0.4</small></td><td>Angular consistency window in degrees for the accelerometer during calibration.</td></tr>
+              <tr><td>cal_buffer_length<small>default 5</small></td><td>Samples in the calibration consistency window.</td></tr>
+              <tr><td>cal_settle_ms<small>default 250</small></td><td>Milliseconds the device must remain stable before a cal point is accepted.</td></tr>
+              <tr><td>cal_ema_alpha<small>default 0.3</small></td><td>EMA smoothing used during calibration.</td></tr>
+              <tr><td>cal_timeout_ms<small>default 3000</small></td><td>Max ms to wait for stability before a cal point is force-accepted.</td></tr>
+            </table>
 
-          <!-- Settings -->
-          <h2 id="doc-settings">Settings</h2>
-          <p>All common settings are accessible from the onboard menu — press <strong>Button 3</strong> to open it.</p>
+            <h4>Timers &amp; display</h4>
+            <table class="setting-table">
+              <tr><td>auto_shutdown_timeout<small>default 1800</small></td><td>Seconds of inactivity before automatic power-off (1800 = 30 min).</td></tr>
+              <tr><td>laser_timeout<small>default 120</small></td><td>Seconds of inactivity before the laser turns off to save power.</td></tr>
+              <tr><td>screen_brightness<small>default 255</small></td><td>OLED contrast level, 0–255.</td></tr>
+            </table>
 
-          <h3>Onboard Menu</h3>
-          <ul>
-            <li><strong>Enter Calibration</strong> — run Long or Short calibration, perform a Mag Field Check, or view the last calibration results</li>
-            <li><strong>Anomaly Detection</strong> — toggle warnings for nearby metallic objects (helmet lights, SRT kit, bolts) on or off</li>
-            <li><strong>Laser Timeout</strong> — how long the laser stays on when idle: 30 sec · 60 sec · 2 min · 5 min · 15 min · 30 min</li>
-            <li><strong>Auto Shutdown</strong> — idle shutdown timer: 5 · 10 · 15 · 30 · 60 min · 2 hr</li>
-            <li><strong>Delete Saved Shots</strong> — wipe any pending readings stored in flash</li>
-            <li><strong>Update / Settings</strong> — access firmware update and advanced config (see below)</li>
-            <li><strong>Play Snake</strong> — a hidden bonus for when you're waiting at the surface</li>
-          </ul>
+            <h4>Bluetooth</h4>
+            <table class="setting-table">
+              <tr><td>ble_name<small>default "SAP6_Unicorn"</small></td><td>Bluetooth device name advertised to survey apps. Max 20 characters.</td></tr>
+            </table>
 
-          <h3>Advanced Settings (config.json)</h3>
-          <p>Go to <strong>Menu → Update / Settings → Edit Settings File</strong>. The DiscoX reboots into USB drive mode and appears as a drive called <strong>DISCOX</strong> on your PC. Open <code>config.json</code>, edit the values you want, save, eject the drive, then hold the power button to restart.</p>
-          <p>Any setting you omit from the file will use its default value. Below is a full reference:</p>
+            <h3>Firmware update</h3>
+            <p>Go to <strong>Menu → Update / Settings → Update Firmware</strong>. The device enters the UF2 bootloader and appears as a removable drive. Drag and drop the new <code>.uf2</code> file onto it — the DiscoX reboots when flashing is complete.</p>
+          </article>
 
-          <h4 style="margin-top:24px; color:var(--accent);">Measurement &amp; Stability</h4>
-          <ul>
-            <li><strong>stability_tolerance</strong> (default&nbsp;<code>0.4</code>) — how many degrees the sensor readings must converge within before a shot is accepted. Lower = stricter, steadier hold required.</li>
-            <li><strong>stability_buffer_length</strong> (default&nbsp;<code>3</code>) — number of consecutive stable samples required before accepting a reading.</li>
-            <li><strong>ema_alpha</strong> (default&nbsp;<code>0.3</code>) — exponential moving average smoothing factor for live sensor data. Lower values give smoother (but slower-reacting) readings; higher values are more responsive but noisier.</li>
-            <li><strong>laser_distance_offset</strong> (default&nbsp;<code>0.162</code>) — length of the device in metres, subtracted from the raw laser distance so the reading is station-to-station.</li>
-          </ul>
+          <!-- ── 07 CALIBRATION ── -->
+          <article class="docs-section" id="calibration">
+            <div class="docs-section__num">07 · Keeping readings honest</div>
+            <h2>Calibration</h2>
+            <p>Calibrate whenever you survey in a new area or if readings seem off. Run a <strong>Mag Field Check</strong> before each trip to quickly verify accuracy at your survey site.</p>
+            <p>To start: press <strong>Button 3</strong> → <strong>Enter Calibration</strong> → choose a type.</p>
 
-          <h4 style="margin-top:24px; color:var(--accent);">Leg Detection</h4>
-          <ul>
-            <li><strong>leg_angle_tolerance</strong> (default&nbsp;<code>1.7</code>) — maximum difference in degrees between three consecutive shots' bearing/clino for them to count as the same leg.</li>
-            <li><strong>leg_distance_tolerance</strong> (default&nbsp;<code>0.05</code>) — maximum difference in metres between three consecutive distance readings for leg detection.</li>
-            <li><strong>laser_wibble</strong> (default&nbsp;<code>true</code>) — when a leg is detected, blink the laser on and off in quick succession as a visual confirmation.</li>
-          </ul>
+            <div class="calib-grid">
+              <div class="calib-card">
+                <span class="calib-card__tag">80 readings</span>
+                <h4>Long calibration</h4>
+                <p>The most accurate option. Runs in two phases automatically.</p>
+                <p><strong>Phase 1 — Ellipsoid (56):</strong> aim in a wide variety of directions. Spread points evenly across the sphere — like touching every zone of a globe's surface. A coverage bar shows progress.</p>
+                <p><strong>Phase 2 — Alignment (24):</strong> 3 sets of 8 readings. Each set aims at one fixed point; barrel-roll ~45° between shots. Pick 3 fixed points roughly 90° apart. Three beeps = next direction.</p>
+                <div class="keys"><b>B1</b> record <b>· B3</b> undo<br><b>B1+B2</b> save <b>· B2 hold</b> discard</div>
+              </div>
 
-          <h4 style="margin-top:24px; color:var(--accent);">Anomaly Detection</h4>
-          <ul>
-            <li><strong>anomaly_detection</strong> (default&nbsp;<code>false</code>) — enable or disable warnings when nearby metallic objects may be distorting the magnetic field.</li>
-            <li><strong>mag_tolerance</strong> (default&nbsp;<code>10.0</code>) — magnetometer field-strength tolerance in degrees. Readings outside this window from the expected local field trigger a warning.</li>
-            <li><strong>grav_tolerance</strong> (default&nbsp;<code>10.0</code>) — accelerometer magnitude tolerance in degrees.</li>
-            <li><strong>dip_tolerance</strong> (default&nbsp;<code>10.0</code>) — magnetic dip angle tolerance in degrees.</li>
-          </ul>
+              <div class="calib-card">
+                <span class="calib-card__tag">24 readings</span>
+                <h4>Short calibration</h4>
+                <p>Faster option for quick field recalibration.</p>
+                <p>Take <strong>3 sets of 8 readings</strong>. For each set, barrel-roll the laser around a single fixed point, rotating ~45° between shots. The 3 points should be roughly 90° apart — e.g. ahead, right, vertically up.</p>
+                <p>The same 24 readings fit both ellipsoid and alignment, so this is quicker but less thorough than the long version.</p>
+                <div class="keys"><b>B1</b> record <b>· B3</b> undo<br><b>B1+B2</b> save <b>· B2 hold</b> discard</div>
+              </div>
 
-          <h4 style="margin-top:24px; color:var(--accent);">Calibration</h4>
-          <ul>
-            <li><strong>cal_mag_consistency</strong> (default&nbsp;<code>0.5</code>) — angular consistency window in degrees for the magnetometer during calibration. Tighter values demand steadier holds per calibration point.</li>
-            <li><strong>cal_grav_consistency</strong> (default&nbsp;<code>0.4</code>) — angular consistency window in degrees for the accelerometer during calibration.</li>
-            <li><strong>cal_buffer_length</strong> (default&nbsp;<code>5</code>) — number of samples in the calibration consistency window.</li>
-            <li><strong>cal_settle_ms</strong> (default&nbsp;<code>250</code>) — milliseconds the device must remain stable before a calibration point is accepted.</li>
-            <li><strong>cal_ema_alpha</strong> (default&nbsp;<code>0.3</code>) — EMA smoothing factor used during calibration. Lower = smoother with more lag.</li>
-            <li><strong>cal_timeout_ms</strong> (default&nbsp;<code>3000</code>) — maximum milliseconds to wait for stability before a calibration point is force-accepted.</li>
-          </ul>
+              <div class="calib-card">
+                <span class="calib-card__tag">Field check</span>
+                <h4>Mag field check</h4>
+                <p>Verifies calibration accuracy without re-running a full cal.</p>
+                <p>Shoot a fixed target, walk to it, shoot back. Repeat for <strong>3+ pairs</strong> in different directions. The device records each pair's bearing error and calculates an overall correction amplitude.</p>
+                <p>A consistently high amplitude means it's time for a full long calibration.</p>
+                <div class="keys"><b>B1</b> take shot<br><b>B2</b> finish (after 2+ pairs)</div>
+              </div>
+            </div>
 
-          <h4 style="margin-top:24px; color:var(--accent);">Timers &amp; Display</h4>
-          <ul>
-            <li><strong>auto_shutdown_timeout</strong> (default&nbsp;<code>1800</code>) — seconds of inactivity before automatic power-off. 1800 = 30 minutes.</li>
-            <li><strong>laser_timeout</strong> (default&nbsp;<code>120</code>) — seconds of inactivity before the laser turns off to save power. 120 = 2 minutes.</li>
-            <li><strong>screen_brightness</strong> (default&nbsp;<code>255</code>) — OLED contrast level, 0–255.</li>
-          </ul>
+            <h3>Quality metrics</h3>
+            <p>After calibration the screen shows three quality scores. <strong>Lower is better</strong> in all cases. View them any time via <strong>Menu → Enter Calibration → View Last Cal</strong>.</p>
+            <ul>
+              <li><strong>Mag</strong> — magnetometer ellipsoid fit uniformity.</li>
+              <li><strong>Grav</strong> — accelerometer ellipsoid fit uniformity.</li>
+              <li><strong>Acc</strong> — final accuracy in degrees (the most important number).</li>
+            </ul>
+            <div class="accuracy-scale">
+              <span style="color:var(--green);">EXCELLENT &lt; 0.25°</span>
+              <div class="accuracy-bar"></div>
+              <span style="color:var(--red);">ACCEPTABLE &lt; 0.5°</span>
+            </div>
 
-          <h4 style="margin-top:24px; color:var(--accent);">Bluetooth</h4>
-          <ul>
-            <li><strong>ble_name</strong> (default&nbsp;<code>"SAP6_Unicorn"</code>) — the Bluetooth device name advertised to survey apps. Maximum 20 characters.</li>
-          </ul>
+            <div class="cb cb--info">
+              <svg class="cb__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/>
+              </svg>
+              <div class="cb__body">
+                <div class="cb__title">Tip</div>
+                <p>For best results, calibrate in the same magnetic environment as your survey — i.e. away from bolts, helmet lights, and SRT kit. Anomaly detection will warn you if your calibration is being contaminated.</p>
+              </div>
+            </div>
+          </article>
 
-          <h3>Firmware Update</h3>
-          <p>Go to <strong>Menu → Update / Settings → Update Firmware</strong>. The device enters the UF2 bootloader and appears as a removable drive. Drag and drop the new <code>.uf2</code> file onto the drive — the DiscoX reboots automatically when flashing is complete.</p>
-
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ════ CALIBRATION ════ -->
-  <section class="docs" id="calibration" style="border-top: 1px solid var(--border);">
-    <div class="container">
-      <p class="section-label">Calibration</p>
-      <h2 class="section-title">Keeping your DiscoX accurate</h2>
-      <p class="section-desc">Calibrate whenever you survey in a new area or if readings seem off. Run a Mag Field Check before each trip to quickly verify accuracy at your survey site.</p>
-
-      <p style="color:var(--text-dim); margin-bottom:24px;">To start: press <strong>Button 3</strong> to open the menu → <strong>Enter Calibration</strong> → choose a calibration type.</p>
-
-      <div class="calib-grid" style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));">
-        <div class="calib-card">
-          <span class="tag">80 readings</span>
-          <h4 style="margin-top:12px;">Long Calibration</h4>
-          <p style="color:var(--text-dim); font-size:.85rem; margin-top:8px;">
-            The most accurate option. Runs in two phases automatically.
-          </p>
-          <p style="color:var(--text-dim); font-size:.85rem; margin-top:8px;">
-            <strong>Phase 1 — Ellipsoid (56 readings):</strong> Aim the DiscoX in a wide variety of directions and orientations. Spread points evenly across the sphere — think of pointing the tip towards every part of a globe's surface. A coverage bar on screen shows which zones have been sampled.
-          </p>
-          <p style="color:var(--text-dim); font-size:.85rem; margin-top:8px;">
-            <strong>Phase 2 — Alignment (24 readings):</strong> Take 3 sets of 8 readings. Each set aims at one fixed point; barrel-roll the device ~45° between shots. Choose 3 fixed points roughly <strong>90° apart</strong> (e.g. ahead, to the right, vertically up). The device beeps 3 times when it's time to move to the next direction.
-          </p>
-          <p style="color:var(--text-dim); font-size:.82rem; margin-top:12px;"><strong>B1:</strong> record shot &nbsp;·&nbsp; <strong>B3:</strong> undo last point</p>
-          <p style="color:var(--text-dim); font-size:.82rem;">Hold <strong>B1+B2</strong> to save &nbsp;·&nbsp; Hold <strong>B2</strong> to discard</p>
-        </div>
-
-        <div class="calib-card">
-          <span class="tag">24 readings</span>
-          <h4 style="margin-top:12px;">Short Calibration</h4>
-          <p style="color:var(--text-dim); font-size:.85rem; margin-top:8px;">
-            A faster option for a quick field recalibration.
-          </p>
-          <p style="color:var(--text-dim); font-size:.85rem; margin-top:8px;">
-            Take <strong>3 sets of 8 readings</strong>. For each set, barrel-roll the laser around a single fixed point, rotating ~45° between shots. The 3 fixed points should be roughly <strong>90° apart</strong> — for example: ahead, to the right, and vertically up.
-          </p>
-          <p style="color:var(--text-dim); font-size:.85rem; margin-top:8px;">
-            The same 24 readings are used for both ellipsoid and alignment fitting, so this is quicker but less thorough than the Long Calibration.
-          </p>
-          <p style="color:var(--text-dim); font-size:.82rem; margin-top:12px;"><strong>B1:</strong> record shot &nbsp;·&nbsp; <strong>B3:</strong> undo last point</p>
-          <p style="color:var(--text-dim); font-size:.82rem;">Hold <strong>B1+B2</strong> to save &nbsp;·&nbsp; Hold <strong>B2</strong> to discard</p>
-        </div>
-
-        <div class="calib-card">
-          <span class="tag">Field Check</span>
-          <h4 style="margin-top:12px;">Mag Field Check</h4>
-          <p style="color:var(--text-dim); font-size:.85rem; margin-top:8px;">
-            Verifies calibration accuracy in the field without re-running a full calibration.
-          </p>
-          <p style="color:var(--text-dim); font-size:.85rem; margin-top:8px;">
-            Shoot a fixed target, walk to it, and shoot back. Repeat for <strong>3 or more pairs</strong> in different directions. The device records each pair's bearing error and calculates an overall correction amplitude.
-          </p>
-          <p style="color:var(--text-dim); font-size:.85rem; margin-top:8px;">
-            A consistently high amplitude suggests it's time for a full Long Calibration.
-          </p>
-          <p style="color:var(--text-dim); font-size:.82rem; margin-top:12px;"><strong>B1:</strong> take shot &nbsp;·&nbsp; <strong>B2:</strong> finish early (after 2+ pairs)</p>
-        </div>
-      </div>
-
-      <div style="margin-top:32px;">
-        <h3 style="font-size:1rem; margin-bottom:12px;">Calibration Quality Metrics</h3>
-        <p style="color:var(--text-dim); margin-bottom:8px;">After calibration the screen shows three quality scores. Lower is better in all cases. View them again any time via <strong>Menu → Enter Calibration → View Last Cal</strong>.</p>
-        <ul style="color:var(--text-dim); font-size:.88rem; margin-bottom:16px; padding-left:20px;">
-          <li><strong style="color:var(--text);">Mag</strong> — magnetometer ellipsoid fit uniformity (lower values = better)</li>
-          <li><strong style="color:var(--text);">Grav</strong> — accelerometer ellipsoid fit uniformity (lower values = better)</li>
-          <li><strong style="color:var(--text);">Acc</strong> — final accuracy in degrees (the most important number)</li>
-        </ul>
-        <div class="accuracy-scale">
-          <span style="color:var(--green);">Excellent &lt; 0.25°</span>
-          <div class="accuracy-bar"></div>
-          <span style="color:var(--red);">Acceptable &lt; 0.5°</span>
         </div>
       </div>
     </div>
@@ -520,30 +745,51 @@
   <!-- ════ FOOTER ════ -->
   <footer>
     <div class="container">
-      <span>© 2026 DiscoX. Built on the <a href="https://stic.readthedocs.io/" target="_blank">SAP6</a> open source platform.</span>
-      <span>
-        <a href="index.html#features">Features</a> · <a href="index.html#specs">Specs</a> · <a href="user-guide.html">User Guide</a> · <a href="#calibration">Calibration</a>
-      </span>
+      <div class="footer__top">
+        <div class="footer__brand">
+          <div class="footer__brand-logo"><img src="logo.png" alt="" /> <span>Disco<em>X</em></span></div>
+          <p>A cave survey device built for modern caving. Hand-built in the UK, fully repairable, fully yours.</p>
+        </div>
+        <div class="footer__col">
+          <h4>Product</h4>
+          <a href="index.html#features">Features</a>
+          <a href="index.html#accuracy">Accuracy</a>
+          <a href="index.html#specs">Specs</a>
+          <a href="order.html">Order</a>
+        </div>
+        <div class="footer__col">
+          <h4>Resources</h4>
+          <a href="user-guide.html">User guide</a>
+          <a href="#calibration">Calibration</a>
+          <a href="firmware.html">Firmware</a>
+          <a href="https://github.com/blhall195/Mr_Zappy" target="_blank">GitHub</a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© 2026 DISCOX · BUILT ON <a href="https://stic.readthedocs.io/" target="_blank">SAP6</a></span>
+        <span>MADE IN THE UNITED KINGDOM</span>
+      </div>
     </div>
   </footer>
 
-  <!-- ════ SCRIPTS ════ -->
   <script>
-    // Active docs nav link on scroll
-    const docSections = document.querySelectorAll('.docs-content h2[id], #calibration');
-    const docLinks = document.querySelectorAll('.docs-nav a');
-    window.addEventListener('scroll', () => {
+    // Active nav highlighting
+    const sections = document.querySelectorAll('.docs-section[id]');
+    const navLinks = document.querySelectorAll('.docs-nav a');
+    function updateActive() {
       let current = '';
-      docSections.forEach(s => {
-        if (window.scrollY >= s.offsetTop - 120) current = s.id;
+      sections.forEach(s => {
+        if (window.scrollY + 120 >= s.offsetTop) current = s.id;
       });
-      docLinks.forEach(a => {
+      navLinks.forEach(a => {
         a.classList.toggle('active', a.getAttribute('href') === '#' + current);
       });
-    });
+    }
+    window.addEventListener('scroll', updateActive, { passive: true });
+    updateActive();
 
-    // Close mobile nav on link click and scroll to target with correct offset
-    document.querySelectorAll('.nav__links a').forEach(a => {
+    // Mobile nav + smooth scroll
+    document.querySelectorAll('.nav__links a, .docs-nav a, .toc-card a').forEach(a => {
       a.addEventListener('click', (e) => {
         document.querySelector('.nav__links').classList.remove('open');
         const href = a.getAttribute('href');
@@ -551,14 +797,12 @@
           const target = document.getElementById(href.slice(1));
           if (target) {
             e.preventDefault();
-            const navHeight = document.querySelector('.nav').offsetHeight;
-            const targetTop = target.getBoundingClientRect().top + window.scrollY - navHeight;
-            window.scrollTo({ top: targetTop, behavior: 'smooth' });
+            const navH = document.querySelector('.nav').offsetHeight;
+            window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - navH - 12, behavior: 'smooth' });
           }
         }
       });
     });
   </script>
-
 </body>
 </html>
