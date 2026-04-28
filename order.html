@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order — DiscoX Cave Survey Device</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --accent-hue: 38;
+      --accent-chroma: 0.18;
+      --bg: #0a0907;
+      --bg-2: #121010;
+      --surface: #17140f;
+      --surface-2: #1f1b14;
+      --border: #2b251b;
+      --border-2: #3a3225;
+      --text: #f0ebdf;
+      --text-mid: #b5a88f;
+      --text-dim: #8a7e68;
+      --accent: oklch(0.78 var(--accent-chroma) var(--accent-hue));
+      --accent-2: oklch(0.62 var(--accent-chroma) var(--accent-hue));
+      --accent-soft: oklch(0.78 var(--accent-chroma) var(--accent-hue) / 0.12);
+      --accent-glow: oklch(0.78 var(--accent-chroma) var(--accent-hue) / 0.22);
+      --red: #ff5a4a;
+      --green: #5edc9e;
+      --blue: #6fb5ff;
+      --purple: #c08bff;
+      --font-sans: 'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      --font-display: 'Space Grotesk', 'Inter Tight', sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+      --max-w: 1200px;
+      --radius: 6px;
+      --radius-lg: 14px;
+    }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    ::selection { background: var(--accent); color: #000; }
+    img { max-width: 100%; display: block; }
+    a { color: var(--accent); text-decoration: none; transition: opacity .2s; }
+    a:hover { opacity: .85; }
+
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 32px; position: relative; }
+
+    code {
+      font-family: var(--font-mono); font-size: .85em;
+      background: var(--surface-2); padding: 2px 6px; border-radius: 4px;
+      color: var(--accent); border: 1px solid var(--border);
+    }
+
+    .mono-label {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: .18em; color: var(--text-dim);
+    }
+    .mono-label::before {
+      content: ''; width: 24px; height: 1px; background: var(--accent);
+    }
+
+    /* ============ NAV ============ */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(10,9,7,.75);
+      backdrop-filter: blur(20px) saturate(140%);
+      -webkit-backdrop-filter: blur(20px) saturate(140%);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav__inner {
+      max-width: var(--max-w); margin: 0 auto; padding: 0 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 68px;
+    }
+    .nav__logo {
+      font-family: var(--font-display); font-weight: 600; font-size: 1.15rem;
+      color: var(--text); letter-spacing: -.02em;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .nav__logo img { height: 30px; width: auto; display: block; }
+    .nav__logo em { font-style: normal; color: var(--accent); }
+    .nav__links { display: flex; gap: 2px; align-items: center; }
+    .nav__links a {
+      font-size: .86rem; font-weight: 500; color: var(--text-mid);
+      padding: 8px 14px; border-radius: 6px; transition: all .2s;
+    }
+    .nav__links a:hover { color: var(--text); background: var(--surface-2); opacity: 1; }
+    .nav__links a.active { color: var(--accent); }
+    .nav__cta {
+      background: var(--accent) !important; color: #000 !important;
+      font-weight: 600 !important; padding: 9px 18px !important;
+      margin-left: 6px; display: inline-flex !important; align-items: center; gap: 8px;
+    }
+    .nav__cta:hover { background: var(--accent-2) !important; }
+
+    .nav__toggle { display: none; background: none; border: none; color: var(--text); cursor: pointer; padding: 8px; }
+    .nav__toggle svg { width: 22px; height: 22px; }
+    @media (max-width: 920px) {
+      .nav__toggle { display: block; }
+      .nav__links {
+        display: none; flex-direction: column; position: absolute;
+        top: 68px; left: 0; right: 0; background: rgba(10,9,7,.96);
+        backdrop-filter: blur(18px);
+        border-bottom: 1px solid var(--border);
+        padding: 16px 20px 20px;
+        align-items: stretch;
+      }
+      .nav__links.open { display: flex; }
+      .nav__links a { padding: 12px 14px; width: 100%; }
+      .nav__cta { margin: 8px 0 0; justify-content: center; }
+    }
+
+    /* ============ PAGE HEADER ============ */
+    .page-header {
+      padding: 140px 0 60px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-header::before {
+      content: ''; position: absolute; inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.02) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(ellipse at 50% 100%, #000 10%, transparent 70%);
+      -webkit-mask-image: radial-gradient(ellipse at 50% 100%, #000 10%, transparent 70%);
+      pointer-events: none;
+    }
+    .page-header__inner { position: relative; max-width: 760px; }
+    .page-header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 5.2vw, 4rem);
+      font-weight: 500; letter-spacing: -.035em; line-height: 1.02;
+      margin: 16px 0 14px;
+    }
+    .page-header h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
+    .page-header p { color: var(--text-mid); max-width: 560px; font-size: 1.05rem; }
+
+    /* ============ ORDER GRID ============ */
+    .order { padding: 72px 0 96px; }
+    .order-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 28px;
+      align-items: stretch;
+    }
+    @media (max-width: 920px) { .order-grid { grid-template-columns: 1fr; } }
+
+    .order-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      position: relative; overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    .order-card--featured::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 100% 0%, var(--accent-glow) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .order-card > * { position: relative; }
+
+    .order-card__tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--accent); padding: 4px 10px;
+      background: var(--accent-soft); border-radius: 100px;
+      margin-bottom: 16px; align-self: flex-start;
+    }
+    .order-card h2 {
+      font-family: var(--font-display);
+      font-size: 1.5rem; font-weight: 500; letter-spacing: -.02em;
+      margin-bottom: 10px;
+    }
+    .order-card > p {
+      color: var(--text-mid); font-size: .95rem;
+      margin-bottom: 22px;
+    }
+    .order-card__price {
+      font-family: var(--font-mono); font-size: 2rem; font-weight: 700;
+      color: var(--accent); letter-spacing: -.02em;
+      margin: 6px 0 22px;
+      display: flex; align-items: baseline; gap: 10px;
+    }
+    .order-card__price small {
+      font-size: .72rem; font-weight: 500; color: var(--text-dim);
+      letter-spacing: .12em; text-transform: uppercase;
+    }
+
+    .order-card__list {
+      list-style: none; padding: 0; margin: 0 0 24px;
+      border-top: 1px dashed var(--border-2); padding-top: 18px;
+    }
+    .order-card__list li {
+      display: flex; gap: 10px; align-items: flex-start;
+      font-size: .88rem; color: var(--text-mid);
+      padding: 6px 0;
+    }
+    .order-card__list li svg { flex-shrink: 0; color: var(--accent); margin-top: 4px; }
+
+    /* ============ BUTTONS ============ */
+    .btn-link {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 13px 20px; border-radius: var(--radius);
+      font-family: var(--font-sans); font-size: .9rem; font-weight: 600;
+      transition: all .18s; cursor: pointer; border: none;
+      width: 100%;
+    }
+    .btn-link--primary { background: var(--accent); color: #000; }
+    .btn-link--primary:hover { background: var(--accent-2); opacity: 1; }
+    .btn-link--outline {
+      background: transparent; color: var(--text);
+      border: 1px solid var(--border-2);
+    }
+    .btn-link--outline:hover { border-color: var(--text-mid); opacity: 1; background: var(--surface-2); }
+
+    .order-card__cta { margin-top: auto; }
+
+    /* ============ FORM ============ */
+    .order-form { display: grid; gap: 14px; }
+    .order-form .form-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    }
+    @media (max-width: 560px) { .order-form .form-row { grid-template-columns: 1fr; } }
+    .order-form label {
+      display: block;
+      font-family: var(--font-mono); font-size: 10.5px;
+      text-transform: uppercase; letter-spacing: .14em;
+      color: var(--text-dim); margin-bottom: 6px; font-weight: 500;
+    }
+    .order-form input,
+    .order-form textarea {
+      width: 100%; padding: 11px 14px;
+      border: 1px solid var(--border); background: var(--bg-2);
+      color: var(--text); border-radius: var(--radius);
+      font-family: var(--font-sans); font-size: .9rem;
+      transition: border-color .2s, background .2s;
+    }
+    .order-form input:focus,
+    .order-form textarea:focus {
+      outline: none; border-color: var(--accent);
+      background: var(--surface);
+    }
+    .order-form textarea { resize: vertical; min-height: 110px; line-height: 1.55; }
+    .order-form .btn-link { margin-top: 6px; }
+
+    /* ============ INFO STRIP ============ */
+    .info-strip {
+      margin-top: 48px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+    }
+    @media (max-width: 720px) { .info-strip { grid-template-columns: 1fr; } }
+    .info-strip__item {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px;
+      border-left: 3px solid var(--accent);
+    }
+    .info-strip__item h4 {
+      font-family: var(--font-mono); font-size: 10.5px;
+      text-transform: uppercase; letter-spacing: .14em;
+      color: var(--text); margin-bottom: 8px; font-weight: 500;
+    }
+    .info-strip__item p { font-size: .87rem; color: var(--text-mid); margin: 0; }
+
+    /* ============ FOOTER ============ */
+    footer {
+      border-top: 1px solid var(--border); padding: 48px 0 32px;
+      font-size: .82rem; color: var(--text-dim);
+      background: var(--bg);
+    }
+    .footer__top {
+      display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px;
+      padding-bottom: 32px; border-bottom: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+    @media (max-width: 680px) { .footer__top { grid-template-columns: 1fr; } }
+    .footer__brand-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-display); font-weight: 600; font-size: 1.05rem;
+      color: var(--text); margin-bottom: 10px;
+    }
+    .footer__brand-logo img { height: 26px; }
+    .footer__brand-logo em { font-style: normal; color: var(--accent); }
+    .footer__brand p { font-size: .85rem; max-width: 320px; }
+    .footer__col h4 {
+      font-family: var(--font-mono); font-size: 10.5px;
+      text-transform: uppercase; letter-spacing: .14em;
+      color: var(--text); margin-bottom: 14px; font-weight: 500;
+    }
+    .footer__col a { display: block; color: var(--text-dim); margin-bottom: 8px; font-size: .85rem; }
+    .footer__col a:hover { color: var(--accent); }
+    .footer__bottom {
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+      font-family: var(--font-mono); font-size: 11px; color: var(--text-dim);
+      letter-spacing: .06em;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════ NAV ════ -->
+  <nav class="nav" role="navigation">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo"><img src="logo.png" alt="DiscoX logo" /><span>Disco<em>X</em></span></a>
+      <button class="nav__toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav__links').classList.toggle('open')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="nav__links">
+        <a href="index.html">Home</a>
+        <a href="index.html#features">Features</a>
+        <a href="index.html#specs">Specs</a>
+        <a href="user-guide.html">User Guide</a>
+        <a href="firmware.html">Firmware</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="order.html" class="nav__cta active">Order</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ════ PAGE HEADER ════ -->
+  <header class="page-header">
+    <div class="container">
+      <div class="page-header__inner">
+        <p class="mono-label">Order · DiscoX v1</p>
+        <h1>Ready to go <em>surveying</em>.</h1>
+        <p>Each DiscoX is hand-built, calibrated, and bench-tested in the UK before it ships. Pick the option that matches where you are — UK customers can pay online, international orders go through a quick enquiry so we can quote shipping accurately.</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- ════ ORDER ════ -->
+  <section class="order">
+    <div class="container">
+      <div class="order-grid">
+
+        <!-- UK Orders (featured) -->
+        <div class="order-card order-card--featured">
+          <span class="order-card__tag">● UK · In stock</span>
+          <h2>UK orders</h2>
+          <p>Order directly and pay securely via Stripe. Price includes UK shipping. Your DiscoX will be dispatched within a few days.</p>
+          <div class="order-card__price">£450 <small>incl. UK shipping</small></div>
+          <ul class="order-card__list">
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Hand-assembled and bench-tested</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Factory-calibrated, ready to survey</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Tracked Royal Mail shipping</li>
+          </ul>
+          <div class="order-card__cta">
+            <a href="https://buy.stripe.com/00wfZie3DgeU7ugd9Za7C03" class="btn-link btn-link--primary">
+              Pay now via Stripe
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- International Orders -->
+        <div class="order-card">
+          <span class="order-card__tag">● International</span>
+          <h2>Outside the UK</h2>
+          <p>Shipping outside the UK? Drop me your details and I'll come back with shipping costs and payment options for your country, usually within a day or two.</p>
+
+          <form class="order-form" action="https://formspree.io/f/mvgwqgyq" method="POST">
+            <input type="hidden" name="_subject" value="International DiscoX Order Enquiry" />
+            <div class="form-row">
+              <div>
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name" required />
+              </div>
+              <div>
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" required />
+              </div>
+            </div>
+            <div>
+              <label for="country">Country</label>
+              <input type="text" name="country" id="country" required placeholder="e.g. France, USA, Australia" />
+            </div>
+            <div>
+              <label for="message">Message</label>
+              <textarea name="message" id="message" rows="4" placeholder="Any questions or details about your order…"></textarea>
+            </div>
+            <button type="submit" class="btn-link btn-link--outline">
+              Send enquiry
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+          </form>
+        </div>
+
+      </div>
+
+      <!-- Info strip -->
+      <div class="info-strip">
+        <div class="info-strip__item">
+          <h4>Lead time</h4>
+          <p>Most orders ship within 1–2 weeks. May take longer if devices are out of stock and I'm building more.</p>
+        </div>
+        <div class="info-strip__item">
+          <h4>Support</h4>
+          <p>Every device includes firmware updates and email support direct from the maker.</p>
+        </div>
+        <div class="info-strip__item">
+          <h4>Questions first?</h4>
+          <p>Not ready to buy? Use the <a href="index.html#contact">contact form</a> on the homepage and ask anything.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ FOOTER ════ -->
+  <footer>
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <div class="footer__brand-logo"><img src="logo.png" alt="" /> <span>Disco<em>X</em></span></div>
+          <p>A cave survey device built for modern caving. Hand-built in the UK, fully repairable, fully yours.</p>
+        </div>
+        <div class="footer__col">
+          <h4>Product</h4>
+          <a href="index.html#features">Features</a>
+          <a href="index.html#accuracy">Accuracy</a>
+          <a href="index.html#specs">Specs</a>
+          <a href="order.html">Order</a>
+        </div>
+        <div class="footer__col">
+          <h4>Resources</h4>
+          <a href="user-guide.html">User guide</a>
+          <a href="firmware.html">Firmware</a>
+          <a href="https://github.com/blhall195/Mr_Zappy" target="_blank">GitHub</a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© 2026 DISCOX · BUILT ON <a href="https://stic.readthedocs.io/" target="_blank">SAP6</a></span>
+        <span>MADE IN THE UNITED KINGDOM</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile nav close on link click
+    document.querySelectorAll('.nav__links a').forEach(a => {
+      a.addEventListener('click', () => {
+        document.querySelector('.nav__links').classList.remove('open');
+      });
+    });
+  </script>
+</body>
+</html>
