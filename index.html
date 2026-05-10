@@ -313,30 +313,6 @@
       font-size: .78rem;
     }
 
-    /* ============ MARQUEE STRIP ============ */
-    .strip {
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      background: var(--bg-2);
-      padding: 18px 0;
-      overflow: hidden;
-      position: relative;
-    }
-    .strip__track {
-      display: flex; gap: 48px;
-      white-space: nowrap;
-      animation: marquee 40s linear infinite;
-      font-family: var(--font-mono); font-size: .8rem;
-      color: var(--text-dim); letter-spacing: .12em;
-      text-transform: uppercase;
-    }
-    .strip__track span b { color: var(--accent); font-weight: 500; margin-right: 10px; }
-    .strip__track span { display: inline-flex; align-items: center; gap: 10px; }
-    .strip__track span::after {
-      content: '✦'; color: var(--border-2); margin-left: 48px; font-size: 10px;
-    }
-    @keyframes marquee { to { transform: translateX(-50%); } }
-
     /* ============ SECTION BASE ============ */
     section { padding: 100px 0; position: relative; }
     .section-head {
@@ -797,6 +773,7 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
       <div class="nav__links">
+        <a href="index.html">Home</a>
         <a href="#features">Features</a>
         <a href="#specs">Specs</a>
         <a href="user-guide.html">User Guide</a>
@@ -824,8 +801,8 @@
             <em><span class="disco-word">Disco</span><span class="disco-tail">ver</span></em>
           </h1>
           <p class="hero__sub">
-            Tough, water resistant, fully repairable. Connects to TopoDroid &amp; SexyTopo over Bluetooth.
-            Precision hardware for surveyors who actually go underground.
+            A tough, water resistant and repairable survey device built for cave surveyors.
+            Connects to TopoDroid &amp; SexyTopo. Developed and manufactured in the UK.
           </p>
           <div class="hero__btns">
             <a href="order.html" class="btn btn--primary">
@@ -836,8 +813,8 @@
           </div>
           <div class="hero__meta">
             <div class="hero__meta-item">RANGE<strong>Up to 100m</strong></div>
-            <div class="hero__meta-item">PLATFORM<strong>Open source · SAP6</strong></div>
-            <div class="hero__meta-item">CONNECT<strong>Bluetooth LE</strong></div>
+            <div class="hero__meta-item">PLATFORM<strong>Open source · C++</strong></div>
+            <div class="hero__meta-item">BLUETOOTH<strong>40m range (Coded-PHY)</strong></div>
           </div>
         </div>
 
@@ -870,38 +847,17 @@
     </div>
   </header>
 
-  <!-- ════ MARQUEE ════ -->
-  <div class="strip" aria-hidden="true">
-    <div class="strip__track">
-      <span><b>SAP6</b>open source platform</span>
-      <span><b>TopoDroid v6</b>compatible</span>
-      <span><b>SexyTopo</b>compatible</span>
-      <span><b>100m</b>laser range</span>
-      <span><b>Gorilla Glass</b>display cover</span>
-      <span><b>Quartz</b>laser protector</span>
-      <span><b>USB-C</b>resin sealed</span>
-      <!-- duplicate for seamless loop -->
-      <span><b>SAP6</b>open source platform</span>
-      <span><b>TopoDroid v6</b>compatible</span>
-      <span><b>SexyTopo</b>compatible</span>
-      <span><b>100m</b>laser range</span>
-      <span><b>Gorilla Glass</b>display cover</span>
-      <span><b>Quartz</b>laser protector</span>
-      <span><b>USB-C</b>resin sealed</span>
-    </div>
-  </div>
-
   <!-- ════ FEATURES ════ -->
   <section class="features" id="features">
     <div class="container">
       <div class="section-head">
         <div>
-          <p class="mono-label">Built for cavers · 002</p>
-          <h2 class="s-title">Everything you need. <br>(And a disco&nbsp;mode.)</h2>
+          <p class="mono-label">The best bits</p>
+          <h2 class="s-title">Key Features</h2>
         </div>
         <p class="s-desc">
-          Designed for wet, muddy, unforgiving environments — with repairability and simplicity at its core.
-          Twelve things the DiscoX does so you can concentrate on surveying.
+          Designed for wet and muddy caves, here are eleven things cavers asked me to build into the DiscoX.
+          Each one makes your survey project just a little easier.
         </p>
       </div>
 
@@ -914,11 +870,11 @@
             <span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span><span class="led"></span>
           </div>
           <h3>RGB status LED &amp; Disco Mode</h3>
-          <p>A colour-coded LED band shows device state at a glance — red for stabilising, green for reading taken, purple for leg detected. Plus a dedicated button for when you've earned it.</p>
+          <p>The device keeps you up to date with it's reading status via an RGB LED light band around it's edge: red for stabilising, green for reading taken, purple for leg detected. If you hold down the second button disco mode activates and you're ready to party.</p>
         </div>
 
         <div class="fcard fade-in">
-          <span class="fcard__num">F/03</span>
+          <span class="fcard__num">F/02</span>
           <div class="fcard__icon">
             <!-- wrench -->
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -926,11 +882,11 @@
             </svg>
           </div>
           <h3>Fully repairable</h3>
-          <p>Every component can be sourced, salvaged, 3D printed, or laser cut. No proprietary lock-in — fix it and get back to surveying.</p>
+          <p>Every component can be sourced, salvaged, 3D printed or laser cut. The DiscoX is designed to be repaired not replaced.</p>
         </div>
 
         <div class="fcard fade-in">
-          <span class="fcard__num">F/04</span>
+          <span class="fcard__num">F/03</span>
           <div class="fcard__icon">
             <!-- bluetooth/phone -->
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -940,11 +896,11 @@
             </svg>
           </div>
           <h3>Paperless survey</h3>
-          <p>Connects wirelessly to TopoDroid and SexyTopo. Take readings and send them straight to your phone — zero paper, fewer errors.</p>
+          <p>Being able to send readings to your phone is a must for modern surveying, the DiscoX is compatible with both sexytopo and topodroid.</p>
         </div>
 
         <div class="fcard fade-in">
-          <span class="fcard__num">F/05</span>
+          <span class="fcard__num">F/04</span>
           <div class="fcard__icon">
             <!-- target -->
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -954,11 +910,11 @@
             </svg>
           </div>
           <h3>Onboard calibration</h3>
-          <p>An intuitive calibration algorithm runs entirely on the device. No laptop, no second device, no faff.</p>
+          <p>An intuitive calibration algorithm runs entirely on the device with instructions that show up on the screen, there's also more comprehensive guide <a href="user-guide.html#calibration">here</a>.</p>
         </div>
 
         <div class="fcard fade-in">
-          <span class="fcard__num">F/06</span>
+          <span class="fcard__num">F/05</span>
           <div class="fcard__icon">
             <!-- warning -->
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -967,11 +923,11 @@
             </svg>
           </div>
           <h3>Anomaly detection</h3>
-          <p>Readings are auto-checked for magnetic interference from helmet lights, watches, or bolts. Get alerted before bad data enters the survey.</p>
+          <p>A single bad reading can ruin your survey. The DiscoX comes with a built in error checking feature. Put the device too close to your helmet light, watch or a bolt and it'll let you know.</p>
         </div>
 
         <div class="fcard fade-in">
-          <span class="fcard__num">F/07</span>
+          <span class="fcard__num">F/06</span>
           <div class="fcard__icon">
             <!-- broadcast -->
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -980,12 +936,12 @@
               <path d="M4.5 4.5a10 10 0 0 0 0 15M19.5 4.5a10 10 0 0 1 0 15"/>
             </svg>
           </div>
-          <h3>Extended range</h3>
-          <p>Long-range Bluetooth delivers 20m+ line-of-sight, keeping you connected to your phone at a distance without babysitting the pairing.</p>
+          <h3>Extended Bluetooth range</h3>
+          <p>The latest firmware uses Coded-PHY to transfer data bits with extra redundancy, error correction and symbol spreading extending connection range significantly (up to 40m in testing).</p>
         </div>
 
         <div class="fcard fade-in">
-          <span class="fcard__num">F/08</span>
+          <span class="fcard__num">F/07</span>
           <div class="fcard__icon">
             <!-- usb-c -->
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -998,11 +954,11 @@
             </svg>
           </div>
           <h3>Sealed USB-C</h3>
-          <p>A resin-capped USB-C port isolates internals while providing easy access for charging and editing device settings.</p>
+          <p>A waterproof data enabled USB-C port allows you to charge your device, update your device configuration and flash new firmware without opening up the device.</p>
         </div>
 
         <div class="fcard fade-in">
-          <span class="fcard__num">F/09</span>
+          <span class="fcard__num">F/08</span>
           <div class="fcard__icon">
             <!-- sliders -->
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -1012,11 +968,11 @@
             </svg>
           </div>
           <h3>Configurable</h3>
-          <p>Tweak settings from the onboard menu, or plug in and edit <code style="font-family:var(--font-mono);color:var(--accent);">settings.json</code> directly on your PC.</p>
+          <p>All the important settings can be edited from the in device menu, but plug in and you can edit the <a href="user-guide.html#config-json"><code style="font-family:var(--font-mono);color:var(--accent);">settings.json</code></a> file for a whole host of nerdy config changes.</p>
         </div>
 
         <div class="fcard fade-in">
-          <span class="fcard__num">F/10</span>
+          <span class="fcard__num">F/09</span>
           <div class="fcard__icon">
             <!-- battery -->
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -1026,12 +982,12 @@
               <rect x="10" y="9" width="4" height="6" fill="currentColor" stroke="none" opacity=".6"/>
             </svg>
           </div>
-          <h3>Accurate battery</h3>
-          <p>A dedicated battery monitoring IC gives reliable charge readings — no more guessing whether you'll make it out of the cave.</p>
+          <h3>Accurate battery level indicator</h3>
+          <p>Contains a dedicated battery monitoring chip for reliable charge readings, a surprisingly difficult thing to measure but worth it for knowing how much life's left in the device.</p>
         </div>
 
         <div class="fcard fade-in">
-          <span class="fcard__num">F/11</span>
+          <span class="fcard__num">F/10</span>
           <div class="fcard__icon">
             <!-- shield -->
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -1040,11 +996,11 @@
             </svg>
           </div>
           <h3>Gorilla Glass &amp; Quartz</h3>
-          <p>Scratch-resistant Gorilla Glass display cover and quartz glass laser protector handle the scrapes and bumps of cave life.</p>
+          <p>With a scratch-resistant Gorilla Glass display cover and quartz glass laser protector you'll be able to lick your device clean secure in the knowledge you won't scratch your laser.</p>
         </div>
 
         <div class="fcard fade-in">
-          <span class="fcard__num">F/12</span>
+          <span class="fcard__num">F/11</span>
           <div class="fcard__icon">
             <!-- code -->
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -1054,7 +1010,7 @@
             </svg>
           </div>
           <h3>Open &amp; reprogrammable</h3>
-          <p>Build with C++ or optionally CircuitPython. Inspect the code, modify behaviour, flash your own firmware. It's your device.</p>
+          <p>Build with C++ or optionally CircuitPython. Inspect the code, modify behaviour, missing a feature you want? Copy my code and flash your own firmware, mess it up and you can just reflash the latest release.</p>
         </div>
 
       </div>
@@ -1066,7 +1022,7 @@
     <div class="container">
       <div class="section-head">
         <div>
-          <p class="mono-label">Field benchmark · 003</p>
+          <p class="mono-label">Field benchmark</p>
           <h2 class="s-title">Tested against <br>the competition.</h2>
         </div>
         <p class="s-desc">
@@ -1105,17 +1061,17 @@
     <div class="container">
       <div class="section-head">
         <div>
-          <p class="mono-label">Technical spec · 004</p>
+          <p class="mono-label">Technical spec</p>
           <h2 class="s-title">What's inside.</h2>
         </div>
         <p class="s-desc">
-          A breakdown of the hardware, sensors and components that make the DiscoX a reliable cave survey instrument.
+          A breakdown of the hardware, sensors and components that make the DiscoX a well-specced cave survey instrument.
         </p>
       </div>
 
       <table class="specs__table">
         <tr><td>Range</td><td>Up to <span class="num">100m</span> in ideal conditions</td></tr>
-        <tr><td>Connectivity</td><td>Bluetooth LE — TopoDroid v6 &amp; SexyTopo</td></tr>
+        <tr><td>Connectivity</td><td>Bluetooth (Coded-PHY) compatible with TopoDroid v6 &amp; SexyTopo</td></tr>
         <tr><td>Interface</td><td>4 membrane buttons</td></tr>
         <tr><td>Display cover</td><td>Gorilla Glass</td></tr>
         <tr><td>Laser cover</td><td>Quartz glass</td></tr>
@@ -1129,8 +1085,8 @@
         <tr><td>Repairability</td><td>Fully modular · 3D printable · laser cuttable · parts available</td></tr>
         <tr><td>Weight</td><td><span class="num">250g</span></td></tr>
         <tr><td>Dimensions</td><td><span class="num">38 × 170 × 62mm</span></td></tr>
-        <tr><td>Screen</td><td><span class="num">1.5in</span> · <span class="num">128×128px</span> OLED</td></tr>
-        <tr><td>Manufacture</td><td>Hand-built in the United Kingdom — assembled, calibrated &amp; tested by hand. No proprietary lock-in.</td></tr>
+        <tr><td>Screen</td><td><span class="num">1.12in</span> · <span class="num">128×128px</span> OLED</td></tr>
+        <tr><td>Manufacture</td><td>Hand-built, calibrated &amp; tested in the UK.</td></tr>
         <tr><td>Price</td><td><span class="num">£450</span> · fully assembled &amp; tested</td></tr>
       </table>
     </div>
@@ -1141,9 +1097,9 @@
     <div class="container">
       <div class="contact__inner">
         <div class="contact__side">
-          <p class="mono-label">Get in touch · 005</p>
-          <h2>Questions, spares, <br>or just saying hi?</h2>
-          <p>Whether you're interested in ordering, need spare parts, or have more queries — drop me a line. I read everything.</p>
+          <p class="mono-label">Get in touch</p>
+          <h2>Questions, spares, <br>advice?</h2>
+          <p>Whether you're interested in ordering, need spare parts, or have more queries just drop me a line.</p>
           <a href="https://github.com/blhall195/Mr_Zappy" target="_blank" class="contact__link">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
             View source on GitHub
@@ -1179,7 +1135,7 @@
       <div class="footer__top">
         <div class="footer__brand">
           <div class="footer__brand-logo"><img src="logo.png" alt="" /> <span>Disco<em>X</em></span></div>
-          <p>A cave survey device built for modern caving. Hand-built in the UK, fully repairable, fully yours.</p>
+          <p>A cave survey device hand-built in the UK, fully repairable with a modular design and opensource code.</p>
         </div>
         <div class="footer__col">
           <h4>Product</h4>
@@ -1197,7 +1153,7 @@
         </div>
       </div>
       <div class="footer__bottom">
-        <span>© 2026 DISCOX · BUILT ON <a href="https://stic.readthedocs.io/" target="_blank">SAP6</a></span>
+        <span>© 2026 DISCOX</span>
         <span>MADE IN THE UNITED KINGDOM</span>
       </div>
     </div>

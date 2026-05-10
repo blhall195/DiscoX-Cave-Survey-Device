@@ -460,8 +460,8 @@
       <div class="page-header__inner">
         <div>
           <p class="mono-label">Documentation · v1</p>
-          <h1>User <em>guide</em>.</h1>
-          <p>Everything you need to operate your DiscoX. Written for the latest C++ firmware — bookmark this page and it'll stay current.</p>
+          <h1>User guide.</h1>
+          <p>A comprehensive guide to using your DiscoX survey device, if anythings missing let me know and I'll get it updated.</p>
         </div>
         <div class="toc-card">
           <h4>On this page</h4>
@@ -470,8 +470,8 @@
           <a href="#display"><span>Display</span><span>03</span></a>
           <a href="#disco"><span>Disco mode</span><span>04</span></a>
           <a href="#bluetooth"><span>Bluetooth</span><span>05</span></a>
-          <a href="#settings"><span>Settings</span><span>06</span></a>
-          <a href="#calibration"><span>Calibration</span><span>07</span></a>
+          <a href="#calibration"><span>Calibration</span><span>06</span></a>
+          <a href="#settings"><span>Settings</span><span>07</span></a>
         </div>
       </div>
     </div>
@@ -490,8 +490,8 @@
           <a href="#display"    data-n="03">Display</a>
           <a href="#disco"      data-n="04">Disco mode</a>
           <a href="#bluetooth"  data-n="05">Bluetooth</a>
-          <a href="#settings"   data-n="06">Settings</a>
-          <a href="#calibration" data-n="07">Calibration</a>
+          <a href="#calibration" data-n="06">Calibration</a>
+          <a href="#settings"   data-n="07">Settings</a>
         </nav>
 
         <div class="docs-content">
@@ -500,7 +500,7 @@
           <article class="docs-section" id="buttons">
             <div class="docs-section__num">01 · Controls</div>
             <h2>Buttons</h2>
-            <p>The DiscoX has four buttons across the top of the device — all operable with gloved hands.</p>
+            <p>The DiscoX has four buttons.</p>
 
             <div class="button-diagram">
               <div class="btn-dia">
@@ -527,10 +527,10 @@
 
             <h3>In normal mode</h3>
             <ul>
-              <li><strong>Button 1</strong> — take a measurement, or wake the laser if it's timed out.</li>
+              <li><strong>Button 1 (Top)</strong> — take a measurement, or wake the laser if it's timed out.</li>
               <li><strong>Button 2</strong> — short press: take a measurement. Hold 2s: toggle Disco mode.</li>
               <li><strong>Button 3</strong> — open the settings menu.</li>
-              <li><strong>Button 4</strong> — power on/off.</li>
+              <li><strong>Button 4 (Bottom)</strong> — power on/off.</li>
             </ul>
             <p>In <strong>menu mode</strong>, Buttons 1/2/3 become scroll-up, scroll-down, and select. Button 4 still powers the device off.</p>
           </article>
@@ -573,28 +573,28 @@
           <article class="docs-section" id="display">
             <div class="docs-section__num">03 · On-screen</div>
             <h2>Display</h2>
-            <p>The <strong>128×128 pixel OLED</strong> shows three values from your most recent stable shot:</p>
+            <p>The OLED display shows three values from your most recent stable shot:</p>
             <ul>
               <li><strong>Distance</strong> (top) — in metres, to two decimal places.</li>
               <li><strong>Azimuth</strong> (middle) — compass bearing, in degrees.</li>
               <li><strong>Inclination</strong> (bottom) — clino angle, in degrees.</li>
             </ul>
-            <p>The <strong>top-left</strong> shows <code>BT</code> when Bluetooth is connected, with a count of pending (unsent) readings beside it. The <strong>top-right</strong> shows a proportional battery bar — no guessing when you're underground.</p>
+            <p>The <strong>top-left</strong> shows <code>BT</code> when Bluetooth is connected, with a count of pending (unsent) readings beside it. The <strong>top-right</strong> shows a proportional battery bar. If the device is set to measure from the front this is indicated at the top of the display as well.</p>
           </article>
 
           <!-- ── 04 DISCO ── -->
           <article class="docs-section" id="disco">
-            <div class="docs-section__num">04 · For the survey party</div>
+            <div class="docs-section__num">04 · Why not</div>
             <h2>Disco mode</h2>
-            <p>Hold <strong>Button 2 for 2 seconds</strong> to toggle disco/rave mode. The laser shuts off and the NeoPixel cycles through colours. <strong>Shake the device</strong> to kick into wild mode — faster cycling, full brightness.</p>
-            <p>Hold Button 2 again for 2 seconds to exit. The laser restarts and the device returns to normal operation.</p>
+            <p>Hold <strong>Button 2 for 2 seconds</strong> to toggle disco/rave mode. The laser shuts off and the NeoPixel cycles through colours. <strong>Shake the device</strong> for faster colour cycling and full brightness.</p>
+            <p>To exit press any of the buttons other than the power button. The laser restarts and the device returns to normal operation.</p>
           </article>
 
           <!-- ── 05 BLUETOOTH ── -->
           <article class="docs-section" id="bluetooth">
             <div class="docs-section__num">05 · Connectivity</div>
             <h2>Bluetooth &amp; memory</h2>
-            <p>The DiscoX works with current versions of <strong>SexyTopo</strong> and <strong>TopoDroid</strong> via a long-range C++ implementation of the SAP6 BLE protocol. The device advertises continuously, so nearby phones and tablets will discover it automatically.</p>
+            <p>The DiscoX works with current versions of <strong>SexyTopo</strong> and <strong>TopoDroid</strong> via a long-range C++ implementation of the SAP6 BLE protocol. The device advertises continuously, so nearby phones and tablets can discover it, unpair and repair it from the Bluetooth settings on your phone.</p>
             <p>Once connected, the device flashes blue, a <code>BT</code> label appears in the top-left of the screen, and live readings are pushed directly to your survey app.</p>
 
             <div class="cb cb--warn">
@@ -603,14 +603,74 @@
               </svg>
               <div class="cb__body">
                 <div class="cb__title">Note · BLE naming</div>
-                <p>Each DiscoX ships with a unique Bluetooth name in the format <code>SAP6_[Nickname]</code> — for example <code>SAP6_Dragon</code>. Change it via the settings file (see below), or request a specific name before assembly.</p>
+                <p>Each DiscoX ships with a unique Bluetooth name, this can be changed from within the <code>settings.json</code> config file by changing the <code>ble_name</code> config item. Change it via the settings file, or request a specific name before assembly. Note the name has a limit of 20 characters.</p>
               </div>
             </div>
           </article>
 
-          <!-- ── 06 SETTINGS ── -->
+          <!-- ── 06 CALIBRATION ── -->
+          <article class="docs-section" id="calibration">
+            <div class="docs-section__num">06 · Worth checking if you need one</div>
+            <h2>Calibration</h2>
+            <p>Calibrate whenever you survey in a new area or if readings seem off. Run a <strong>Mag Field Check</strong> before each trip to quickly verify accuracy at your survey site.</p>
+            <p>To start: press <strong>Button 3</strong> → <strong>Enter Calibration</strong> → choose a type.</p>
+
+            <div class="calib-grid">
+              <div class="calib-card">
+                <span class="calib-card__tag">80 readings</span>
+                <h4>Long calibration</h4>
+                <p>The most accurate option. Runs in two phases automatically.</p>
+                <p><strong>Phase 1 — Ellipsoid (56):</strong> aim in a wide variety of directions. Best approach is to imagine you're standing in a cube and firing at every face and corner while rotating 90° after each shot. No need to be exact.</p>
+                <p><strong>Phase 2 — Alignment (24):</strong> 3 sets of 8 readings. Each set aims at one fixed point; barrel-roll ~45° between shots. Pick 3 fixed points roughly 90° apart. Three beeps = next direction.</p>
+                <div class="keys"><b>B1</b> record <b>· B3</b> undo<br><b>B1+B2</b> save <b>· B2 hold</b> discard</div>
+              </div>
+
+              <div class="calib-card">
+                <span class="calib-card__tag">24 readings</span>
+                <h4>Short calibration</h4>
+                <p>Faster option for quick field recalibration.</p>
+                <p>Take <strong>3 sets of 8 readings</strong>. For each set, barrel-roll the laser around a single fixed point, rotating ~45° between shots. The 3 points should be roughly 90° apart — e.g. ahead, right, vertically up.</p>
+                <p>The same 24 readings fit both ellipsoid and alignment, so this is quicker but less thorough than the long version.</p>
+                <div class="keys"><b>B1</b> record <b>· B3</b> undo<br><b>B1+B2</b> save <b>· B2 hold</b> discard</div>
+              </div>
+
+              <div class="calib-card">
+                <span class="calib-card__tag">Field check</span>
+                <h4>Mag field check</h4>
+                <p>Verifies calibration accuracy without re-running a full cal.</p>
+                <p>Shoot a fixed target, walk to it, shoot back. Repeat for <strong>3+ pairs</strong> in different directions. The device records each pair's bearing error and calculates an overall correction amplitude.</p>
+                <p>A consistently high amplitude means it's time for a full long calibration.</p>
+                <div class="keys"><b>B1</b> take shot<br><b>B2</b> finish (after 2+ pairs)</div>
+              </div>
+            </div>
+
+            <h3>Quality metrics</h3>
+            <p>After calibration the screen shows three quality scores. <strong>Lower is better</strong> in all cases. View them any time via <strong>Menu → Enter Calibration → View Last Cal</strong>.</p>
+            <ul>
+              <li><strong>Mag</strong> — magnetometer ellipsoid fit uniformity.</li>
+              <li><strong>Grav</strong> — accelerometer ellipsoid fit uniformity.</li>
+              <li><strong>Acc</strong> — final accuracy in degrees (the most important number).</li>
+            </ul>
+            <div class="accuracy-scale">
+              <span style="color:var(--green);">EXCELLENT &lt; 0.25°</span>
+              <div class="accuracy-bar"></div>
+              <span style="color:var(--red);">ACCEPTABLE &lt; 0.5°</span>
+            </div>
+
+            <div class="cb cb--info">
+              <svg class="cb__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/>
+              </svg>
+              <div class="cb__body">
+                <div class="cb__title">Tip</div>
+                <p>For best results, calibrate in the same magnetic environment as your survey — i.e. away from bolts, helmet lights, and SRT kit. Anomaly detection will warn you if your calibration is being contaminated.</p>
+              </div>
+            </div>
+          </article>
+
+          <!-- ── 07 SETTINGS ── -->
           <article class="docs-section" id="settings">
-            <div class="docs-section__num">06 · Configuration</div>
+            <div class="docs-section__num">07 · Configuration</div>
             <h2>Settings</h2>
             <p>All common settings are accessible from the onboard menu — press <strong>Button 3</strong> to open it.</p>
 
@@ -621,11 +681,12 @@
               <li><strong>Laser Timeout</strong> — 30s · 60s · 2m · 5m · 15m · 30m.</li>
               <li><strong>Auto Shutdown</strong> — 5 · 10 · 15 · 30 · 60 min · 2h.</li>
               <li><strong>Delete Saved Shots</strong> — wipe any pending readings stored in flash.</li>
+              <li><strong>Measure From:</strong> — lets you choose whether to measure from the front or back of the device.</li>
               <li><strong>Update / Settings</strong> — firmware update and advanced config.</li>
-              <li><strong>Play Snake</strong> — hidden bonus for when you're waiting at the surface.</li>
+              <li><strong>Play Snake</strong> — hidden bonus for when you're waiting around.</li>
             </ul>
 
-            <h3>Advanced: <code>config.json</code></h3>
+            <h3 id="config-json">Advanced: <code>config.json</code></h3>
             <p>Go to <strong>Menu → Update / Settings → Edit Settings File</strong>. The DiscoX reboots into USB drive mode and appears as a drive called <code>DISCOX</code>. Open <code>config.json</code>, edit values, save, eject, then hold the power button to restart. Any setting you omit uses its default.</p>
 
             <h4>Measurement &amp; stability</h4>
@@ -675,66 +736,6 @@
 
             <h3>Firmware update</h3>
             <p>Go to <strong>Menu → Update / Settings → Update Firmware</strong>. The device enters the UF2 bootloader and appears as a removable drive. Drag and drop the new <code>.uf2</code> file onto it — the DiscoX reboots when flashing is complete.</p>
-          </article>
-
-          <!-- ── 07 CALIBRATION ── -->
-          <article class="docs-section" id="calibration">
-            <div class="docs-section__num">07 · Keeping readings honest</div>
-            <h2>Calibration</h2>
-            <p>Calibrate whenever you survey in a new area or if readings seem off. Run a <strong>Mag Field Check</strong> before each trip to quickly verify accuracy at your survey site.</p>
-            <p>To start: press <strong>Button 3</strong> → <strong>Enter Calibration</strong> → choose a type.</p>
-
-            <div class="calib-grid">
-              <div class="calib-card">
-                <span class="calib-card__tag">80 readings</span>
-                <h4>Long calibration</h4>
-                <p>The most accurate option. Runs in two phases automatically.</p>
-                <p><strong>Phase 1 — Ellipsoid (56):</strong> aim in a wide variety of directions. Spread points evenly across the sphere — like touching every zone of a globe's surface. A coverage bar shows progress.</p>
-                <p><strong>Phase 2 — Alignment (24):</strong> 3 sets of 8 readings. Each set aims at one fixed point; barrel-roll ~45° between shots. Pick 3 fixed points roughly 90° apart. Three beeps = next direction.</p>
-                <div class="keys"><b>B1</b> record <b>· B3</b> undo<br><b>B1+B2</b> save <b>· B2 hold</b> discard</div>
-              </div>
-
-              <div class="calib-card">
-                <span class="calib-card__tag">24 readings</span>
-                <h4>Short calibration</h4>
-                <p>Faster option for quick field recalibration.</p>
-                <p>Take <strong>3 sets of 8 readings</strong>. For each set, barrel-roll the laser around a single fixed point, rotating ~45° between shots. The 3 points should be roughly 90° apart — e.g. ahead, right, vertically up.</p>
-                <p>The same 24 readings fit both ellipsoid and alignment, so this is quicker but less thorough than the long version.</p>
-                <div class="keys"><b>B1</b> record <b>· B3</b> undo<br><b>B1+B2</b> save <b>· B2 hold</b> discard</div>
-              </div>
-
-              <div class="calib-card">
-                <span class="calib-card__tag">Field check</span>
-                <h4>Mag field check</h4>
-                <p>Verifies calibration accuracy without re-running a full cal.</p>
-                <p>Shoot a fixed target, walk to it, shoot back. Repeat for <strong>3+ pairs</strong> in different directions. The device records each pair's bearing error and calculates an overall correction amplitude.</p>
-                <p>A consistently high amplitude means it's time for a full long calibration.</p>
-                <div class="keys"><b>B1</b> take shot<br><b>B2</b> finish (after 2+ pairs)</div>
-              </div>
-            </div>
-
-            <h3>Quality metrics</h3>
-            <p>After calibration the screen shows three quality scores. <strong>Lower is better</strong> in all cases. View them any time via <strong>Menu → Enter Calibration → View Last Cal</strong>.</p>
-            <ul>
-              <li><strong>Mag</strong> — magnetometer ellipsoid fit uniformity.</li>
-              <li><strong>Grav</strong> — accelerometer ellipsoid fit uniformity.</li>
-              <li><strong>Acc</strong> — final accuracy in degrees (the most important number).</li>
-            </ul>
-            <div class="accuracy-scale">
-              <span style="color:var(--green);">EXCELLENT &lt; 0.25°</span>
-              <div class="accuracy-bar"></div>
-              <span style="color:var(--red);">ACCEPTABLE &lt; 0.5°</span>
-            </div>
-
-            <div class="cb cb--info">
-              <svg class="cb__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/>
-              </svg>
-              <div class="cb__body">
-                <div class="cb__title">Tip</div>
-                <p>For best results, calibrate in the same magnetic environment as your survey — i.e. away from bolts, helmet lights, and SRT kit. Anomaly detection will warn you if your calibration is being contaminated.</p>
-              </div>
-            </div>
           </article>
 
         </div>
