@@ -137,7 +137,15 @@
       -webkit-mask-image: radial-gradient(ellipse at 50% 100%, #000 10%, transparent 70%);
       pointer-events: none;
     }
-    .page-header__inner { position: relative; max-width: 760px; }
+    .page-header__inner {
+      position: relative; max-width: 1100px;
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 40px; align-items: center;
+    }
+    .page-header__text { max-width: 760px; }
+    @media (max-width: 920px) {
+      .page-header__inner { grid-template-columns: 1fr; gap: 28px; }
+    }
     .page-header h1 {
       font-family: var(--font-display);
       font-size: clamp(2.4rem, 5.2vw, 4rem);
@@ -146,6 +154,53 @@
     }
     .page-header h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
     .page-header p { color: var(--text-mid); max-width: 560px; font-size: 1.05rem; }
+
+    /* ============ STOCK INDICATOR ============ */
+    .stock-indicator {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      min-width: 200px;
+      display: flex; flex-direction: column; gap: 6px;
+      position: relative; overflow: hidden;
+    }
+    .stock-indicator::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 100% 0%, var(--accent-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .stock-indicator > * { position: relative; }
+    .stock-indicator__label {
+      font-family: var(--font-mono); font-size: 13px;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--text-mid);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .stock-indicator__dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #5dd67a; box-shadow: 0 0 10px #5dd67a;
+      animation: stockPulse 2s ease-in-out infinite;
+    }
+    @keyframes stockPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: .45; }
+    }
+    .stock-indicator__count {
+      font-family: var(--font-display);
+      font-size: 2.4rem; font-weight: 500;
+      letter-spacing: -.03em; line-height: 1;
+      color: var(--accent);
+    }
+    .stock-indicator__count small {
+      font-family: var(--font-sans); font-size: 1.15rem;
+      color: var(--text-mid); font-weight: 400;
+      margin-left: 8px;
+    }
+    .stock-indicator__note {
+      font-size: .78rem; color: var(--text-dim);
+      margin-top: 2px;
+    }
 
     /* ============ ORDER GRID ============ */
     .order { padding: 72px 0 96px; }
@@ -332,9 +387,16 @@
   <header class="page-header">
     <div class="container">
       <div class="page-header__inner">
-        <p class="mono-label">Order · DiscoX v1</p>
-        <h1>Ready to go <em>surveying</em>.</h1>
-        <p>Each DiscoX is hand-built, calibrated, and bench-tested in the UK before it ships. Pick the option that matches where you are — UK customers can pay online, international orders go through a quick enquiry so we can quote shipping accurately.</p>
+        <div class="page-header__text">
+          <p class="mono-label">Order · DiscoX v1</p>
+          <h1>Ready to go <em>surveying</em>.</h1>
+          <p>Each DiscoX is hand-built, calibrated, and bench-tested in the UK before it ships. Pick the option that matches where you are — UK customers can pay online, international orders will require alternative payment options and additional shipping costs.</p>
+        </div>
+        <aside class="stock-indicator" aria-label="Current stock">
+          <span class="stock-indicator__label"><span class="stock-indicator__dot"></span>In stock</span>
+          <span class="stock-indicator__count">4<small>units</small></span>
+          <span class="stock-indicator__note">Lead time = 4 weeks when stock reaches zero.</span>
+        </aside>
       </div>
     </div>
   </header>
@@ -367,28 +429,56 @@
         <div class="order-card">
           <span class="order-card__tag">● International</span>
           <h2>Outside the UK</h2>
-          <p>Shipping outside the UK? Drop me your details and I'll come back with shipping costs and payment options for your country, usually within a day or two.</p>
+          <p>Shipping outside the UK? Drop me your address and details. I'll come back with shipping costs and payment options for your country.</p>
 
           <form class="order-form" action="https://formspree.io/f/mvgwqgyq" method="POST">
             <input type="hidden" name="_subject" value="International DiscoX Order Enquiry" />
             <div class="form-row">
               <div>
-                <label for="name">Name</label>
+                <label for="name">Full name</label>
                 <input type="text" name="name" id="name" required />
               </div>
               <div>
-                <label for="email">Email</label>
-                <input type="email" name="email" id="email" required />
+                <label for="company">Company (optional)</label>
+                <input type="text" name="company" id="company" />
               </div>
             </div>
             <div class="form-row">
               <div>
-                <label for="country">Country</label>
-                <input type="text" name="country" id="country" required placeholder="e.g. France, USA, Australia" />
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" required />
               </div>
               <div>
                 <label for="phone">Contact number</label>
-                <input type="tel" name="phone" id="phone" placeholder="+44 7700 900123" />
+                <input type="tel" name="phone" id="phone" required placeholder="+44 7700 900123" />
+              </div>
+            </div>
+            <div>
+              <label for="address1">Address line 1</label>
+              <input type="text" name="address1" id="address1" required placeholder="Street address, P.O. box" />
+            </div>
+            <div>
+              <label for="address2">Address line 2 (optional)</label>
+              <input type="text" name="address2" id="address2" placeholder="Apartment, suite, unit, building, floor" />
+            </div>
+            <div class="form-row">
+              <div>
+                <label for="city">City / Town</label>
+                <input type="text" name="city" id="city" required />
+              </div>
+              <div>
+                <label for="state">State / Region / Province</label>
+                <input type="text" name="state" id="state" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div>
+                <label for="postcode">Postal / ZIP code</label>
+                <input type="text" name="postcode" id="postcode" required />
+              </div>
+              <div>
+                <label for="country">Country</label>
+                <input type="text" name="country" id="country" required placeholder="e.g. France, USA, Australia" />
               </div>
             </div>
             <div>
