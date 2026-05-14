@@ -777,6 +777,14 @@
     }
     .i18n-switch button:hover { color: var(--text); border-color: var(--text-mid); }
     .i18n-switch button.active { color: #000; background: var(--accent); border-color: var(--accent); }
+
+    /* Suppress Google Translate UI */
+    .goog-te-banner-frame, iframe.goog-te-banner-frame,
+    .goog-te-banner-frame.skiptranslate { display: none !important; visibility: hidden !important; height: 0 !important; }
+    body { top: 0 !important; position: static !important; }
+    #google_translate_element { display: none !important; }
+    .goog-tooltip, .goog-tooltip:hover { background: transparent !important; box-shadow: none !important; border: none !important; }
+    .goog-text-highlight { background: transparent !important; box-shadow: none !important; }
   </style>
 </head>
 <body>
