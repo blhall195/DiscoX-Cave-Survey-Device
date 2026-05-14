@@ -4,6 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Firmware — DiscoX Cave Survey Device</title>
+  <script>
+    (function () {
+      var m = document.cookie.match(/(?:^|;\s*)googtrans=\/[^\/]+\/([a-z\-]+)/);
+      if (m && m[1] && m[1] !== 'en') document.documentElement.classList.add('gt-translated');
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
@@ -490,13 +496,13 @@
     .i18n-switch button:hover { color: var(--text); border-color: var(--text-mid); }
     .i18n-switch button.active { color: #000; background: var(--accent); border-color: var(--accent); }
 
-    /* Suppress Google Translate UI */
-    .goog-te-banner-frame, iframe.goog-te-banner-frame,
-    .goog-te-banner-frame.skiptranslate { display: none !important; visibility: hidden !important; height: 0 !important; }
-    body { top: 0 !important; position: static !important; }
+    /* Hide the dropdown widget host (we drive translation via cookie + custom buttons) */
     #google_translate_element { display: none !important; }
     .goog-tooltip, .goog-tooltip:hover { background: transparent !important; box-shadow: none !important; border: none !important; }
     .goog-text-highlight { background: transparent !important; box-shadow: none !important; }
+
+    /* When translated, Google injects a 40px banner at top:0. Shift the fixed nav down to clear it. */
+    html.gt-translated .nav { top: 40px; }
   </style>
 </head>
 <body>
