@@ -472,6 +472,23 @@
       font-family: var(--font-mono); font-size: 11px; color: var(--text-dim);
       letter-spacing: .06em;
     }
+
+    /* ============ LANGUAGE SWITCH ============ */
+    .i18n-switch {
+      display: flex; gap: 6px; justify-content: center; flex-wrap: wrap;
+      margin-top: 18px; padding-top: 16px;
+      border-top: 1px dashed var(--border-2);
+    }
+    .i18n-switch button {
+      background: transparent; color: var(--text-dim);
+      border: 1px solid var(--border-2); border-radius: 100px;
+      padding: 4px 12px; cursor: pointer;
+      font-family: var(--font-mono); font-size: 10.5px;
+      letter-spacing: .1em; text-transform: uppercase;
+      transition: all .15s;
+    }
+    .i18n-switch button:hover { color: var(--text); border-color: var(--text-mid); }
+    .i18n-switch button.active { color: #000; background: var(--accent); border-color: var(--accent); }
   </style>
 </head>
 <body>
@@ -755,6 +772,13 @@
         <span>© 2026 DISCOX · BUILT ON <a href="https://stic.readthedocs.io/" target="_blank">SAP6</a></span>
         <span>MADE IN THE UNITED KINGDOM</span>
       </div>
+      <div class="i18n-switch" role="group" aria-label="Language">
+        <button type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="fr">FR</button>
+        <button type="button" data-lang="de">DE</button>
+        <button type="button" data-lang="es">ES</button>
+        <button type="button" data-lang="it">IT</button>
+      </div>
     </div>
   </footer>
 
@@ -790,5 +814,6 @@
       });
     });
   </script>
+  <script src="assets/i18n.js"></script>
 </body>
 </html>
