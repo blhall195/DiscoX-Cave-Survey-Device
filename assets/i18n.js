@@ -88,9 +88,28 @@
     });
   }
 
+  function killBanner() {
+    if (document.body && document.body.style.top) document.body.style.top = '';
+    var frame = document.querySelector('iframe.goog-te-banner-frame');
+    if (frame && frame.parentNode) frame.parentNode.removeChild(frame);
+    var box = document.querySelector('.goog-te-banner-frame');
+    if (box && box.parentNode) box.parentNode.removeChild(box);
+  }
+
+  function watchBanner() {
+    killBanner();
+    var mo = new MutationObserver(killBanner);
+    mo.observe(document.documentElement, {
+      childList: true, subtree: true,
+      attributes: true, attributeFilter: ['style', 'class']
+    });
+    setInterval(killBanner, 400);
+  }
+
   function init() {
     injectStyle();
     ensureHost();
+    watchBanner();
     var buttons = Array.prototype.slice.call(
       document.querySelectorAll('.i18n-switch [data-lang]')
     );
