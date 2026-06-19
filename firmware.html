@@ -571,8 +571,8 @@
             <p>The DiscoX runs an open-source C++ firmware built on the SAP6 platform. Keep an eye on this page for bug fixes, calibration improvements and new features.</p>
 
             <div class="download-row">
-              <a href="firmware.uf2" download="discox-v1.4.2.uf2" class="btn-link btn-link--primary">
-                Download discox-v1.4.2.uf2
+              <a href="firmware.uf2" download="discox-v0.1.0.uf2" class="btn-link btn-link--primary">
+                Download discox-v0.1.0.uf2
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v14M6 13l6 6 6-6M5 21h14"/></svg>
               </a>
               <a href="https://github.com/blhall195/Mr_Zappy/releases" target="_blank" class="btn-link btn-link--outline">
@@ -582,7 +582,7 @@
             </div>
 
             <p style="font-family: var(--font-mono); font-size: .8rem; color: var(--text-dim); letter-spacing: .04em; margin-top: 8px;">
-              v1.4.2 · released 2026-04-12 · sha256 <code>9f3c…b21a</code>
+              v0.1.0 · released 2026-06-19 · sha256 <code>4c5c…23e0a</code>
             </p>
           </article>
 
@@ -661,7 +661,7 @@
             <p>With the device in Firmware Update Mode and the <code>DISCOX</code> drive mounted, you're ready to flash.</p>
 
             <div class="dropzone" aria-hidden="true">
-              <div class="dropzone__file">discox-v1.4.2.uf2</div>
+              <div class="dropzone__file">discox-v0.1.0.uf2</div>
               <div class="dropzone__arrow"><span></span>drop<span></span></div>
               <div class="dropzone__drive">
                 <span class="icon">D</span>
@@ -734,24 +734,10 @@
             <div class="docs-section__num">05 · What's new</div>
             <h2>Changelog</h2>
 
-            <h3>v1.4.2 — 2026-04-12</h3>
+            <h3>v0.1.0 — 2026-06-19</h3>
             <ul>
-              <li>Improved leg detection at near-vertical clinos.</li>
-              <li>BLE reconnection is faster after the phone wakes from sleep.</li>
-              <li>Fixed an edge case where Mag Field Check could overflow on &gt;9 pairs.</li>
-            </ul>
-
-            <h3>v1.4.0 — 2026-03-04</h3>
-            <ul>
-              <li>New <strong>Mag Field Check</strong> mode — verify cal accuracy without re-running a full calibration.</li>
-              <li>Auto-shutdown timer is now configurable in 6 steps.</li>
-              <li>Disco mode adds a "wild" sub-mode triggered by shaking the device.</li>
-            </ul>
-
-            <h3>v1.3.5 — 2026-01-22</h3>
-            <ul>
-              <li>Battery monitor IC support — proportional battery bar replaces the 3-segment indicator.</li>
-              <li>Lowered laser-distance offset default to <code>0.162</code> for production runs after the v3 case.</li>
+              <li>Initial public release of the DiscoX firmware.</li>
+              <li>Main board and BLE board UF2 builds published via automated GitHub releases.</li>
             </ul>
           </article>
 
