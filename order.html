@@ -463,7 +463,8 @@
             <input type="hidden" name="xJdfEaS" value="" />
             <input type="hidden" name="actionType" value="Q2FzZXM=" />
             <input type="hidden" name="returnURL" value="https://discox.co.uk/submitted" />
-            <input type="hidden" name="Subject" value="DiscoX Order Enquiry" />
+            <!-- Subject is auto-built from name + country on submit -->
+            <input type="hidden" name="Subject" id="orderSubject" />
             <!-- Address / order details are folded into this Description on submit -->
             <input type="hidden" name="Description" id="orderDescription" />
             <div class="form-row">
@@ -532,6 +533,10 @@
                   var el = document.getElementById(id);
                   return el && el.value ? el.value.trim() : '';
                 }
+                var name = [v('firstName'), v('lastName')].filter(Boolean).join(' ');
+                var subject = name;
+                if (v('country')) subject += (subject ? ' — ' : '') + v('country');
+                document.getElementById('orderSubject').value = subject || 'DiscoX Order Enquiry';
                 var lines = ['Order enquiry submitted from the DiscoX website.', ''];
                 if (v('phone'))    lines.push('Phone: ' + v('phone'));
                 lines.push('', 'Shipping address:');
