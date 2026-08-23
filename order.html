@@ -462,65 +462,97 @@
           <h2>Outside the UK</h2>
           <p>Shipping outside the UK? Drop me your address and details. I'll come back with shipping costs and payment options for your country.</p>
 
-          <form class="order-form" action="https://formspree.io/f/mvgwqgyq" method="POST">
-            <input type="hidden" name="_subject" value="International DiscoX Order Enquiry" />
+          <form class="order-form" id="orderForm" action="https://desk.zoho.eu/support/WebToCase" method="POST" enctype="multipart/form-data">
+            <!-- Zoho Desk Web-to-Ticket — required hidden fields (do not remove) -->
+            <input type="hidden" name="xnQsjsdp" value="edbsn15cf0e47295cbca5dac0c058c754c136" />
+            <input type="hidden" name="xmIwtLD" value="edbsn1110dc3093c08340d89349a09043d03e531e6dd7f22f2985210aeab6fa40f7a2" />
+            <input type="hidden" name="xJdfEaS" value="" />
+            <input type="hidden" name="actionType" value="Q2FzZXM=" />
+            <input type="hidden" name="returnURL" value="https://discox.co.uk/submitted" />
+            <input type="hidden" name="Subject" value="International DiscoX Order Enquiry" />
+            <!-- Address / order details are folded into this Description on submit -->
+            <input type="hidden" name="Description" id="orderDescription" />
             <div class="form-row">
               <div>
                 <label for="name">Full name</label>
-                <input type="text" name="name" id="name" required />
+                <input type="text" name="Contact Name" id="name" required />
               </div>
               <div>
                 <label for="company">Company (optional)</label>
-                <input type="text" name="company" id="company" />
+                <input type="text" id="company" />
               </div>
             </div>
             <div class="form-row">
               <div>
                 <label for="email">Email</label>
-                <input type="email" name="email" id="email" required />
+                <input type="email" name="Email" id="email" required />
               </div>
               <div>
                 <label for="phone">Contact number</label>
-                <input type="tel" name="phone" id="phone" required placeholder="+44 7700 900123" />
+                <input type="tel" name="Phone" id="phone" required placeholder="+44 7700 900123" />
               </div>
             </div>
             <div>
               <label for="address1">Address line 1</label>
-              <input type="text" name="address1" id="address1" required placeholder="Street address, P.O. box" />
+              <input type="text" id="address1" required placeholder="Street address, P.O. box" />
             </div>
             <div>
               <label for="address2">Address line 2 (optional)</label>
-              <input type="text" name="address2" id="address2" placeholder="Apartment, suite, unit, building, floor" />
+              <input type="text" id="address2" placeholder="Apartment, suite, unit, building, floor" />
             </div>
             <div class="form-row">
               <div>
                 <label for="city">City / Town</label>
-                <input type="text" name="city" id="city" required />
+                <input type="text" id="city" required />
               </div>
               <div>
                 <label for="state">State / Region / Province</label>
-                <input type="text" name="state" id="state" />
+                <input type="text" id="state" />
               </div>
             </div>
             <div class="form-row">
               <div>
                 <label for="postcode">Postal / ZIP code</label>
-                <input type="text" name="postcode" id="postcode" required />
+                <input type="text" id="postcode" required />
               </div>
               <div>
                 <label for="country">Country</label>
-                <input type="text" name="country" id="country" required placeholder="e.g. France, USA, Australia" />
+                <input type="text" id="country" required placeholder="e.g. France, USA, Australia" />
               </div>
             </div>
             <div>
               <label for="message">Message</label>
-              <textarea name="message" id="message" rows="4" placeholder="Any questions or details about your order…"></textarea>
+              <textarea id="message" rows="4" placeholder="Any questions or details about your order…"></textarea>
             </div>
             <button type="submit" class="btn-link btn-link--outline">
               Send enquiry
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </button>
           </form>
+          <script>
+            (function () {
+              var form = document.getElementById('orderForm');
+              if (!form) return;
+              form.addEventListener('submit', function () {
+                function v(id) {
+                  var el = document.getElementById(id);
+                  return el && el.value ? el.value.trim() : '';
+                }
+                var lines = ['Order enquiry submitted from the DiscoX website.', ''];
+                if (v('company'))  lines.push('Company: ' + v('company'));
+                if (v('phone'))    lines.push('Phone: ' + v('phone'));
+                lines.push('', 'Shipping address:');
+                if (v('address1')) lines.push(v('address1'));
+                if (v('address2')) lines.push(v('address2'));
+                var cityLine = [v('city'), v('state')].filter(Boolean).join(', ');
+                if (v('postcode')) cityLine = (cityLine ? cityLine + ' ' : '') + v('postcode');
+                if (cityLine)      lines.push(cityLine);
+                if (v('country'))  lines.push(v('country'));
+                if (v('message'))  lines.push('', 'Message:', v('message'));
+                document.getElementById('orderDescription').value = lines.join('\n');
+              });
+            })();
+          </script>
         </div>
 
       </div>
