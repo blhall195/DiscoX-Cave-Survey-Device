@@ -482,10 +482,6 @@
                 <input type="text" name="Contact Name" id="lastName" required />
               </div>
             </div>
-            <div>
-              <label for="company">Company (optional)</label>
-              <input type="text" id="company" />
-            </div>
             <div class="form-row">
               <div>
                 <label for="email">Email</label>
@@ -543,7 +539,6 @@
                   return el && el.value ? el.value.trim() : '';
                 }
                 var lines = ['Order enquiry submitted from the DiscoX website.', ''];
-                if (v('company'))  lines.push('Company: ' + v('company'));
                 if (v('phone'))    lines.push('Phone: ' + v('phone'));
                 lines.push('', 'Shipping address:');
                 if (v('address1')) lines.push(v('address1'));
