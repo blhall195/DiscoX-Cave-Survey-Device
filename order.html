@@ -437,30 +437,24 @@
     <div class="container">
       <div class="order-grid">
 
-        <!-- UK Orders (featured) -->
+        <!-- Product summary -->
         <div class="order-card order-card--featured">
-          <span class="order-card__tag">● UK · Out of stock — pre-order</span>
-          <h2>UK orders</h2>
-          <p>Devices are currently sold out. Get in touch to reserve a pre-order and I'll confirm a build slot and payment. Price includes UK shipping.</p>
-          <div class="order-card__price">£450 <small>incl. UK shipping</small></div>
+          <span class="order-card__tag">● Out of stock — pre-order</span>
+          <h2>Reserve your DiscoX</h2>
+          <p>Every DiscoX is hand-built, calibrated, and bench-tested in the UK. Devices are currently sold out — fill in your details and I'll confirm a build slot, shipping, and payment for your location, UK or international.</p>
+          <div class="order-card__price">£450 <small>plus shipping</small></div>
           <ul class="order-card__list">
             <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Hand-assembled and bench-tested</li>
             <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Factory-calibrated, ready to survey</li>
-            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Tracked Royal Mail shipping</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Tracked shipping, UK &amp; worldwide</li>
           </ul>
-          <div class="order-card__cta">
-            <a href="index.html#contact" class="btn-link btn-link--primary">
-              Get in touch to pre-order
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </a>
-          </div>
         </div>
 
-        <!-- International Orders -->
+        <!-- Order form (everyone) -->
         <div class="order-card">
-          <span class="order-card__tag">● International</span>
-          <h2>Outside the UK</h2>
-          <p>Shipping outside the UK? Drop me your address and details. I'll come back with shipping costs and payment options for your country.</p>
+          <span class="order-card__tag">● Order / pre-order</span>
+          <h2>Your details</h2>
+          <p>UK or international — add your address and contact info below and I'll set up your order, confirm shipping to your location, and come back to you with payment.</p>
 
           <form class="order-form" id="orderForm" action="https://desk.zoho.eu/support/WebToCase" method="POST" enctype="multipart/form-data">
             <!-- Zoho Desk Web-to-Ticket — required hidden fields (do not remove) -->
@@ -469,7 +463,7 @@
             <input type="hidden" name="xJdfEaS" value="" />
             <input type="hidden" name="actionType" value="Q2FzZXM=" />
             <input type="hidden" name="returnURL" value="https://discox.co.uk/submitted" />
-            <input type="hidden" name="Subject" value="International DiscoX Order Enquiry" />
+            <input type="hidden" name="Subject" value="DiscoX Order Enquiry" />
             <!-- Address / order details are folded into this Description on submit -->
             <input type="hidden" name="Description" id="orderDescription" />
             <div class="form-row">
@@ -517,7 +511,7 @@
               </div>
               <div>
                 <label for="country">Country</label>
-                <input type="text" name="Country" id="country" required placeholder="e.g. France, USA, Australia" />
+                <input type="text" name="Country" id="country" required placeholder="e.g. United Kingdom, France, USA" />
               </div>
             </div>
             <div>
