@@ -1135,13 +1135,15 @@
             View source on GitHub
           </a>
         </div>
-        <form class="contact__form" action="https://desk.zoho.eu/support/WebToCase" method="POST" enctype="multipart/form-data">
+        <form class="contact__form" id="contactForm" action="https://desk.zoho.eu/support/WebToCase" method="POST" enctype="multipart/form-data">
           <!-- Zoho Desk Web-to-Ticket — required hidden fields (do not remove) -->
           <input type="hidden" name="xnQsjsdp" value="edbsn15cf0e47295cbca5dac0c058c754c136" />
           <input type="hidden" name="xmIwtLD" value="edbsn1110dc3093c08340d89349a09043d03e531e6dd7f22f2985210aeab6fa40f7a2" />
           <input type="hidden" name="xJdfEaS" value="" />
           <input type="hidden" name="actionType" value="Q2FzZXM=" />
           <input type="hidden" name="returnURL" value="https://discox.co.uk/submitted" />
+          <!-- Subject is auto-built from name + country on submit -->
+          <input type="hidden" name="Subject" id="contactSubject" />
           <div class="form-row">
             <div>
               <label for="firstName">First name</label>
@@ -1158,8 +1160,8 @@
               <input type="email" name="Email" id="email" required />
             </div>
             <div>
-              <label for="subject">Subject</label>
-              <input type="text" name="Subject" id="subject" required />
+              <label for="country">Country</label>
+              <input type="text" id="country" required placeholder="e.g. United Kingdom" />
             </div>
           </div>
           <div style="margin-bottom:16px;">
@@ -1171,6 +1173,20 @@
             <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </button>
         </form>
+        <script>
+          (function () {
+            var form = document.getElementById('contactForm');
+            if (!form) return;
+            form.addEventListener('submit', function () {
+              function v(id) { var el = document.getElementById(id); return el && el.value ? el.value.trim() : ''; }
+              var name = [v('firstName'), v('lastName')].filter(Boolean).join(' ');
+              var country = v('country');
+              var subject = name;
+              if (country) subject += (subject ? ' — ' : '') + country;
+              document.getElementById('contactSubject').value = subject || 'Website contact enquiry';
+            });
+          })();
+        </script>
       </div>
     </div>
   </section>
