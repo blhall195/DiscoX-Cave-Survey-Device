@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>News — DiscoX Cave Survey Device</title>
+  <title>Upgrading the design — DiscoX News</title>
   <script>
     (function () {
       var m = document.cookie.match(/(?:^|;\s*)googtrans=\/[^\/]+\/([a-z\-]+)/);
@@ -23,13 +23,14 @@
       --accent: oklch(0.78 var(--accent-chroma) var(--accent-hue));
       --accent-2: oklch(0.62 var(--accent-chroma) var(--accent-hue));
       --accent-soft: oklch(0.78 var(--accent-chroma) var(--accent-hue) / 0.12);
+      --red: #ff5a4a; --green: #5edc9e; --blue: #6fb5ff;
       --font-sans: 'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;
       --font-display: 'Space Grotesk', 'Inter Tight', sans-serif;
       --font-mono: 'JetBrains Mono', ui-monospace, monospace;
       --max-w: 1200px; --radius: 6px; --radius-lg: 14px;
     }
     html { scroll-behavior: smooth; scroll-padding-top: 90px; }
-    body { font-family: var(--font-sans); background: var(--bg); color: var(--text); line-height: 1.65; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    body { font-family: var(--font-sans); background: var(--bg); color: var(--text); line-height: 1.75; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
     ::selection { background: var(--accent); color: #000; }
     img { max-width: 100%; display: block; }
     a { color: var(--accent); text-decoration: none; transition: opacity .2s; }
@@ -60,28 +61,28 @@
       .nav__cta { margin: 8px 0 0; justify-content: center; }
     }
 
-    /* PAGE HEADER */
-    .page-header { padding: 140px 0 50px; position: relative; overflow: hidden; border-bottom: 1px solid var(--border); }
-    .page-header::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(to right, rgba(255,255,255,.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,.02) 1px, transparent 1px); background-size: 56px 56px; mask-image: radial-gradient(ellipse at 50% 100%, #000 10%, transparent 70%); -webkit-mask-image: radial-gradient(ellipse at 50% 100%, #000 10%, transparent 70%); pointer-events: none; }
-    .page-header h1 { font-family: var(--font-display); font-size: clamp(2.4rem, 5.2vw, 4rem); font-weight: 500; letter-spacing: -.035em; line-height: 1.02; margin: 16px 0 14px; position: relative; }
-    .page-header h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
-    .page-header p { color: var(--text-mid); max-width: 560px; font-size: 1.05rem; position: relative; }
+    /* ARTICLE */
+    .article { padding: 130px 0 80px; }
+    .article__wrap { max-width: 760px; margin: 0 auto; }
+    .article__back { font-family: var(--font-mono); font-size: .78rem; color: var(--text-dim); display: inline-flex; align-items: center; gap: 6px; margin-bottom: 24px; }
+    .article__back:hover { color: var(--accent); }
+    .article h1 { font-family: var(--font-display); font-size: clamp(2.1rem, 4.4vw, 3.1rem); font-weight: 500; letter-spacing: -.035em; line-height: 1.05; margin: 14px 0 16px; }
+    .article__dek { color: var(--text-mid); font-size: 1.1rem; max-width: 620px; margin-bottom: 40px; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
+    .article h2 { font-family: var(--font-display); font-size: clamp(1.5rem, 2.6vw, 1.9rem); font-weight: 500; letter-spacing: -.025em; line-height: 1.1; margin: 48px 0 18px; }
+    .article h3 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 500; letter-spacing: -.01em; margin: 36px 0 10px; }
+    .article p { color: var(--text-mid); margin-bottom: 16px; }
+    .article strong { color: var(--text); font-weight: 600; }
 
-    /* POST LIST */
-    .posts { padding: 20px 0 80px; }
-    .post {
-      display: grid; grid-template-columns: 150px 1fr; gap: 36px;
-      padding: 40px 0; border-bottom: 1px solid var(--border); align-items: start;
-    }
-    .post:hover .post__title { color: var(--accent); }
-    @media (max-width: 720px) { .post { grid-template-columns: 1fr; gap: 12px; } }
-    .post__meta { font-family: var(--font-mono); font-size: .74rem; letter-spacing: .08em; text-transform: uppercase; color: var(--text-dim); padding-top: 6px; }
-    .post__tag { display: inline-block; margin-top: 10px; color: var(--accent); }
-    .post__title { font-family: var(--font-display); font-size: clamp(1.4rem, 2.6vw, 1.85rem); font-weight: 500; letter-spacing: -.02em; line-height: 1.15; margin-bottom: 12px; color: var(--text); transition: color .2s; }
-    .post__excerpt { color: var(--text-mid); font-size: .98rem; margin-bottom: 16px; max-width: 640px; }
-    .post__more { font-family: var(--font-mono); font-size: .78rem; color: var(--accent); display: inline-flex; align-items: center; gap: 8px; }
-    .post__more svg { width: 14px; height: 14px; transition: transform .2s; }
-    .post:hover .post__more svg { transform: translateX(3px); }
+    /* Improvement blocks */
+    .improve { border-left: 2px solid var(--border-2); padding: 4px 0 4px 24px; margin: 28px 0; }
+    .improve h3 { margin-top: 0; }
+    .improve p:last-child { margin-bottom: 0; }
+
+    /* Figure (photo slots) */
+    .figure { margin: 28px 0; }
+    .figure img { width: 100%; height: auto; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); }
+    .figure figcaption { color: var(--text-dim); margin-top: 10px; font-size: .84rem; line-height: 1.5; font-style: italic; }
+    .photo-slot { display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 120px; border: 1px dashed var(--border-2); border-radius: var(--radius-lg); color: var(--text-dim); font-family: var(--font-mono); font-size: .74rem; letter-spacing: .1em; text-transform: uppercase; background: var(--surface); margin: 24px 0; }
 
     /* FOOTER */
     footer { border-top: 1px solid var(--border); padding: 48px 0 32px; font-size: .82rem; color: var(--text-dim); background: var(--bg); }
@@ -124,55 +125,69 @@
     </div>
   </nav>
 
-  <!-- ════ PAGE HEADER ════ -->
-  <header class="page-header">
+  <!-- ════ ARTICLE ════ -->
+  <article class="article">
     <div class="container">
-      <p class="mono-label">News &amp; updates</p>
-      <h1>Project <em>news</em>.</h1>
-      <p>Progress updates on the DiscoX — new features, production batches, and what's coming next.</p>
+      <div class="article__wrap">
+
+        <a href="news.html" class="article__back">← All news</a>
+        <p class="mono-label">Update · 24 August 2026</p>
+        <h1>Upgrading the design</h1>
+        <p class="article__dek">Seven changes landing in the next batch &mdash; a phase-shift laser module, a fully embedded PCB, a higher-precision tilt sensor, an MJF-printed case and more.</p>
+
+        <!--
+          ADD A PHOTO ANYWHERE LIKE THIS:
+          <figure class="figure">
+            <img src="news/your-photo.jpg" alt="Describe the photo">
+            <figcaption>Optional caption.</figcaption>
+          </figure>
+          (put image files in a "news/" folder next to this page)
+        -->
+
+        <p>I've taken a short break from manufacturing to upgrade the design and introduce some improvements based on user feedback. Specifically, these include:</p>
+
+        <div class="improve">
+          <h3>A new generation of laser module</h3>
+          <p>The new module calculates distance from the phase shift of the reflected light, rather than time of flight. The result is significantly greater range and much faster readings.</p>
+        </div>
+
+        <div class="improve">
+          <h3>A fully embedded PCB</h3>
+          <p>The original DiscoX was built from an array of commercially available breakout boards socketed onto a custom PCB. This made it easier to design conceptually, as most of the hard engineering work had already been done — but it also had major drawbacks. It made the PCB much larger than it needed to be, with more points of failure, and it made the electronic design difficult to optimise, as I was constrained by what the breakout boards were capable of.</p>
+          <p>So I went back to the drawing board and made a fully pick-and-placed board with the exact components I needed to make the DiscoX work the way I wanted.</p>
+        </div>
+
+        <div class="improve">
+          <h3>A high-precision tilt sensor</h3>
+          <p>The DiscoX already used a best-in-class compass sensor for direction (the RM3100), but the tilt sensor had room for improvement. I've since upgraded the board to use an SCA3000, which provides a much lower noise floor and more accurate readings.</p>
+        </div>
+
+        <div class="improve">
+          <h3>A Multi Jet Fusion 3D-printed case</h3>
+          <p>The cases for the original DiscoX were 3D printed on a hobby printer and required an internal coating of epoxy to prevent water ingress. The newer cases are made using commercial-grade printers that fuse layers of nylon powder to form parts, followed by a vapour-smoothing process to create a sealed finish. This produces cases of comparable quality to injection-moulded parts.</p>
+        </div>
+
+        <div class="improve">
+          <h3>Custom membrane buttons</h3>
+          <p>The biggest complaint I had from users was that the buttons weren't very intuitive — a consequence of being limited to what I could buy off the shelf. I now have a fully custom-made membrane button cover that provides a more ergonomic, easy-to-use interface.</p>
+        </div>
+
+        <div class="improve">
+          <h3>A larger screen</h3>
+          <p>I've increased the screen size to 1.5″, making it easier to read the menu and see readings on the display.</p>
+        </div>
+
+        <div class="improve">
+          <h3>A multi-tone buzzer</h3>
+          <p>Previously I used the buzzer built into the laser module, which only had a single tone — making it harder for users to distinguish between legs, splays and anomalous shots. I've since upgraded to a larger 8-bit buzzer capable of many different tones.</p>
+        </div>
+
+        <h2>What's next</h2>
+        <p>I should soon have enough devices to fulfil any pre-orders — I'm currently waiting on the final few parts to come through before going into production. I'm hoping to have a more streamlined supply chain in place for future batches, now that I'm fairly settled on this design.</p>
+
+      </div>
     </div>
-  </header>
-
-  <!-- ════ POSTS ════ -->
-  <section class="posts">
-    <div class="container">
-
-      <!--
-        ═══ TO ADD A NEW POST ═══
-        1. Create a copy of "news-discox-introduction.html", rename it (e.g. news-batch-2.html), and write the article.
-        2. Copy the <article> block below, paste it at the TOP of this list (newest first), and update the date, title, excerpt and link.
-      -->
-
-      <a href="news-upgrading-the-design.html" class="post" style="text-decoration:none;">
-        <div class="post__meta">
-          24 Aug 2026
-          <span class="post__tag">● Update</span>
-        </div>
-        <div>
-          <h2 class="post__title">Upgrading the design</h2>
-          <p class="post__excerpt">Seven changes landing in the next batch — a phase-shift laser module, a fully embedded PCB, a higher-precision tilt sensor, an MJF-printed case, custom membrane buttons, a larger screen and a multi-tone buzzer.</p>
-          <span class="post__more">Read the article
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </span>
-        </div>
-      </a>
-
-      <a href="news-discox-introduction.html" class="post" style="text-decoration:none;">
-        <div class="post__meta">
-          24 Aug 2026
-          <span class="post__tag">● Update</span>
-        </div>
-        <div>
-          <h2 class="post__title">DiscoX Introduction</h2>
-          <p class="post__excerpt">Where the DiscoX came from, how it grew out of Phil Underwood’s SAP6 project, and why it moved from cheap-and-buildable towards quality and robustness.</p>
-          <span class="post__more">Read the article
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </span>
-        </div>
-      </a>
-
-    </div>
-  </section>
+  </article>
 
   <!-- ════ FOOTER ════ -->
   <footer>
