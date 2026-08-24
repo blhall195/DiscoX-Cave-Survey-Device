@@ -645,35 +645,51 @@
             <div class="docs-section__num">06 · Worth checking if you need one</div>
             <h2>Calibration</h2>
             <p>Calibrate whenever you survey in a new area or if readings seem off. Run a <strong>Mag Field Check</strong> before each trip to quickly verify accuracy at your survey site.</p>
-            <p>To start: press <strong>Button 3</strong> → <strong>Enter Calibration</strong> → choose a type.</p>
+            <p>To start: press <strong>Button 3</strong> &rarr; <strong>Enter Calibration</strong>.</p>
+            <p>Calibration is performed in two stages. <strong>Stage 1</strong> corrects for sensor bias; <strong>Stage 2</strong> corrects for the alignment between the sensors and the laser. Together they take 80 readings.</p>
 
-            <div class="calib-grid">
-              <div class="calib-card">
-                <span class="calib-card__tag">80 readings</span>
-                <h4>Long calibration</h4>
-                <p>The most accurate option. Runs in two phases automatically.</p>
-                <p><strong>Phase 1 — Ellipsoid (56):</strong> aim in a wide variety of directions. Best approach is to imagine you're standing in a cube and firing at every face and corner while rotating 90° after each shot. No need to be exact.</p>
-                <p><strong>Phase 2 — Alignment (24):</strong> 3 sets of 8 readings. Each set aims at one fixed point; barrel-roll ~45° between shots. Pick 3 fixed points roughly 90° apart. Three beeps = next direction.</p>
-                <div class="keys"><b>B1</b> record <b>· B3</b> undo<br><b>B1+B2</b> save <b>· B2 hold</b> discard</div>
-              </div>
+            <h3>Stage 1 &mdash; Sensor bias</h3>
+            <p>With perfect sensors under perfect conditions, taking survey readings in every orientation would trace out a sphere. In practice, manufacturing variance between sensors and the presence of metal components mean an uncalibrated device traces something closer to a rugby ball.</p>
+            <p>The fix is to take readings across a well-distributed set of orientations, then compute a correction matrix that can be applied to the raw sensor readings to give a less biased output.</p>
 
-              <div class="calib-card">
-                <span class="calib-card__tag">24 readings</span>
-                <h4>Short calibration</h4>
-                <p>Faster option for quick field recalibration.</p>
-                <p>Take <strong>3 sets of 8 readings</strong>. For each set, barrel-roll the laser around a single fixed point, rotating ~45° between shots. The 3 points should be roughly 90° apart — e.g. ahead, right, vertically up.</p>
-                <p>The same 24 readings fit both ellipsoid and alignment, so this is quicker but less thorough than the long version.</p>
-                <div class="keys"><b>B1</b> record <b>· B3</b> undo<br><b>B1+B2</b> save <b>· B2 hold</b> discard</div>
-              </div>
+            <div class="calib-card">
+              <span class="calib-card__tag">56 readings</span>
+              <h4>Taking the readings</h4>
+              <p>You could take readings in random directions and still get a decent result, but a recommended set usually does better. For the DiscoX, aim roughly at every face and corner of an imaginary cube &mdash; 14 positions &mdash; rolling the device 90&deg; four times at each one.</p>
+              <p>This is similar to the DistoX, but with no need to worry about where the laser is pointing.</p>
+              <p>Do try to keep the device still as you take each reading. Rest your arms on a non-magnetic surface while moving it, or use a jig &mdash; this helps ensure the accelerometer readings are correct.</p>
+              <div class="keys"><b>B1</b> record <b>&middot; B3</b> undo<br><b>B1+B2</b> save <b>&middot; B2 hold</b> discard</div>
+            </div>
 
-              <div class="calib-card">
-                <span class="calib-card__tag">Field check</span>
-                <h4>Mag field check</h4>
-                <p>Verifies calibration accuracy without re-running a full cal.</p>
-                <p>Shoot a fixed target, walk to it, shoot back. Repeat for <strong>3+ pairs</strong> in different directions. The device records each pair's bearing error and calculates an overall correction amplitude.</p>
-                <p>A consistently high amplitude means it's time for a full long calibration.</p>
-                <div class="keys"><b>B1</b> take shot<br><b>B2</b> finish (after 2+ pairs)</div>
+            <h3>Stage 2 &mdash; Sensor alignment</h3>
+            <p>When the sensors are mounted in the device it is very difficult to get them perfectly aligned with the laser, so an alignment function is needed to correct for the residual error.</p>
+
+            <div class="calib-card">
+              <span class="calib-card__tag">24 readings</span>
+              <h4>Taking the readings</h4>
+              <p>Point the device at a target and barrel-roll it, taking <strong>8 readings</strong> evenly distributed around the same axis as the laser. Repeat this twice more, aiming at targets in completely different directions.</p>
+              <div class="keys"><b>B1</b> record <b>&middot; B3</b> undo<br><b>B1+B2</b> save <b>&middot; B2 hold</b> discard</div>
+            </div>
+
+            <div class="cb cb--info">
+              <svg class="cb__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/>
+              </svg>
+              <div class="cb__body">
+                <div class="cb__title">Hold it steady</div>
+                <p>For this stage it is very important that the readings are on point and the device is steady. The best way I have found is to sit down with your head and back supported, rest the back of the device against your nose, then lock your arms to your sides and take the readings as described above. This gives the most stable base, because there are very few degrees of freedom between you and the device.</p>
               </div>
+            </div>
+
+            <h3>Mag field check</h3>
+            <p>Verifies calibration accuracy without re-running a full calibration.</p>
+
+            <div class="calib-card">
+              <span class="calib-card__tag">Field check</span>
+              <h4>How it works</h4>
+              <p>Shoot a fixed target, walk to it, shoot back. Repeat for <strong>3+ pairs</strong> in different directions. The device records each pair's bearing error and calculates an overall correction amplitude.</p>
+              <p>A consistently high amplitude means it's time to run a full calibration.</p>
+              <div class="keys"><b>B1</b> take shot<br><b>B2</b> finish (after 2+ pairs)</div>
             </div>
 
             <h3>Quality metrics</h3>
@@ -708,7 +724,7 @@
 
             <h3>Onboard menu</h3>
             <ul>
-              <li><strong>Enter Calibration</strong> — run Long or Short calibration, perform a Mag Field Check, or view last results.</li>
+              <li><strong>Enter Calibration</strong> — run a calibration, perform a Mag Field Check, or view last results.</li>
               <li><strong>Anomaly Detection</strong> — toggle warnings for nearby metallic objects (helmet lights, SRT kit, bolts).</li>
               <li><strong>Laser Timeout</strong> — 30s · 60s · 2m · 5m · 15m · 30m.</li>
               <li><strong>Auto Shutdown</strong> — 5 · 10 · 15 · 30 · 60 min · 2h.</li>
