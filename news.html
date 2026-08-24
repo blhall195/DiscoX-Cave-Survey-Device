@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>News — DiscoX Cave Survey Device</title>
+  <script>
+    (function () {
+      var m = document.cookie.match(/(?:^|;\s*)googtrans=\/[^\/]+\/([a-z\-]+)/);
+      if (m && m[1] && m[1] !== 'en') document.documentElement.classList.add('gt-translated');
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --accent-hue: 38; --accent-chroma: 0.18;
+      --bg: #0a0907; --bg-2: #121010; --surface: #17140f; --surface-2: #1f1b14;
+      --border: #2b251b; --border-2: #3a3225;
+      --text: #f0ebdf; --text-mid: #b5a88f; --text-dim: #8a7e68;
+      --accent: oklch(0.78 var(--accent-chroma) var(--accent-hue));
+      --accent-2: oklch(0.62 var(--accent-chroma) var(--accent-hue));
+      --accent-soft: oklch(0.78 var(--accent-chroma) var(--accent-hue) / 0.12);
+      --font-sans: 'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      --font-display: 'Space Grotesk', 'Inter Tight', sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+      --max-w: 1200px; --radius: 6px; --radius-lg: 14px;
+    }
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+    body { font-family: var(--font-sans); background: var(--bg); color: var(--text); line-height: 1.65; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    ::selection { background: var(--accent); color: #000; }
+    img { max-width: 100%; display: block; }
+    a { color: var(--accent); text-decoration: none; transition: opacity .2s; }
+    a:hover { opacity: .85; }
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 32px; position: relative; }
+    .mono-label { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .18em; color: var(--text-dim); }
+    .mono-label::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+
+    /* NAV */
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(10,9,7,.75); backdrop-filter: blur(20px) saturate(140%); -webkit-backdrop-filter: blur(20px) saturate(140%); border-bottom: 1px solid var(--border); }
+    .nav__inner { max-width: var(--max-w); margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .nav__logo { font-family: var(--font-display); font-weight: 600; font-size: 1.15rem; color: var(--text); letter-spacing: -.02em; display: flex; align-items: center; gap: 10px; }
+    .nav__logo img { height: 30px; width: auto; display: block; }
+    .nav__logo em { font-style: normal; color: var(--accent); }
+    .nav__links { display: flex; gap: 2px; align-items: center; }
+    .nav__links a { font-size: .86rem; font-weight: 500; color: var(--text-mid); padding: 8px 14px; border-radius: 6px; transition: all .2s; }
+    .nav__links a:hover { color: var(--text); background: var(--surface-2); opacity: 1; }
+    .nav__links a.active { color: var(--accent); }
+    .nav__cta { background: var(--accent) !important; color: #000 !important; font-weight: 600 !important; padding: 9px 18px !important; margin-left: 6px; display: inline-flex !important; align-items: center; gap: 8px; }
+    .nav__cta:hover { background: var(--accent-2) !important; }
+    .nav__toggle { display: none; background: none; border: none; color: var(--text); cursor: pointer; padding: 8px; }
+    .nav__toggle svg { width: 22px; height: 22px; }
+    @media (max-width: 920px) {
+      .nav__toggle { display: block; }
+      .nav__links { display: none; flex-direction: column; position: absolute; top: 68px; left: 0; right: 0; background: rgba(10,9,7,.96); backdrop-filter: blur(18px); border-bottom: 1px solid var(--border); padding: 16px 20px 20px; align-items: stretch; }
+      .nav__links.open { display: flex; }
+      .nav__links a { padding: 12px 14px; width: 100%; }
+      .nav__cta { margin: 8px 0 0; justify-content: center; }
+    }
+
+    /* PAGE HEADER */
+    .page-header { padding: 140px 0 50px; position: relative; overflow: hidden; border-bottom: 1px solid var(--border); }
+    .page-header::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(to right, rgba(255,255,255,.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,.02) 1px, transparent 1px); background-size: 56px 56px; mask-image: radial-gradient(ellipse at 50% 100%, #000 10%, transparent 70%); -webkit-mask-image: radial-gradient(ellipse at 50% 100%, #000 10%, transparent 70%); pointer-events: none; }
+    .page-header h1 { font-family: var(--font-display); font-size: clamp(2.4rem, 5.2vw, 4rem); font-weight: 500; letter-spacing: -.035em; line-height: 1.02; margin: 16px 0 14px; position: relative; }
+    .page-header h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
+    .page-header p { color: var(--text-mid); max-width: 560px; font-size: 1.05rem; position: relative; }
+
+    /* POST LIST */
+    .posts { padding: 20px 0 80px; }
+    .post {
+      display: grid; grid-template-columns: 150px 1fr; gap: 36px;
+      padding: 40px 0; border-bottom: 1px solid var(--border); align-items: start;
+    }
+    .post:hover .post__title { color: var(--accent); }
+    @media (max-width: 720px) { .post { grid-template-columns: 1fr; gap: 12px; } }
+    .post__meta { font-family: var(--font-mono); font-size: .74rem; letter-spacing: .08em; text-transform: uppercase; color: var(--text-dim); padding-top: 6px; }
+    .post__tag { display: inline-block; margin-top: 10px; color: var(--accent); }
+    .post__title { font-family: var(--font-display); font-size: clamp(1.4rem, 2.6vw, 1.85rem); font-weight: 500; letter-spacing: -.02em; line-height: 1.15; margin-bottom: 12px; color: var(--text); transition: color .2s; }
+    .post__excerpt { color: var(--text-mid); font-size: .98rem; margin-bottom: 16px; max-width: 640px; }
+    .post__more { font-family: var(--font-mono); font-size: .78rem; color: var(--accent); display: inline-flex; align-items: center; gap: 8px; }
+    .post__more svg { width: 14px; height: 14px; transition: transform .2s; }
+    .post:hover .post__more svg { transform: translateX(3px); }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border); padding: 48px 0 32px; font-size: .82rem; color: var(--text-dim); background: var(--bg); }
+    .footer__top { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; padding-bottom: 32px; border-bottom: 1px solid var(--border); margin-bottom: 24px; }
+    @media (max-width: 680px) { .footer__top { grid-template-columns: 1fr; } }
+    .footer__brand-logo { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; color: var(--text); margin-bottom: 10px; }
+    .footer__brand-logo img { height: 26px; }
+    .footer__brand-logo em { font-style: normal; color: var(--accent); }
+    .footer__brand p { font-size: .85rem; max-width: 320px; }
+    .footer__col h4 { font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .14em; color: var(--text); margin-bottom: 14px; font-weight: 500; }
+    .footer__col a { display: block; color: var(--text-dim); margin-bottom: 8px; font-size: .85rem; }
+    .footer__col a:hover { color: var(--accent); }
+    .footer__bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); letter-spacing: .06em; }
+    .i18n-switch { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-top: 18px; padding-top: 16px; border-top: 1px dashed var(--border-2); }
+    .i18n-switch button { background: transparent; color: var(--text-dim); border: 1px solid var(--border-2); border-radius: 100px; padding: 4px 12px; cursor: pointer; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; transition: all .15s; }
+    .i18n-switch button:hover { color: var(--text); border-color: var(--text-mid); }
+    .i18n-switch button.active { color: #000; background: var(--accent); border-color: var(--accent); }
+    #google_translate_element { display: none !important; }
+    html.gt-translated .nav { top: 40px; }
+  </style>
+</head>
+<body>
+
+  <!-- ════ NAV ════ -->
+  <nav class="nav" role="navigation">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo"><img src="logo.png" alt="DiscoX logo" /><span>Disco<em>X</em></span></a>
+      <button class="nav__toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav__links').classList.toggle('open')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="nav__links">
+        <a href="index.html">Home</a>
+        <a href="index.html#features">Features</a>
+        <a href="index.html#specs">Specs</a>
+        <a href="user-guide.html">User Guide</a>
+        <a href="firmware.html">Firmware</a>
+        <a href="news.html" class="active">News</a>
+        <a href="order.html" class="nav__cta">Order</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ════ PAGE HEADER ════ -->
+  <header class="page-header">
+    <div class="container">
+      <p class="mono-label">News &amp; updates</p>
+      <h1>Project <em>news</em>.</h1>
+      <p>Progress updates on the DiscoX — new features, production batches, and what's coming next.</p>
+    </div>
+  </header>
+
+  <!-- ════ POSTS ════ -->
+  <section class="posts">
+    <div class="container">
+
+      <!--
+        ═══ TO ADD A NEW POST ═══
+        1. Create a copy of "news-discox-introduction.html", rename it (e.g. news-batch-2.html), and write the article.
+        2. Copy the <article> block below, paste it at the TOP of this list (newest first), and update the date, title, excerpt and link.
+      -->
+
+      <a href="news-discox-introduction.html" class="post" style="text-decoration:none;">
+        <div class="post__meta">
+          24 Aug 2026
+          <span class="post__tag">● Update</span>
+        </div>
+        <div>
+          <h2 class="post__title">DiscoX Introduction</h2>
+          <p class="post__excerpt">Where the DiscoX came from, how it grew out of the SAP6 project, and the upgrades landing in the next batch — a new phase-shift laser module, a fully embedded PCB, a higher-precision tilt sensor, an MJF-printed case, custom membrane buttons and more.</p>
+          <span class="post__more">Read the article
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ════ FOOTER ════ -->
+  <footer>
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <div class="footer__brand-logo"><img src="logo.png" alt="" /> <span>Disco<em>X</em></span></div>
+          <p>A cave survey device built for modern caving. Hand-built in the UK, fully repairable, fully yours.</p>
+        </div>
+        <div class="footer__col">
+          <h4>Product</h4>
+          <a href="index.html#features">Features</a>
+          <a href="index.html#specs">Specs</a>
+          <a href="order.html">Order</a>
+        </div>
+        <div class="footer__col">
+          <h4>Resources</h4>
+          <a href="user-guide.html">User guide</a>
+          <a href="firmware.html">Firmware</a>
+          <a href="news.html">News</a>
+          <a href="https://github.com/blhall195/Mr_Zappy" target="_blank">GitHub</a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© 2026 DISCOX · BUILT ON <a href="https://stic.readthedocs.io/" target="_blank">SAP6</a></span>
+        <span>MADE IN THE UNITED KINGDOM</span>
+      </div>
+      <div class="i18n-switch" role="group" aria-label="Language">
+        <button type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="fr">FR</button>
+        <button type="button" data-lang="de">DE</button>
+        <button type="button" data-lang="es">ES</button>
+        <button type="button" data-lang="it">IT</button>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.nav__links a').forEach(a => {
+      a.addEventListener('click', () => document.querySelector('.nav__links').classList.remove('open'));
+    });
+  </script>
+  <script src="assets/i18n.js"></script>
+</body>
+</html>

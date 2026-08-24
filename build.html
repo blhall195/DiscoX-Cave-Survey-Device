@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Build — DiscoX Cave Survey Device</title>
+  <script>
+    (function () {
+      var m = document.cookie.match(/(?:^|;\s*)googtrans=\/[^\/]+\/([a-z\-]+)/);
+      if (m && m[1] && m[1] !== 'en') document.documentElement.classList.add('gt-translated');
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --accent-hue: 38;
+      --accent-chroma: 0.18;
+      --bg: #0a0907;
+      --bg-2: #121010;
+      --surface: #17140f;
+      --surface-2: #1f1b14;
+      --border: #2b251b;
+      --border-2: #3a3225;
+      --text: #f0ebdf;
+      --text-mid: #b5a88f;
+      --text-dim: #8a7e68;
+      --accent: oklch(0.78 var(--accent-chroma) var(--accent-hue));
+      --accent-2: oklch(0.62 var(--accent-chroma) var(--accent-hue));
+      --accent-soft: oklch(0.78 var(--accent-chroma) var(--accent-hue) / 0.12);
+      --accent-glow: oklch(0.78 var(--accent-chroma) var(--accent-hue) / 0.22);
+      --red: #ff5a4a;
+      --green: #5edc9e;
+      --blue: #6fb5ff;
+      --purple: #c08bff;
+      --font-sans: 'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      --font-display: 'Space Grotesk', 'Inter Tight', sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+      --max-w: 1200px;
+      --radius: 6px;
+      --radius-lg: 14px;
+    }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    ::selection { background: var(--accent); color: #000; }
+    img { max-width: 100%; display: block; }
+    a { color: var(--accent); text-decoration: none; transition: opacity .2s; }
+    a:hover { opacity: .85; }
+
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 32px; position: relative; }
+
+    code {
+      font-family: var(--font-mono); font-size: .85em;
+      background: var(--surface-2); padding: 2px 6px; border-radius: 4px;
+      color: var(--accent); border: 1px solid var(--border);
+    }
+
+    .mono-label {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: .18em; color: var(--text-dim);
+    }
+    .mono-label::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+
+    /* ============ NAV ============ */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(10,9,7,.75);
+      backdrop-filter: blur(20px) saturate(140%);
+      -webkit-backdrop-filter: blur(20px) saturate(140%);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav__inner {
+      max-width: var(--max-w); margin: 0 auto; padding: 0 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 68px;
+    }
+    .nav__logo {
+      font-family: var(--font-display); font-weight: 600; font-size: 1.15rem;
+      color: var(--text); letter-spacing: -.02em;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .nav__logo img { height: 30px; width: auto; display: block; }
+    .nav__logo em { font-style: normal; color: var(--accent); }
+    .nav__links { display: flex; gap: 2px; align-items: center; }
+    .nav__links a {
+      font-size: .86rem; font-weight: 500; color: var(--text-mid);
+      padding: 8px 14px; border-radius: 6px; transition: all .2s;
+    }
+    .nav__links a:hover { color: var(--text); background: var(--surface-2); opacity: 1; }
+    .nav__links a.active { color: var(--accent); }
+    .nav__cta {
+      background: var(--accent) !important; color: #000 !important;
+      font-weight: 600 !important; padding: 9px 18px !important;
+      margin-left: 6px; display: inline-flex !important; align-items: center; gap: 8px;
+    }
+    .nav__cta:hover { background: var(--accent-2) !important; }
+
+    .nav__toggle { display: none; background: none; border: none; color: var(--text); cursor: pointer; padding: 8px; }
+    .nav__toggle svg { width: 22px; height: 22px; }
+    @media (max-width: 920px) {
+      .nav__toggle { display: block; }
+      .nav__links {
+        display: none; flex-direction: column; position: absolute;
+        top: 68px; left: 0; right: 0; background: rgba(10,9,7,.96);
+        backdrop-filter: blur(18px);
+        border-bottom: 1px solid var(--border);
+        padding: 16px 20px 20px;
+        align-items: stretch;
+      }
+      .nav__links.open { display: flex; }
+      .nav__links a { padding: 12px 14px; width: 100%; }
+      .nav__cta { margin: 8px 0 0; justify-content: center; }
+    }
+
+    /* ============ PAGE HEADER ============ */
+    .page-header {
+      padding: 140px 0 60px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-header::before {
+      content: ''; position: absolute; inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.02) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(ellipse at 50% 100%, #000 10%, transparent 70%);
+      -webkit-mask-image: radial-gradient(ellipse at 50% 100%, #000 10%, transparent 70%);
+      pointer-events: none;
+    }
+    .page-header__inner {
+      display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; align-items: end;
+      position: relative;
+    }
+    @media (max-width: 820px) { .page-header__inner { grid-template-columns: 1fr; } }
+    .page-header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 5.2vw, 4rem);
+      font-weight: 500; letter-spacing: -.035em; line-height: 1.02;
+      margin: 16px 0 14px;
+    }
+    .page-header h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
+    .page-header p { color: var(--text-mid); max-width: 560px; font-size: 1.05rem; }
+
+    .source-card {
+      background: var(--surface); border: 1px solid var(--border);
+      padding: 22px; border-radius: var(--radius-lg);
+      font-family: var(--font-mono); font-size: .82rem; line-height: 1.9;
+    }
+    .source-card h4 {
+      font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--text-dim); margin-bottom: 12px; font-weight: 500;
+    }
+    .source-card a { color: var(--text); display: flex; justify-content: space-between; }
+    .source-card a span:last-child { color: var(--text-dim); }
+    .source-card a:hover { color: var(--accent); opacity: 1; }
+
+    /* ============ BUILD ============ */
+    .build { padding: 72px 0 80px; }
+    .build__intro { max-width: 640px; margin-bottom: 36px; }
+    .build__intro h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 2.6vw, 2rem);
+      font-weight: 500; letter-spacing: -.025em;
+      line-height: 1.1; margin: 12px 0 14px;
+    }
+    .build__intro p { color: var(--text-mid); }
+
+    .build-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+    @media (max-width: 720px) { .build-grid { grid-template-columns: 1fr; } }
+    .build-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 28px 26px;
+      display: flex; flex-direction: column;
+    }
+    .build-card__icon {
+      width: 46px; height: 46px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--accent-soft); color: var(--accent);
+      margin-bottom: 18px;
+    }
+    .build-card__icon svg { width: 22px; height: 22px; }
+    .build-card h3 {
+      font-family: var(--font-display); font-weight: 500; font-size: 1.15rem;
+      letter-spacing: -.01em; margin-bottom: 8px;
+    }
+    .build-card p { font-size: .9rem; color: var(--text-mid); margin-bottom: 22px; flex: 1; line-height: 1.55; }
+
+    /* Callout */
+    .cb {
+      display: flex; gap: 14px;
+      background: var(--surface); border: 1px solid var(--border);
+      padding: 18px 20px; border-radius: var(--radius);
+      margin: 0 0 36px;
+      border-left: 3px solid var(--accent);
+      font-size: .92rem;
+    }
+    .cb--info { border-left-color: var(--blue); }
+    .cb__icon { flex-shrink: 0; width: 18px; height: 18px; margin-top: 2px; color: var(--accent); }
+    .cb--info .cb__icon { color: var(--blue); }
+    .cb__title {
+      font-family: var(--font-mono); font-size: 10.5px;
+      text-transform: uppercase; letter-spacing: .14em;
+      color: var(--text); margin-bottom: 6px; font-weight: 500;
+    }
+    .cb__body p { margin: 0; color: var(--text-mid); font-size: .9rem; }
+
+    /* Buttons */
+    .btn-link {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 12px 18px; border-radius: var(--radius);
+      font-family: var(--font-sans); font-size: .85rem; font-weight: 600;
+      transition: all .18s; width: 100%;
+    }
+    .btn-link--primary { background: var(--accent); color: #000; }
+    .btn-link--primary:hover { background: var(--accent-2); opacity: 1; }
+    .btn-link--outline {
+      background: transparent; color: var(--text); border: 1px solid var(--border-2);
+    }
+    .btn-link--outline:hover { border-color: var(--text-mid); opacity: 1; background: var(--surface-2); }
+
+    /* ============ FOOTER ============ */
+    footer {
+      border-top: 1px solid var(--border); padding: 48px 0 32px;
+      font-size: .82rem; color: var(--text-dim); background: var(--bg);
+    }
+    .footer__top {
+      display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px;
+      padding-bottom: 32px; border-bottom: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+    @media (max-width: 680px) { .footer__top { grid-template-columns: 1fr; } }
+    .footer__brand-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-display); font-weight: 600; font-size: 1.05rem;
+      color: var(--text); margin-bottom: 10px;
+    }
+    .footer__brand-logo img { height: 26px; }
+    .footer__brand-logo em { font-style: normal; color: var(--accent); }
+    .footer__brand p { font-size: .85rem; max-width: 320px; }
+    .footer__col h4 {
+      font-family: var(--font-mono); font-size: 10.5px;
+      text-transform: uppercase; letter-spacing: .14em;
+      color: var(--text); margin-bottom: 14px; font-weight: 500;
+    }
+    .footer__col a { display: block; color: var(--text-dim); margin-bottom: 8px; font-size: .85rem; }
+    .footer__col a:hover { color: var(--accent); }
+    .footer__bottom {
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+      font-family: var(--font-mono); font-size: 11px; color: var(--text-dim);
+      letter-spacing: .06em;
+    }
+
+    /* ============ LANGUAGE SWITCH ============ */
+    .i18n-switch {
+      display: flex; gap: 6px; justify-content: center; flex-wrap: wrap;
+      margin-top: 18px; padding-top: 16px;
+      border-top: 1px dashed var(--border-2);
+    }
+    .i18n-switch button {
+      background: transparent; color: var(--text-dim);
+      border: 1px solid var(--border-2); border-radius: 100px;
+      padding: 4px 12px; cursor: pointer;
+      font-family: var(--font-mono); font-size: 10.5px;
+      letter-spacing: .1em; text-transform: uppercase;
+      transition: all .15s;
+    }
+    .i18n-switch button:hover { color: var(--text); border-color: var(--text-mid); }
+    .i18n-switch button.active { color: #000; background: var(--accent); border-color: var(--accent); }
+
+    #google_translate_element { display: none !important; }
+    .goog-tooltip, .goog-tooltip:hover { background: transparent !important; box-shadow: none !important; border: none !important; }
+    .goog-text-highlight { background: transparent !important; box-shadow: none !important; }
+    html.gt-translated .nav { top: 40px; }
+  </style>
+</head>
+<body>
+
+  <!-- ════ NAV ════ -->
+  <nav class="nav" role="navigation">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo"><img src="logo.png" alt="DiscoX logo" /><span>Disco<em>X</em></span></a>
+      <button class="nav__toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav__links').classList.toggle('open')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="nav__links">
+        <a href="index.html">Home</a>
+        <a href="index.html#features">Features</a>
+        <a href="index.html#specs">Specs</a>
+        <a href="user-guide.html">User Guide</a>
+        <a href="firmware.html">Firmware</a>
+        <a href="news.html">News</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="order.html" class="nav__cta">Order</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ════ PAGE HEADER ════ -->
+  <header class="page-header">
+    <div class="container">
+      <div class="page-header__inner">
+        <div>
+          <p class="mono-label">Open source · Build it yourself</p>
+          <h1>Build your own <em>DiscoX</em>.</h1>
+          <p>I'd honestly recommend buying rather than building a DiscoX. The cost of building one DiscoX yourself is probably higher than just buying one from us. We've had plenty of practice so you can rest assured you'd be getting a quality device. That said, I'm keen for people to understand how the device is put together. So here are all my design files!</p>
+        </div>
+        <div class="source-card">
+          <h4>Source &amp; firmware</h4>
+          <a href="https://github.com/blhall195/Mr_Zappy" target="_blank"><span>Source code</span><span>GitHub ↗</span></a>
+          <a href="firmware.html"><span>Firmware</span><span>.uf2 →</span></a>
+          <a href="https://stic.readthedocs.io/" target="_blank"><span>Platform</span><span>SAP6 ↗</span></a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ════ BUILD ════ -->
+  <section class="build">
+    <div class="container">
+
+      <div class="cb cb--info">
+        <svg class="cb__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/>
+        </svg>
+        <div class="cb__body">
+          <div class="cb__title">Prefer one ready-made?</div>
+          <p>These files are for DIY builders. If you'd rather have a hand-built, calibrated unit shipped to you, <a href="order.html">order a finished DiscoX</a> instead.</p>
+        </div>
+      </div>
+
+      <div class="build__intro">
+        <p class="mono-label">Parts &amp; downloads</p>
+        <h2>Everything you need</h2>
+        <p>Download the printable and manufacturable parts below, then order the off-the-shelf components from the linked suppliers.</p>
+      </div>
+
+      <div class="build-grid">
+
+        <!-- PCB files -->
+        <div class="build-card">
+          <div class="build-card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 4v3M15 4v3M9 17v3M15 17v3M4 9h3M4 15h3M17 9h3M17 15h3"/><circle cx="12" cy="12" r="2"/></svg>
+          </div>
+          <h3>PCB files</h3>
+          <p>The DiscoX PCB design files, ready to send to your PCB manufacturer of choice.</p>
+          <a href="Parts/PCB%20files.zip" download class="btn-link btn-link--primary">
+            Download PCB files.zip
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v14M6 13l6 6 6-6M5 21h14"/></svg>
+          </a>
+        </div>
+
+        <!-- Buttons -->
+        <div class="build-card">
+          <div class="build-card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <h3>Buttons</h3>
+          <p>The DiscoX button parts, ready for 3D printing.</p>
+          <a href="Parts/Buttons.zip" download class="btn-link btn-link--primary">
+            Download Buttons.zip
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v14M6 13l6 6 6-6M5 21h14"/></svg>
+          </a>
+        </div>
+
+        <!-- Case -->
+        <div class="build-card">
+          <div class="build-card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          </div>
+          <h3>Case</h3>
+          <p>The STL file for the DiscoX2 case, ready for 3D printing.</p>
+          <a href="Parts/DiscoX2%20case.stl" download class="btn-link btn-link--primary">
+            Download DiscoX2 case.stl
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v14M6 13l6 6 6-6M5 21h14"/></svg>
+          </a>
+        </div>
+
+        <!-- Top cover cutout -->
+        <div class="build-card">
+          <div class="build-card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="7" cy="8" r="1"/><circle cx="17" cy="8" r="1"/><circle cx="7" cy="16" r="1"/><circle cx="17" cy="16" r="1"/></svg>
+          </div>
+          <h3>Top cover cutout</h3>
+          <p>The DXF cutout file for the device's top cover, ready for laser cutting.</p>
+          <a href="Parts/DiscoX%20DXF%20cutout.dxf" download class="btn-link btn-link--primary">
+            Download DiscoX DXF cutout.dxf
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v14M6 13l6 6 6-6M5 21h14"/></svg>
+          </a>
+        </div>
+
+        <!-- Laser module -->
+        <div class="build-card">
+          <div class="build-card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="2"/><line x1="7" y1="12" x2="21" y2="12"/><line x1="15" y1="9" x2="15" y2="15"/><line x1="18" y1="10.5" x2="18" y2="13.5"/></svg>
+          </div>
+          <h3>Laser distance module</h3>
+          <p>The DiscoX uses a MesKernel laser distance module for range measurement. Order it directly from the manufacturer.</p>
+          <a href="https://www.meskernel.com/laser-distance-moudules/63657075.html" target="_blank" rel="noopener" class="btn-link btn-link--outline">
+            View on MesKernel
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ FOOTER ════ -->
+  <footer>
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <div class="footer__brand-logo"><img src="logo.png" alt="" /> <span>Disco<em>X</em></span></div>
+          <p>A cave survey device built for modern caving. Hand-built in the UK, fully repairable, fully yours.</p>
+        </div>
+        <div class="footer__col">
+          <h4>Product</h4>
+          <a href="index.html#features">Features</a>
+          <a href="index.html#specs">Specs</a>
+          <a href="order.html">Order</a>
+        </div>
+        <div class="footer__col">
+          <h4>Resources</h4>
+          <a href="user-guide.html">User guide</a>
+          <a href="firmware.html">Firmware</a>
+          <a href="news.html">News</a>
+          <a href="https://github.com/blhall195/Mr_Zappy" target="_blank">GitHub</a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© 2026 DISCOX · BUILT ON <a href="https://stic.readthedocs.io/" target="_blank">SAP6</a></span>
+        <span>MADE IN THE UNITED KINGDOM</span>
+      </div>
+      <div class="i18n-switch" role="group" aria-label="Language">
+        <button type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="fr">FR</button>
+        <button type="button" data-lang="de">DE</button>
+        <button type="button" data-lang="es">ES</button>
+        <button type="button" data-lang="it">IT</button>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile nav close on link click
+    document.querySelectorAll('.nav__links a').forEach(a => {
+      a.addEventListener('click', () => document.querySelector('.nav__links').classList.remove('open'));
+    });
+  </script>
+  <script src="assets/i18n.js"></script>
+</body>
+</html>
