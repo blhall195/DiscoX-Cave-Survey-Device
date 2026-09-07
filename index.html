@@ -1136,29 +1136,27 @@
             View source on GitHub
           </a>
         </div>
-        <form class="contact__form" id="contactForm" action="https://desk.zoho.eu/support/WebToCase" method="POST" enctype="multipart/form-data">
-          <!-- Zoho Desk Web-to-Ticket — required hidden fields (do not remove) -->
-          <input type="hidden" name="xnQsjsdp" value="edbsn15cf0e47295cbca5dac0c058c754c136" />
-          <input type="hidden" name="xmIwtLD" value="edbsn1110dc3093c08340d89349a09043d03e531e6dd7f22f2985210aeab6fa40f7a2" />
-          <input type="hidden" name="xJdfEaS" value="" />
-          <input type="hidden" name="actionType" value="Q2FzZXM=" />
-          <input type="hidden" name="returnURL" value="https://discox.co.uk/submitted" />
+        <form class="contact__form" id="contactForm" action="https://formspree.io/f/mvgwqgyq" method="POST">
+          <!-- Formspree — emails the enquiry straight to info@discox.co.uk -->
+          <input type="hidden" name="_next" value="https://discox.co.uk/submitted" />
           <!-- Subject is auto-built from name + country on submit -->
-          <input type="hidden" name="Subject" id="contactSubject" />
+          <input type="hidden" name="_subject" id="contactSubject" />
+          <!-- Honeypot: bots fill this, people never see it -->
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true" />
           <div class="form-row">
             <div>
               <label for="firstName">First name</label>
-              <input type="text" name="First Name" id="firstName" />
+              <input type="text" name="First name" id="firstName" />
             </div>
             <div>
               <label for="lastName">Last name</label>
-              <input type="text" name="Contact Name" id="lastName" required />
+              <input type="text" name="Last name" id="lastName" required />
             </div>
           </div>
           <div class="form-row">
             <div>
               <label for="email">Email</label>
-              <input type="email" name="Email" id="email" required />
+              <input type="email" name="email" id="email" required />
             </div>
             <div>
               <label for="country">Country</label>
@@ -1167,7 +1165,7 @@
           </div>
           <div style="margin-bottom:16px;">
             <label for="message">Message</label>
-            <textarea name="Description" id="message" rows="5" required></textarea>
+            <textarea name="message" id="message" rows="5" required></textarea>
           </div>
           <button type="submit" class="btn btn--primary">
             Send message
@@ -1184,7 +1182,8 @@
               var country = v('country');
               var subject = name;
               if (country) subject += (subject ? ' — ' : '') + country;
-              document.getElementById('contactSubject').value = subject || 'Website contact enquiry';
+              document.getElementById('contactSubject').value =
+                'Website enquiry' + (subject ? ' — ' + subject : '');
             });
           })();
         </script>
