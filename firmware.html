@@ -10,6 +10,20 @@
       if (m && m[1] && m[1] !== 'en') document.documentElement.classList.add('gt-translated');
     })();
   </script>
+  <script>
+    /* Device version: "v2" (new device) is the default. ?device=v1 or the
+       on-page switch pins the other one; the choice is shared with the user
+       guide. Applied before paint so the page never flashes the wrong
+       release. */
+    (function () {
+      var v = null;
+      try {
+        var q = location.search.match(/[?&]device=(v1|v2)/);
+        v = q ? q[1] : localStorage.getItem('discox-device');
+      } catch (e) {}
+      document.documentElement.classList.add(v === 'v1' ? 'ver-v1' : 'ver-v2');
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
@@ -428,6 +442,30 @@
     }
 
     /* CTA download row */
+    /* ============ DEVICE VERSION SWITCH ============ */
+    html.ver-v2 [data-ver="v1"], html.ver-v1 [data-ver="v2"] { display: none !important; }
+
+    .ver-switch {
+      display: inline-flex; gap: 4px; padding: 4px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 100px; margin: 18px 0 2px;
+    }
+    .ver-switch button {
+      background: transparent; color: var(--text-mid);
+      border: none; border-radius: 100px;
+      padding: 7px 16px; cursor: pointer;
+      font-family: var(--font-mono); font-size: 10.5px;
+      letter-spacing: .1em; text-transform: uppercase;
+      transition: all .15s; white-space: nowrap;
+    }
+    .ver-switch button:hover { color: var(--text); }
+    .ver-switch button.active { color: #000; background: var(--accent); }
+
+    .ver-note {
+      font-family: var(--font-mono); font-size: 11px; letter-spacing: .04em;
+      color: var(--text-dim); margin-top: 10px !important;
+    }
+
     .download-row {
       display: flex; flex-wrap: wrap; gap: 10px;
       margin: 18px 0 6px;
@@ -532,7 +570,8 @@
     <div class="container">
       <div class="page-header__inner">
         <div>
-          <p class="mono-label">Documentation · v1</p>
+          <p class="mono-label" data-ver="v2">Documentation · New device</p>
+          <p class="mono-label" data-ver="v1">Documentation · Original device</p>
           <h1>Firmware <em>updates</em>.</h1>
           <p>The DiscoX is designed to be easy to update. This page walks you through entering Firmware Update Mode and dropping a new <code>.uf2</code> file onto the device.</p>
         </div>
@@ -571,7 +610,29 @@
             <h2>Latest firmware</h2>
             <p>The DiscoX runs an open-source C++ firmware built on the SAP6 platform. Keep an eye on this page for bug fixes, calibration improvements and new features.</p>
 
-            <div class="download-row">
+            <div class="ver-switch" role="group" aria-label="Which device do you have?">
+              <button type="button" data-set-ver="v2">New device</button>
+              <button type="button" data-set-ver="v1">Original device</button>
+            </div>
+            <p class="ver-note" data-ver="v2">Showing the new device — the one with the large orange trigger button.</p>
+            <p class="ver-note" data-ver="v1">Showing the original device — four identical blue buttons, no orange trigger.</p>
+
+            <div class="download-row" data-ver="v2">
+              <a href="mrzappy-v2.0.1.uf2" download="mrzappy-v2.0.1.uf2" class="btn-link btn-link--primary">
+                Download mrzappy-v2.0.1.uf2
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v14M6 13l6 6 6-6M5 21h14"/></svg>
+              </a>
+              <a href="https://github.com/blhall195/Mr_Zappy/releases" target="_blank" class="btn-link btn-link--outline">
+                All releases on GitHub
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
+              </a>
+            </div>
+
+            <p data-ver="v2" style="font-family: var(--font-mono); font-size: .8rem; color: var(--text-dim); letter-spacing: .04em; margin-top: 8px;">
+              v2.0.1 · released 2026-09-14 · sha256 <code>7941…03c5</code>
+            </p>
+
+            <div class="download-row" data-ver="v1">
               <a href="firmware.uf2" download="discox-v0.1.0.uf2" class="btn-link btn-link--primary">
                 Download discox-v0.1.0.uf2
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v14M6 13l6 6 6-6M5 21h14"/></svg>
@@ -582,7 +643,7 @@
               </a>
             </div>
 
-            <p style="font-family: var(--font-mono); font-size: .8rem; color: var(--text-dim); letter-spacing: .04em; margin-top: 8px;">
+            <p data-ver="v1" style="font-family: var(--font-mono); font-size: .8rem; color: var(--text-dim); letter-spacing: .04em; margin-top: 8px;">
               v0.1.0 · released 2026-06-19 · sha256 <code>4c5c…23e0a</code>
             </p>
           </article>
@@ -662,7 +723,8 @@
             <p>With the device in Firmware Update Mode and the <code>DISCOX</code> drive mounted, you're ready to flash.</p>
 
             <div class="dropzone" aria-hidden="true">
-              <div class="dropzone__file">discox-v0.1.0.uf2</div>
+              <div class="dropzone__file" data-ver="v2">mrzappy-v2.0.1.uf2</div>
+              <div class="dropzone__file" data-ver="v1">discox-v0.1.0.uf2</div>
               <div class="dropzone__arrow"><span></span>drop<span></span></div>
               <div class="dropzone__drive">
                 <span class="icon">D</span>
@@ -785,6 +847,42 @@
   </footer>
 
   <script>
+    // ── Device version switch (new device / original device) ──────────
+    // The class is already on <html> from the head script; this wires the
+    // buttons, remembers the choice (shared with the user guide), and keeps
+    // ?device= in the URL so a link lands on the right release.
+    (function () {
+      var root = document.documentElement;
+      var buttons = document.querySelectorAll('[data-set-ver]');
+
+      function paint() {
+        var ver = root.classList.contains('ver-v1') ? 'v1' : 'v2';
+        buttons.forEach(function (b) {
+          var on = b.getAttribute('data-set-ver') === ver;
+          b.classList.toggle('active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+      }
+
+      function setVer(ver) {
+        root.classList.remove('ver-v1', 'ver-v2');
+        root.classList.add('ver-' + ver);
+        try { localStorage.setItem('discox-device', ver); } catch (e) {}
+        if (window.history && history.replaceState) {
+          var url = new URL(window.location.href);
+          url.searchParams.set('device', ver);
+          history.replaceState(null, '', url.toString());
+        }
+        paint();
+        updateActive();
+      }
+
+      buttons.forEach(function (b) {
+        b.addEventListener('click', function () { setVer(b.getAttribute('data-set-ver')); });
+      });
+      paint();
+    })();
+
     // Active nav highlighting
     const sections = document.querySelectorAll('.docs-section[id]');
     const navLinks = document.querySelectorAll('.docs-nav a');
