@@ -10,6 +10,19 @@
       if (m && m[1] && m[1] !== 'en') document.documentElement.classList.add('gt-translated');
     })();
   </script>
+  <script>
+    /* Device version: "v2" (new device) is the default. ?device=v1 or the
+       on-page switch pins the other one; the choice is remembered. Applied
+       before paint so the page never flashes the wrong guide. */
+    (function () {
+      var v = null;
+      try {
+        var q = location.search.match(/[?&]device=(v1|v2)/);
+        v = q ? q[1] : localStorage.getItem('discox-device');
+      } catch (e) {}
+      document.documentElement.classList.add(v === 'v1' ? 'ver-v1' : 'ver-v2');
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
@@ -405,6 +418,45 @@
     }
     .setting-table td:last-child { color: var(--text-mid); }
 
+    /* ============ DEVICE VERSION SWITCH ============ */
+    html.ver-v2 [data-ver="v1"], html.ver-v1 [data-ver="v2"] { display: none !important; }
+
+    .ver-switch {
+      display: inline-flex; gap: 4px; padding: 4px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 100px; margin-top: 20px;
+    }
+    .ver-switch button {
+      background: transparent; color: var(--text-mid);
+      border: none; border-radius: 100px;
+      padding: 7px 16px; cursor: pointer;
+      font-family: var(--font-mono); font-size: 10.5px;
+      letter-spacing: .1em; text-transform: uppercase;
+      transition: all .15s; white-space: nowrap;
+    }
+    .ver-switch button:hover { color: var(--text); }
+    .ver-switch button.active { color: #000; background: var(--accent); }
+
+    .ver-switch--nav {
+      display: flex; width: 100%; margin: 0 0 18px; gap: 2px;
+      border-radius: var(--radius);
+    }
+    .ver-switch--nav button { flex: 1; padding: 7px 4px; font-size: 9.5px; border-radius: var(--radius); }
+
+    .ver-note {
+      font-family: var(--font-mono); font-size: 11px; letter-spacing: .04em;
+      color: var(--text-dim); margin-top: 12px !important;
+    }
+
+    /* Button diagram */
+    .button-diagram--5 { grid-template-columns: repeat(5, 1fr); }
+    @media (max-width: 620px) {
+      .button-diagram, .button-diagram--5 { grid-template-columns: repeat(2, 1fr); }
+    }
+    .btn-dia--fire { border-color: var(--accent); background: var(--accent-soft); }
+    .btn-dia__n--icon { height: 1.8rem; display: flex; align-items: center; justify-content: center; }
+    .btn-dia__n--icon svg { width: 22px; height: 22px; stroke: var(--accent); fill: none; stroke-width: 2; stroke-linecap: round; }
+
     /* ============ FOOTER ============ */
     footer {
       border-top: 1px solid var(--border); padding: 48px 0 32px;
@@ -491,9 +543,16 @@
     <div class="container">
       <div class="page-header__inner">
         <div>
-          <p class="mono-label">Documentation · v1</p>
+          <p class="mono-label" data-ver="v2">Documentation · New device</p>
+          <p class="mono-label" data-ver="v1">Documentation · Original device</p>
           <h1>User guide.</h1>
           <p>A comprehensive guide to using your DiscoX survey device, if anythings missing let me know and I'll get it updated.</p>
+          <div class="ver-switch" role="group" aria-label="Which device do you have?">
+            <button type="button" data-set-ver="v2">New device</button>
+            <button type="button" data-set-ver="v1">Original device</button>
+          </div>
+          <p class="ver-note" data-ver="v2">Showing the new device — the one with the large orange trigger button.</p>
+          <p class="ver-note" data-ver="v1">Showing the original device — four identical buttons, no orange trigger.</p>
         </div>
         <div class="toc-card">
           <h4>On this page</h4>
@@ -516,6 +575,10 @@
 
         <!-- Side nav -->
         <nav class="docs-nav" aria-label="Documentation navigation">
+          <div class="ver-switch ver-switch--nav" role="group" aria-label="Which device do you have?">
+            <button type="button" data-set-ver="v2">New</button>
+            <button type="button" data-set-ver="v1">Original</button>
+          </div>
           <div class="docs-nav__label">Contents</div>
           <a href="#buttons"    data-n="01">Buttons</a>
           <a href="#readings"   data-n="02">Readings</a>
@@ -532,6 +595,68 @@
           <article class="docs-section" id="buttons">
             <div class="docs-section__num">01 · Controls</div>
             <h2>Buttons</h2>
+            <div data-ver="v2">
+            <p>The new DiscoX has four membrane buttons plus a dedicated power button. The large orange button is the trigger — everything else sits around it.</p>
+
+            <div class="button-diagram button-diagram--5">
+              <div class="btn-dia btn-dia--fire">
+                <div class="btn-dia__n">1</div>
+                <div class="btn-dia__lbl">Trigger</div>
+                <div class="btn-dia__sub">menu: select</div>
+              </div>
+              <div class="btn-dia">
+                <div class="btn-dia__n">2</div>
+                <div class="btn-dia__lbl">Up · Splay</div>
+                <div class="btn-dia__sub">menu: up</div>
+              </div>
+              <div class="btn-dia">
+                <div class="btn-dia__n">3</div>
+                <div class="btn-dia__lbl">Down · Laser</div>
+                <div class="btn-dia__sub">menu: down</div>
+              </div>
+              <div class="btn-dia">
+                <div class="btn-dia__n">4</div>
+                <div class="btn-dia__lbl">Menu</div>
+                <div class="btn-dia__sub">menu: select</div>
+              </div>
+              <div class="btn-dia">
+                <div class="btn-dia__n btn-dia__n--icon">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v9"/><path d="M6.6 6.6a8 8 0 1 0 10.9 0"/></svg>
+                </div>
+                <div class="btn-dia__lbl">Power</div>
+                <div class="btn-dia__sub">on / off / reset</div>
+              </div>
+            </div>
+
+            <h3>In normal mode</h3>
+            <ul>
+              <li><strong>Orange trigger</strong> — high-accuracy shots. The first press wakes the laser so you can aim; the second takes the shot.</li>
+              <li><strong>Up</strong> — short press: take a splay shot. Hold for ~1.5s: toggle Disco mode.</li>
+              <li><strong>Down</strong> — turn the laser off between shots to save battery. The trigger brings it back.</li>
+              <li><strong>Menu</strong> — open the settings menu.</li>
+              <li><strong>Power</strong> — press to turn the device on or off.</li>
+            </ul>
+            <p>In <strong>menu mode</strong>, Up and Down scroll and either the <strong>orange trigger</strong> or <strong>Menu</strong> selects. The power button still turns the device off.</p>
+
+            <div class="cb">
+              <svg class="cb__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3v9"/><path d="M6.6 6.6a8 8 0 1 0 10.9 0"/>
+              </svg>
+              <div class="cb__body">
+                <div class="cb__title">Hint · The power button is also the reset button</div>
+                <p>If the device software ever crashes, <strong>hold the power button down for 3 seconds</strong>. That cuts power in hardware, no matter what the firmware is doing — press it again to start back up.</p>
+              </div>
+            </div>
+
+            <h3>Hold at power-on</h3>
+            <p>Holding a button while the device starts up gets you to the recovery routes:</p>
+            <ul>
+              <li><strong>Down</strong> — boot straight into USB drive mode, even if the settings file is unreadable.</li>
+              <li><strong>Down + Menu</strong> — storage factory reset. You're asked to confirm; hold the trigger for 3s to erase. This wipes settings, calibration and any unsent shots, so it's the last resort.</li>
+            </ul>
+            </div>
+
+            <div data-ver="v1">
             <p>The DiscoX has four buttons.</p>
 
             <div class="button-diagram">
@@ -565,12 +690,68 @@
               <li><strong>Button 4 (Bottom)</strong> — power on/off.</li>
             </ul>
             <p>In <strong>menu mode</strong>, Buttons 1/2/3 become scroll-up, scroll-down, and select. Button 4 still powers the device off.</p>
+            </div>
           </article>
 
           <!-- ── 02 READINGS ── -->
           <article class="docs-section" id="readings">
             <div class="docs-section__num">02 · Field operation</div>
             <h2>Taking readings</h2>
+            <div data-ver="v2">
+            <p>Once set up the DiscoX is a simple point-and-shoot device. The <strong>large orange button</strong> triggers high-accuracy shots: press it once to wake the laser and aim, then press again to shoot. The device checks it is being held steady (LED turns <strong>red</strong>) before taking the shot (LED turns <strong>green</strong>) — so hold it still until the shot lands.</p>
+            <p>To save battery, and to show you the shot worked, <strong>the laser turns off after every high-accuracy shot</strong>. The next press of the trigger turns it back on for aiming.</p>
+
+            <h3>LED states</h3>
+            <div class="led-list">
+              <div class="led-item led-item--red">
+                <span class="led-item__dot"></span>
+                <span class="led-item__label">Red</span>
+                <span class="led-item__desc">Checking you're steady — hold the device still.</span>
+              </div>
+              <div class="led-item led-item--green">
+                <span class="led-item__dot"></span>
+                <span class="led-item__label">Green</span>
+                <span class="led-item__desc">Shot taken and saved.</span>
+              </div>
+              <div class="led-item led-item--purple">
+                <span class="led-item__dot"></span>
+                <span class="led-item__label">Purple</span>
+                <span class="led-item__desc">Station recognised — three shots agreed.</span>
+              </div>
+            </div>
+
+            <h3>Splay shots</h3>
+            <p>The <strong>up button</strong> takes splay shots. These skip the stability check, so they are not as precise as shots taken with the orange button, but they are much faster to take — and the laser stays on afterwards so you can fire off the next one straight away.</p>
+            <p>Splays don't count towards station detection, so a run of splays between stations never interferes with your legs.</p>
+
+            <h3>Turning the laser off</h3>
+            <p>To turn the laser off between shots press the <strong>down button</strong>. It only ever turns the beam off — a stray press underground can cost you a re-press, but it will never light the laser unasked. The orange trigger brings it back. The laser also switches itself off after the laser timeout (2 minutes by default).</p>
+
+            <h3>Stations</h3>
+            <p>If 3 shots are taken at the same target 3 times in a row, the device registers this as a station: it flashes white, plays a rising fanfare, blinks the laser, and then <strong>lights up purple</strong>. Shots count as the same target when their end points fall within the leg tolerance of each other (10&nbsp;cm by default — <strong>Menu → Settings → Leg tol</strong>).</p>
+            <p>The display stays frozen on the reading until you take the next shot.</p>
+
+            <h3>Sounds</h3>
+            <p>The buzzer has a different sound for each event, so you can survey without looking at the device:</p>
+            <ul>
+              <li><strong>Click</strong> — shot started.</li>
+              <li><strong>Bleep</strong> — reading taken and saved.</li>
+              <li><strong>Rising fanfare</strong> — station recognised.</li>
+              <li><strong>Falling womp</strong> — something went wrong, check the screen.</li>
+            </ul>
+
+            <div class="cb cb--info">
+              <svg class="cb__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/>
+              </svg>
+              <div class="cb__body">
+                <div class="cb__title">Rejected shots</div>
+                <p>Very dark or shiny targets can bounce back too little light for the laser to trust the distance it measured. Rather than record a plausible-but-wrong number the DiscoX rejects the shot and plays the error tone — re-sight onto a better target, or put something matt where you're aiming.</p>
+              </div>
+            </div>
+            </div>
+
+            <div data-ver="v1">
             <p>Press <strong>Button 1</strong> or <strong>Button 2</strong> (short press) to take a reading. The device waits until the sensors have settled before accepting a shot — hold the device still during readings.</p>
 
             <h3>LED states</h3>
@@ -599,6 +780,7 @@
 
             <h3>Laser wake</h3>
             <p>If the laser has auto-timed-out, pressing any measure button re-enables it with a short beep before taking the shot.</p>
+            </div>
           </article>
 
           <!-- ── 03 DISPLAY ── -->
@@ -618,8 +800,16 @@
           <article class="docs-section" id="disco">
             <div class="docs-section__num">04 · Why not</div>
             <h2>Disco mode</h2>
+            <div data-ver="v2">
+            <p>Hold the <strong>up button</strong> for about 1.5 seconds to toggle disco/rave mode. The laser shuts off and the LED cycles through colours. <strong>Shake the device</strong> for faster colour cycling and full brightness.</p>
+            <p>While disco is running the <strong>down button</strong> starts and stops the tune.</p>
+            <p>To get back to surveying, press the <strong>orange trigger</strong> — or hold the up button again to switch disco off where it stands.</p>
+            </div>
+
+            <div data-ver="v1">
             <p>Hold <strong>Button 2 for 2 seconds</strong> to toggle disco/rave mode. The laser shuts off and the NeoPixel cycles through colours. <strong>Shake the device</strong> for faster colour cycling and full brightness.</p>
             <p>To exit press any of the buttons other than the power button. The laser restarts and the device returns to normal operation.</p>
+            </div>
           </article>
 
           <!-- ── 05 BLUETOOTH ── -->
@@ -628,6 +818,7 @@
             <h2>Bluetooth &amp; memory</h2>
             <p>The DiscoX works with current versions of <strong>SexyTopo</strong> and <strong>TopoDroid</strong> via a long-range C++ implementation of the SAP6 BLE protocol. The device advertises continuously, so nearby phones and tablets can discover it, unpair and repair it from the Bluetooth settings on your phone.</p>
             <p>Once connected, the device flashes blue, a <code>BT</code> label appears in the top-left of the screen, and live readings are pushed directly to your survey app.</p>
+            <p data-ver="v2">Shots are saved in the device's memory until a Bluetooth device is connected and they are transferred to the surveying app. A reading is only struck off the device once the app has confirmed it arrived, so dropping the connection mid-survey — or surveying with the phone switched off entirely — can't lose readings. The number beside <code>BT</code> is how many are still waiting to go.</p>
 
             <div class="cb cb--warn">
               <svg class="cb__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -645,7 +836,8 @@
             <div class="docs-section__num">06 · Worth checking if you need one</div>
             <h2>Calibration</h2>
             <p>Calibrate whenever you survey in a new area or if readings seem off. Run a <strong>Mag Field Check</strong> before each trip to quickly verify accuracy at your survey site.</p>
-            <p>To start: press <strong>Button 3</strong> &rarr; <strong>Enter Calibration</strong>.</p>
+            <p data-ver="v2">To start: press <strong>Menu</strong> &rarr; <strong>Enter Calibration</strong>. The two stages are separate menu entries — <strong>Part 1 (Ellipsoid)</strong> and <strong>Part 2 (Alignment)</strong> — so you can re-run either one on its own.</p>
+            <p data-ver="v1">To start: press <strong>Button 3</strong> &rarr; <strong>Enter Calibration</strong>.</p>
             <p>Calibration is performed in two stages. <strong>Stage 1</strong> corrects for sensor bias; <strong>Stage 2</strong> corrects for the alignment between the sensors and the laser. Together they take 80 readings.</p>
 
             <h3>Stage 1 &mdash; Sensor bias</h3>
@@ -658,7 +850,8 @@
               <p>You could take readings in random directions and still get a decent result, but a recommended set usually does better. For the DiscoX, aim roughly at every face and corner of an imaginary cube &mdash; 14 positions &mdash; rolling the device 90&deg; four times at each one.</p>
               <p>This is similar to the DistoX, but with no need to worry about where the laser is pointing.</p>
               <p>Do try to keep the device still as you take each reading. Rest your arms on a non-magnetic surface while moving it, or use a jig &mdash; this helps ensure the accelerometer readings are correct.</p>
-              <div class="keys"><b>B1</b> record <b>&middot; B3</b> undo<br><b>B1+B2</b> save <b>&middot; B2 hold</b> discard</div>
+              <div class="keys" data-ver="v2"><b>Trigger</b> record <b>&middot; Down</b> undo<br><b>Up+Down hold</b> save <b>&middot; Down hold</b> discard</div>
+              <div class="keys" data-ver="v1"><b>B1</b> record <b>&middot; B3</b> undo<br><b>B1+B2</b> save <b>&middot; B2 hold</b> discard</div>
             </div>
 
             <h3>Stage 2 &mdash; Sensor alignment</h3>
@@ -668,7 +861,8 @@
               <span class="calib-card__tag">24 readings</span>
               <h4>Taking the readings</h4>
               <p>Point the device at a target and barrel-roll it, taking <strong>8 readings</strong> evenly distributed around the same axis as the laser. Repeat this twice more, aiming at targets in completely different directions.</p>
-              <div class="keys"><b>B1</b> record <b>&middot; B3</b> undo<br><b>B1+B2</b> save <b>&middot; B2 hold</b> discard</div>
+              <div class="keys" data-ver="v2"><b>Trigger</b> record <b>&middot; Down</b> undo<br><b>Up+Down hold</b> save <b>&middot; Down hold</b> discard</div>
+              <div class="keys" data-ver="v1"><b>B1</b> record <b>&middot; B3</b> undo<br><b>B1+B2</b> save <b>&middot; B2 hold</b> discard</div>
             </div>
 
             <div class="cb cb--info">
@@ -689,7 +883,8 @@
               <h4>How it works</h4>
               <p>Shoot a fixed target, walk to it, shoot back. Repeat for <strong>3+ pairs</strong> in different directions. The device records each pair's bearing error and calculates an overall correction amplitude.</p>
               <p>A consistently high amplitude means it's time to run a full calibration.</p>
-              <div class="keys"><b>B1</b> take shot<br><b>B2</b> finish (after 2+ pairs)</div>
+              <div class="keys" data-ver="v2"><b>Trigger</b> take shot<br><b>Up</b> finish (after 2+ pairs) <b>&middot; Down hold</b> exit</div>
+              <div class="keys" data-ver="v1"><b>B1</b> take shot<br><b>B2</b> finish (after 2+ pairs)</div>
             </div>
 
             <h3>Quality metrics</h3>
@@ -720,6 +915,96 @@
           <article class="docs-section" id="settings">
             <div class="docs-section__num">07 · Configuration</div>
             <h2>Settings</h2>
+            <div data-ver="v2">
+            <p>All common settings are accessible from the onboard menu — press <strong>Menu</strong> to open it, <strong>Up</strong>/<strong>Down</strong> to scroll, and the <strong>orange trigger</strong> or <strong>Menu</strong> to select.</p>
+
+            <h3>Onboard menu</h3>
+            <ul>
+              <li><strong>Exit</strong> — back to surveying.</li>
+              <li><strong>Enter Calibration</strong> — run Part 1 (Ellipsoid) or Part 2 (Alignment), perform a Mag Field Check, or view the last results.</li>
+              <li><strong>Measure from:</strong> — measure from the back of the device (its length is added on) or the front (raw laser distance).</li>
+              <li><strong>Settings</strong> — the submenu below.</li>
+              <li><strong>Play Snake</strong> — hidden bonus for when you're waiting around.</li>
+              <li><strong>Update Firmware</strong> — reboot into the bootloader to flash a new <code>.uf2</code>.</li>
+              <li><strong>Delete saved shots</strong> — wipe any pending readings stored in flash.</li>
+            </ul>
+
+            <h4>Settings submenu</h4>
+            <ul>
+              <li><strong>Laser off</strong> — 30s · 60s · 2m · 5m · 15m · 30m of inactivity before the laser shuts down.</li>
+              <li><strong>Anomaly Detec</strong> — toggle warnings for nearby metallic objects (helmet lights, SRT kit, bolts).</li>
+              <li><strong>Shutdown</strong> — 5 · 10 · 15 · 30 · 60 min · 2 hr auto power-off.</li>
+              <li><strong>Brightness</strong> — screen contrast, 1% to 100%.</li>
+              <li><strong>Leg tol</strong> — how close three shots must land to count as a station, 4&nbsp;cm to 30&nbsp;cm.</li>
+              <li><strong>USB Drive Mode</strong> — mount the device on a computer to edit its settings and calibration files.</li>
+              <li><strong>Reformat Storage</strong> — erase and rebuild the device's filesystem. Only needed if storage is corrupt.</li>
+            </ul>
+
+            <h3 id="config-json">Advanced: <code>config.json</code></h3>
+            <p>Go to <strong>Menu → Settings → USB Drive Mode</strong>. The DiscoX reboots and appears as a drive called <code>MRZAPPY</code> holding <code>CONFIG.JSON</code>, <code>CALIBRATION.JSON</code>, <code>READINGS.CSV</code> (your unsent shots, export only) and a <code>README.TXT</code>. Edit the values you want, save, eject the drive on your computer, then press <strong>Menu</strong> on the device to import and restart. Any setting you omit uses its default, and a file that doesn't parse is rejected — the device keeps the old one rather than starting up misconfigured.</p>
+            <p>If the device ever won't boot far enough to reach the menu, <strong>hold Down while turning it on</strong> to get to the same drive.</p>
+
+            <h4>Measurement &amp; stability</h4>
+            <table class="setting-table">
+              <tr><td>stability_tolerance<small>default 0.5</small></td><td>Degrees the sensors must converge within before a high-accuracy shot is accepted. Lower = stricter.</td></tr>
+              <tr><td>stability_buffer_length<small>default 5</small></td><td>Consecutive stable samples required before accepting a reading.</td></tr>
+              <tr><td>ema_alpha_stable<small>default 0.15</small></td><td>Smoothing applied while the device is held still. Lower = smoother but slower-reacting.</td></tr>
+              <tr><td>ema_alpha_moving<small>default 0.6</small></td><td>Smoothing applied while the device is moving, so the display keeps up as you swing onto a target.</td></tr>
+              <tr><td>laser_distance_offset<small>default 0.12</small></td><td>Device length in metres, added to the laser distance when measuring from the back so readings are station-to-station.</td></tr>
+              <tr><td>measure_from_front<small>default false</small></td><td><code>true</code> uses the raw laser distance instead (same as Menu → Measure from).</td></tr>
+              <tr><td>splays_enabled<small>default true</small></td><td>Whether a short press of the up button takes a splay shot.</td></tr>
+            </table>
+
+            <h4>Station detection</h4>
+            <table class="setting-table">
+              <tr><td>cartesian_tolerance<small>default 10.0</small></td><td>Centimetres. Three shots count as the same station when their end points all fall this close together — one number covering bearing, clino and distance at once. Same as Menu → Settings → Leg tol.</td></tr>
+              <tr><td>laser_wibble<small>default true</small></td><td>Blink the laser on/off in quick succession when a station is detected.</td></tr>
+              <tr><td>leg_angle_tolerance<small>default 1.7</small></td><td>Degrees. Used by the Mag Field Check to decide that a foresight and backsight are a matching pair.</td></tr>
+            </table>
+
+            <h4>Laser shot validation</h4>
+            <table class="setting-table">
+              <tr><td>laser_shots<small>default 1</small></td><td>Shots taken per measurement. Above 1 the median of the surviving shots is used — slower, but steadier on awkward targets.</td></tr>
+              <tr><td>laser_sq_limit<small>default 50</small></td><td>Minimum signal quality for a shot to be trusted. Raise it to reject more dark/shiny targets, set to 0 to accept everything.</td></tr>
+              <tr><td>laser_spread_limit_mm<small>default 25</small></td><td>How far apart multiple shots may land and still be averaged. Only relevant when <code>laser_shots</code> is above 1.</td></tr>
+            </table>
+
+            <h4>Anomaly detection</h4>
+            <table class="setting-table">
+              <tr><td>anomaly_detection<small>default false</small></td><td>Enable warnings when nearby metallic objects may be distorting the magnetic field. Turn this on once the device has been calibrated in your own environment.</td></tr>
+              <tr><td>mag_tolerance<small>default 10.0</small></td><td>Magnetometer field-strength tolerance in degrees from the expected local field.</td></tr>
+              <tr><td>grav_tolerance<small>default 10.0</small></td><td>Accelerometer magnitude tolerance in degrees.</td></tr>
+              <tr><td>dip_tolerance<small>default 10.0</small></td><td>Magnetic dip-angle tolerance in degrees.</td></tr>
+            </table>
+
+            <h4>Calibration</h4>
+            <table class="setting-table">
+              <tr><td>cal_mag_consistency<small>default 0.5</small></td><td>Angular consistency window in degrees for the magnetometer during calibration.</td></tr>
+              <tr><td>cal_grav_consistency<small>default 0.4</small></td><td>Angular consistency window in degrees for the accelerometer during calibration.</td></tr>
+              <tr><td>cal_buffer_length<small>default 5</small></td><td>Samples in the calibration consistency window.</td></tr>
+              <tr><td>cal_settle_ms<small>default 250</small></td><td>Milliseconds the device must remain stable before a cal point is accepted.</td></tr>
+              <tr><td>cal_ema_alpha<small>default 0.3</small></td><td>EMA smoothing used during calibration.</td></tr>
+              <tr><td>cal_timeout_ms<small>default 4000</small></td><td>Max ms to wait for stability before a cal point is force-accepted.</td></tr>
+            </table>
+
+            <h4>Timers &amp; display</h4>
+            <table class="setting-table">
+              <tr><td>auto_shutdown_timeout<small>default 1800</small></td><td>Seconds of inactivity before automatic power-off (1800 = 30 min).</td></tr>
+              <tr><td>laser_timeout<small>default 120</small></td><td>Seconds of inactivity before the laser turns off to save power.</td></tr>
+              <tr><td>screen_brightness<small>default 255</small></td><td>OLED contrast level, 0–255.</td></tr>
+            </table>
+
+            <h4>Bluetooth</h4>
+            <table class="setting-table">
+              <tr><td>ble_name<small>default "SAP6_DiscoX"</small></td><td>Bluetooth device name advertised to survey apps. Max 20 characters; the <code>SAP6_</code> prefix is added for you if you leave it out.</td></tr>
+            </table>
+
+            <h3>Firmware update</h3>
+            <p>Plug the DiscoX into your computer first, then go to <strong>Menu → Update Firmware → Yes</strong>. The device enters the UF2 bootloader and appears as a removable drive. Drag and drop the new <code>.uf2</code> file onto it — the DiscoX reboots when flashing is complete. Your settings, calibration and any unsent shots survive the update.</p>
+            <p>The device has to be connected before you pick Yes: the bootloader only waits a few seconds for the USB connection before dropping back into the normal firmware.</p>
+            </div>
+
+            <div data-ver="v1">
             <p>All common settings are accessible from the onboard menu — press <strong>Button 3</strong> to open it.</p>
 
             <h3>Onboard menu</h3>
@@ -734,7 +1019,7 @@
               <li><strong>Play Snake</strong> — hidden bonus for when you're waiting around.</li>
             </ul>
 
-            <h3 id="config-json">Advanced: <code>config.json</code></h3>
+            <h3 id="config-json-v1">Advanced: <code>config.json</code></h3>
             <p>Go to <strong>Menu → Update / Settings → Edit Settings File</strong>. The DiscoX reboots into USB drive mode and appears as a drive called <code>DISCOX</code>. Open <code>config.json</code>, edit values, save, eject, then hold the power button to restart. Any setting you omit uses its default.</p>
 
             <h4>Measurement &amp; stability</h4>
@@ -784,6 +1069,7 @@
 
             <h3>Firmware update</h3>
             <p>Go to <strong>Menu → Update / Settings → Update Firmware</strong>. The device enters the UF2 bootloader and appears as a removable drive. Drag and drop the new <code>.uf2</code> file onto it — the DiscoX reboots when flashing is complete.</p>
+            </div>
           </article>
 
         </div>
@@ -830,6 +1116,42 @@
   </footer>
 
   <script>
+    // ── Device version switch (new device / original device) ──────────
+    // The class is already on <html> from the head script; this wires the
+    // buttons, remembers the choice, and keeps ?device= in the URL so a
+    // link to either guide lands on the right one.
+    (function () {
+      var root = document.documentElement;
+      var buttons = document.querySelectorAll('[data-set-ver]');
+
+      function paint() {
+        var ver = root.classList.contains('ver-v1') ? 'v1' : 'v2';
+        buttons.forEach(function (b) {
+          var on = b.getAttribute('data-set-ver') === ver;
+          b.classList.toggle('active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+      }
+
+      function setVer(ver) {
+        root.classList.remove('ver-v1', 'ver-v2');
+        root.classList.add('ver-' + ver);
+        try { localStorage.setItem('discox-device', ver); } catch (e) {}
+        if (window.history && history.replaceState) {
+          var url = new URL(window.location.href);
+          url.searchParams.set('device', ver);
+          history.replaceState(null, '', url.toString());
+        }
+        paint();
+        updateActive();
+      }
+
+      buttons.forEach(function (b) {
+        b.addEventListener('click', function () { setVer(b.getAttribute('data-set-ver')); });
+      });
+      paint();
+    })();
+
     // Active nav highlighting
     const sections = document.querySelectorAll('.docs-section[id]');
     const navLinks = document.querySelectorAll('.docs-nav a');
