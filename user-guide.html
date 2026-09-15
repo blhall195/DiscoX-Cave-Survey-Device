@@ -455,6 +455,12 @@
     }
     .btn-dia__n--icon { height: 1.8rem; display: flex; align-items: center; justify-content: center; }
     .btn-dia__n--icon svg { width: 22px; height: 22px; stroke: var(--accent); fill: none; stroke-width: 2; stroke-linecap: round; }
+    .controls-figure {
+      margin: 20px 0 8px;
+      border: 1px solid var(--border); border-radius: var(--radius-lg);
+      overflow: hidden; line-height: 0;
+    }
+    .controls-figure img { display: block; width: 100%; height: auto; }
 
     /* ============ FOOTER ============ */
     footer {
@@ -551,7 +557,7 @@
             <button type="button" data-set-ver="v1">Original device</button>
           </div>
           <p class="ver-note" data-ver="v2">Showing the new device — the one with the large orange trigger button.</p>
-          <p class="ver-note" data-ver="v1">Showing the original device — four identical buttons, no orange trigger.</p>
+          <p class="ver-note" data-ver="v1">Showing the original device — four identical blue buttons, no orange trigger.</p>
         </div>
         <div class="toc-card">
           <h4>On this page</h4>
@@ -595,37 +601,9 @@
             <div class="docs-section__num">01 · Controls</div>
             <h2>Buttons</h2>
             <div data-ver="v2">
-            <p>The new DiscoX has four membrane buttons plus a dedicated power button. The large orange button is the trigger — everything else sits around it.</p>
-
-            <div class="button-diagram button-diagram--5">
-              <div class="btn-dia">
-                <div class="btn-dia__n">1</div>
-                <div class="btn-dia__lbl">Trigger</div>
-                <div class="btn-dia__sub">menu: select</div>
-              </div>
-              <div class="btn-dia">
-                <div class="btn-dia__n">2</div>
-                <div class="btn-dia__lbl">Up · Splay</div>
-                <div class="btn-dia__sub">menu: up</div>
-              </div>
-              <div class="btn-dia">
-                <div class="btn-dia__n">3</div>
-                <div class="btn-dia__lbl">Down · Laser</div>
-                <div class="btn-dia__sub">menu: down</div>
-              </div>
-              <div class="btn-dia">
-                <div class="btn-dia__n">4</div>
-                <div class="btn-dia__lbl">Menu</div>
-                <div class="btn-dia__sub">menu: select</div>
-              </div>
-              <div class="btn-dia">
-                <div class="btn-dia__n btn-dia__n--icon">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v9"/><path d="M6.6 6.6a8 8 0 1 0 10.9 0"/></svg>
-                </div>
-                <div class="btn-dia__lbl">Power</div>
-                <div class="btn-dia__sub">on / off / reset</div>
-              </div>
-            </div>
+            <figure class="controls-figure">
+              <img src="DiscoX%20Controls%20-dark-.svg" alt="Diagram of the DiscoX controls: trigger (take reading), menu button (enter menu / select), power button (on / off), up (menu up / splays) and down (menu down)." />
+            </figure>
 
             <h3>In normal mode</h3>
             <ul>
@@ -801,7 +779,6 @@
             <h2>Disco mode</h2>
             <div data-ver="v2">
             <p>Hold the <strong>up button</strong> for about 1.5 seconds to toggle disco/rave mode. The laser shuts off and the LED cycles through colours. <strong>Shake the device</strong> for faster colour cycling and full brightness.</p>
-            <p>While disco is running the <strong>down button</strong> starts and stops the tune.</p>
             <p>To get back to surveying, press the <strong>orange trigger</strong> — or hold the up button again to switch disco off where it stands.</p>
             </div>
 
@@ -847,7 +824,7 @@
               <span class="calib-card__tag">56 readings</span>
               <h4>Taking the readings</h4>
               <p>You could take readings in random directions and still get a decent result, but a recommended set usually does better. For the DiscoX, aim roughly at every face and corner of an imaginary cube &mdash; 14 positions &mdash; rolling the device 90&deg; four times at each one.</p>
-              <p>This is similar to the DistoX, but with no need to worry about where the laser is pointing.</p>
+              <p>This is similar to the <a href="56%20measurements.png" target="_blank" rel="noopener">DistoX</a>, but with no need to worry about where exactly the laser is pointing.</p>
               <p>Do try to keep the device still as you take each reading. Rest your arms on a non-magnetic surface while moving it, or use a jig &mdash; this helps ensure the accelerometer readings are correct.</p>
               <div class="keys" data-ver="v2"><b>Trigger</b> record <b>&middot; Down</b> undo<br><b>Up+Down hold</b> save <b>&middot; Down hold</b> discard</div>
               <div class="keys" data-ver="v1"><b>B1</b> record <b>&middot; B3</b> undo<br><b>B1+B2</b> save <b>&middot; B2 hold</b> discard</div>
