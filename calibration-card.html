@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>DiscoX — Calibration Card (print source)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  /* ════════════════════════════════════════════════════════════════
+     DiscoX calibration card — print source for discox-calibration-card.pdf
+
+     Two A4 landscape sheets. Each sheet is two columns divided by a fold
+     line down the middle, so the card reads straight through panels 1-4
+     and folds to A5 for a pocket or an SRT bag.
+
+     Regenerate the PDF with:
+       google-chrome --headless --disable-gpu --no-pdf-header-footer \
+         --print-to-pdf=discox-calibration-card.pdf calibration-card.html
+     ════════════════════════════════════════════════════════════════ */
+
+  @page { size: A4 landscape; margin: 0; }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ink: #111;
+    --ink-mid: #45403a;
+    --ink-dim: #6c655c;
+    --rule: #cfc8bd;
+    --rule-2: #e6e0d6;
+    --accent: #b35c00;
+    --accent-soft: #fdf2e4;
+    --font-sans: 'Inter Tight', 'Liberation Sans', Arial, sans-serif;
+    --font-display: 'Space Grotesk', 'Liberation Sans', Arial, sans-serif;
+    --font-mono: 'JetBrains Mono', 'DejaVu Sans Mono', monospace;
+  }
+
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  body {
+    font-family: var(--font-sans);
+    font-size: 9.8pt; line-height: 1.42;
+    color: var(--ink); background: #fff;
+  }
+
+  /* ── Sheet & fold ────────────────────────────────────────────── */
+  .sheet {
+    position: relative;
+    width: 297mm; height: 210mm;
+    display: flex; overflow: hidden;
+  }
+  .sheet + .sheet { page-break-before: always; }
+
+  .panel { width: 148.5mm; height: 210mm; padding: 11mm 11mm 9mm; position: relative; }
+  .panel--l { padding-right: 8mm; }
+  .panel--r { padding-left: 8mm; }
+
+  /* fold line + the tick marks that show where to crease */
+  .fold {
+    position: absolute; top: 0; bottom: 0; left: 148.5mm;
+    border-left: 0.4pt dashed var(--rule); 
+  }
+  .fold::before, .fold::after {
+    content: ''; position: absolute; left: -3mm; width: 6mm;
+    border-top: 0.6pt solid var(--ink-dim);
+  }
+  .fold::before { top: 4mm; }
+  .fold::after  { bottom: 4mm; }
+  .fold span {
+    position: absolute; left: 1.6mm; top: 50%;
+    transform: rotate(90deg); transform-origin: left center;
+    font-family: var(--font-mono); font-size: 6pt; letter-spacing: .22em;
+    text-transform: uppercase; color: var(--ink-dim);
+    background: #fff; padding: 0 2mm;
+  }
+
+  /* ── Panel furniture ─────────────────────────────────────────── */
+  .kicker {
+    font-family: var(--font-mono); font-size: 7pt; font-weight: 500;
+    letter-spacing: .2em; text-transform: uppercase; color: var(--accent);
+  }
+  h1 {
+    font-family: var(--font-display); font-size: 21pt; font-weight: 700;
+    letter-spacing: -.02em; line-height: 1.02; margin: 1.5mm 0 2mm;
+  }
+  h1 em { font-style: normal; color: var(--accent); }
+  h2 {
+    font-family: var(--font-display); font-size: 15pt; font-weight: 700;
+    letter-spacing: -.015em; line-height: 1.06; margin: 1.5mm 0 1mm;
+  }
+  h3 {
+    font-family: var(--font-display); font-size: 10pt; font-weight: 600;
+    margin: 3.2mm 0 1.2mm; letter-spacing: -.005em;
+  }
+  h3:first-child { margin-top: 0; }
+  p { margin-bottom: 1.8mm; }
+  p:last-child, ul:last-child, ol:last-child { margin-bottom: 0; }
+  strong { font-weight: 600; }
+  .lede { font-size: 10.2pt; color: var(--ink-mid); margin-bottom: 3mm; }
+
+  .hr { border-top: 0.8pt solid var(--ink); margin: 2.4mm 0; }
+  .hr--light { border-top: 0.4pt solid var(--rule); }
+
+  ul, ol { margin: 0 0 2mm 4.6mm; }
+  li { margin-bottom: 1.1mm; padding-left: .6mm; }
+
+  /* ── Numbered steps ──────────────────────────────────────────── */
+  .steps { list-style: none; margin: 0 0 2mm; counter-reset: s; }
+  .steps li {
+    counter-increment: s; position: relative;
+    padding-left: 7.5mm; margin-bottom: 2mm;
+  }
+  .steps li::before {
+    content: counter(s); position: absolute; left: 0; top: -0.2mm;
+    width: 5.2mm; height: 5.2mm; border-radius: 50%;
+    background: var(--ink); color: #fff;
+    font-family: var(--font-mono); font-size: 7.5pt; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ── Key legend ──────────────────────────────────────────────── */
+  .keys {
+    border: 0.7pt solid var(--ink); border-radius: 1.6mm;
+    padding: 2.6mm 3mm; margin: 2.5mm 0;
+  }
+  .keys__hd {
+    font-family: var(--font-mono); font-size: 6.6pt; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--ink-dim); margin-bottom: 1.6mm;
+  }
+  .keys table { width: 100%; border-collapse: collapse; }
+  .keys td { padding: .7mm 0; vertical-align: baseline; }
+  .keys td:first-child {
+    font-family: var(--font-mono); font-size: 8pt; font-weight: 700;
+    white-space: nowrap; padding-right: 3mm; width: 38mm;
+  }
+  .keys td:last-child { font-size: 9.2pt; color: var(--ink-mid); }
+
+  /* ── Callout ─────────────────────────────────────────────────── */
+  .note {
+    background: var(--accent-soft); border-left: 1.2pt solid var(--accent);
+    padding: 2.4mm 3mm; margin: 2.5mm 0; font-size: 9.2pt;
+  }
+  .note__t {
+    font-family: var(--font-display); font-weight: 700; font-size: 9.4pt;
+    margin-bottom: .8mm;
+  }
+
+  /* ── Menu tree ───────────────────────────────────────────────── */
+  .tree {
+    font-family: var(--font-mono); font-size: 8pt; line-height: 1.65;
+    background: #f6f3ee; border: 0.4pt solid var(--rule-2);
+    border-radius: 1.6mm; padding: 2.6mm 3mm; margin: 2mm 0 2.5mm;
+    white-space: pre; color: var(--ink-mid);
+  }
+  .tree b { color: var(--ink); font-weight: 700; }
+
+  /* ── Metrics table ───────────────────────────────────────────── */
+  .metrics { width: 100%; border-collapse: collapse; margin: 1.5mm 0 2.5mm; }
+  .metrics th {
+    text-align: left; font-family: var(--font-mono); font-size: 6.6pt;
+    letter-spacing: .16em; text-transform: uppercase; color: var(--ink-dim);
+    font-weight: 500; padding-bottom: 1.2mm; border-bottom: 0.7pt solid var(--ink);
+  }
+  .metrics td { padding: 1.2mm 0; border-bottom: 0.4pt solid var(--rule-2); vertical-align: top; }
+  .metrics td:first-child { font-weight: 600; width: 22mm; }
+  .metrics td:last-child { color: var(--ink-mid); }
+
+  .scale {
+    display: flex; align-items: center; gap: 2mm;
+    font-family: var(--font-mono); font-size: 7.4pt; font-weight: 700;
+    margin: 2mm 0 1mm;
+  }
+  .scale__bar {
+    flex: 1; height: 2.4mm; border-radius: 1.2mm;
+    background: linear-gradient(90deg, #2f7d4f 0%, #9a8f2a 55%, #a33a22 100%);
+  }
+
+  /* ── Diagrams ────────────────────────────────────────────────── */
+  .dia { display: flex; gap: 4mm; align-items: center; margin: 2mm 0 2.5mm; }
+  .dia svg { display: block; flex-shrink: 0; }
+  .dia__cap {
+    font-size: 8.6pt; color: var(--ink-mid); line-height: 1.38;
+  }
+  .dia__cap b { color: var(--ink); font-weight: 600; }
+
+  /* ── Tick-off tally ─────────────────────────────────────────── */
+  .tally { display: flex; gap: 4mm; margin: 1.2mm 0 0; }
+  .tally__col { flex: 1; }
+  .tally__hd {
+    font-family: var(--font-mono); font-size: 6.6pt; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--ink-dim);
+    border-bottom: 0.7pt solid var(--ink); padding-bottom: 1mm; margin-bottom: 1.4mm;
+  }
+  .tally__row { display: flex; align-items: center; gap: 1.3mm; margin-bottom: .7mm; }
+  .tally__lbl {
+    font-family: var(--font-mono); font-size: 7.4pt; color: var(--ink-mid);
+    width: 10mm; flex-shrink: 0;
+  }
+  .box {
+    width: 3.1mm; height: 3.1mm; border: 0.5pt solid var(--ink-dim);
+    border-radius: .5mm; flex-shrink: 0;
+  }
+
+  /* ── Warnings ────────────────────────────────────────────────── */
+  .warn { width: 100%; border-collapse: collapse; margin: 1.5mm 0 2mm; }
+  .warn td { padding: 1.2mm 0; border-bottom: 0.4pt solid var(--rule-2); vertical-align: top; }
+  .warn td:first-child {
+    font-family: var(--font-mono); font-size: 8pt; font-weight: 700;
+    width: 20mm; padding-right: 3mm;
+  }
+  .warn td:last-child { font-size: 9pt; color: var(--ink-mid); }
+
+  /* ── Panel footer ────────────────────────────────────────────── */
+  .foot {
+    position: absolute; left: 11mm; right: 11mm; bottom: 5.5mm;
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-family: var(--font-mono); font-size: 6.6pt; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--ink-dim);
+    border-top: 0.4pt solid var(--rule-2); padding-top: 1.6mm;
+  }
+  .panel--l .foot { right: 8mm; }
+  .panel--r .foot { left: 8mm; }
+  .foot b { color: var(--ink); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════ SHEET 1 ════════════════════ -->
+<div class="sheet">
+  <div class="fold"><span>fold</span></div>
+
+  <!-- ── PANEL 1 · cover + essentials ── -->
+  <div class="panel panel--l">
+    <p class="kicker">DiscoX · Field reference</p>
+    <h1>Calibration <em>card</em>.</h1>
+    <p class="lede">Everything needed to calibrate underground, on one folded sheet. Covers the new device — the one with the orange trigger.</p>
+
+    <div class="hr"></div>
+
+    <h3>When to calibrate</h3>
+    <ul>
+      <li><strong>Every trip, before you start:</strong> run a Mag Field Check (panel 4). It takes a few minutes and tells you whether a full calibration is needed.</li>
+      <li><strong>Full calibration</strong> when you survey in a new area, when readings look wrong, or when the field check keeps reporting a high amplitude.</li>
+    </ul>
+
+    <h3>Getting there</h3>
+    <div class="tree">Menu
+ └ <b>Enter Calibration</b>
+    ├ <b>Enter Calibration</b>
+    │   ├ Part 1 (Ellipsoid)  56 readings
+    │   └ Part 2 (Alignment)  24 readings
+    ├ <b>Mag Field Check</b>
+    └ <b>View Last Cal</b></div>
+    <p>Part 1 and Part 2 are separate entries, so either can be re-run on its own. A full calibration is both, in order: 80 readings.</p>
+
+    <div class="keys">
+      <div class="keys__hd">Recording keys · both stages</div>
+      <table>
+        <tr><td>Trigger</td><td>record a reading</td></tr>
+        <tr><td>Down <span style="color:var(--ink-dim)">(or Menu)</span></td><td>undo the last one</td></tr>
+        <tr><td>Hold Up + Down</td><td>save the result</td></tr>
+        <tr><td>Hold Down</td><td>discard and exit</td></tr>
+      </table>
+    </div>
+
+    <div class="note">
+      <div class="note__t">Get away from metal first</div>
+      Calibrate in the same magnetic environment you will survey in, and well clear of bolts, helmet lights, SRT kit, ammo boxes and your phone. The device warns about anomalies, but it cannot undo a calibration taken next to a scaffold bar.
+    </div>
+
+    <div class="foot"><span>Panel <b>1</b> · Overview</span><span>discox.co.uk</span></div>
+  </div>
+
+  <!-- ── PANEL 2 · Part 1 ── -->
+  <div class="panel panel--r">
+    <p class="kicker">Stage 1 · 56 readings</p>
+    <h2>Part 1 — Ellipsoid</h2>
+    <p class="lede">Corrects sensor bias. Perfect sensors would trace a sphere as you turn the device through every orientation; a real one traces something closer to a rugby ball. This measures that shape.</p>
+
+    <div class="hr"></div>
+
+    <h3>The set of orientations</h3>
+    <div class="dia">
+      <svg width="150" height="132" viewBox="0 0 150 132" fill="none" stroke="#111" stroke-width="1.6" stroke-linejoin="round">
+        <!-- isometric cube: three visible faces -->
+        <path d="M70 14 L120 43 L70 72 L20 43 Z" fill="#f2ede5"/>
+        <path d="M20 43 L70 72 L70 122 L20 93 Z" fill="#e4ddd1"/>
+        <path d="M120 43 L120 93 L70 122 L70 72 Z" fill="#efe9df"/>
+        <!-- face-centre aim: straight up out of the top face -->
+        <g stroke="#b35c00" stroke-width="1.9">
+          <path d="M70 40 L70 6"/>
+          <path d="M65.5 11 L70 4.5 L74.5 11" fill="none" stroke-linecap="round"/>
+        </g>
+        <circle cx="70" cy="43" r="2.6" fill="#b35c00" stroke="none"/>
+        <!-- corner aim: out through the right-hand top vertex -->
+        <g stroke="#b35c00" stroke-width="1.9">
+          <path d="M122 42 L145 29"/>
+          <path d="M139 26.5 L146.5 28.5 L143 35" fill="none" stroke-linecap="round"/>
+        </g>
+        <circle cx="120" cy="43" r="2.6" fill="#b35c00" stroke="none"/>
+      </svg>
+      <div class="dia__cap">
+        Imagine a cube around you. Aim the laser at the centre of each of its <b>6 faces</b> and at each of its <b>8 corners</b> — <b>14 directions</b> in all.
+        <br><br>
+        At every one of those directions, take <b>4 readings</b>, rolling the device 90° about the laser axis between each.
+        <br><br>
+        14 × 4 = <b>56 readings</b>.
+      </div>
+    </div>
+
+    <div class="dia" style="gap:3mm; align-items:flex-start;">
+      <svg width="150" height="34" viewBox="0 0 150 34" fill="none" stroke="#111" stroke-width="1.5">
+        <g>
+          <rect x="6" y="5" width="16" height="26" rx="3" fill="#fff"/>
+          <circle cx="14" cy="10.5" r="4.4" fill="#d92b1c" opacity=".22" stroke="none"/>
+          <circle cx="14" cy="10.5" r="2.4" fill="#d92b1c" stroke="none"/>
+          <rect x="44" y="9" width="26" height="16" rx="3" fill="#fff"/>
+          <circle cx="64.5" cy="17" r="4.4" fill="#d92b1c" opacity=".22" stroke="none"/>
+          <circle cx="64.5" cy="17" r="2.4" fill="#d92b1c" stroke="none"/>
+          <rect x="86" y="5" width="16" height="26" rx="3" fill="#fff"/>
+          <circle cx="94" cy="25.5" r="4.4" fill="#d92b1c" opacity=".22" stroke="none"/>
+          <circle cx="94" cy="25.5" r="2.4" fill="#d92b1c" stroke="none"/>
+          <rect x="120" y="9" width="26" height="16" rx="3" fill="#fff"/>
+          <circle cx="125.5" cy="17" r="4.4" fill="#d92b1c" opacity=".22" stroke="none"/>
+          <circle cx="125.5" cy="17" r="2.4" fill="#d92b1c" stroke="none"/>
+        </g>
+        <g stroke="#6c655c" stroke-width="1.2" stroke-linecap="round">
+          <path d="M28 18 L38 18"/><path d="M35 15 L38.5 18 L35 21"/>
+          <path d="M74 18 L82 18"/><path d="M79 15 L82.5 18 L79 21"/>
+          <path d="M108 18 L116 18"/><path d="M113 15 L116.5 18 L113 21"/>
+        </g>
+      </svg>
+      <div class="dia__cap" style="padding-top:1mm;">Rolling 90° four times at one direction. Keep the laser on the same spot as you roll.</div>
+    </div>
+
+    <div class="note">
+      <div class="note__t">Steady beats fast</div>
+      The accelerometer needs the device still. Rest your arms on a non-magnetic surface between readings, or use a jig. Random orientations do work — the cube set just does better.
+    </div>
+
+    <h3>The result</h3>
+    <p>The screen shows <strong>Mag</strong> and <strong>Grav</strong> — how uniformly each sensor's readings fit the ellipsoid. <strong>Lower is better.</strong> Hold Up+Down to save, hold Down to discard and re-run.</p>
+
+    <div class="hr hr--light"></div>
+
+    <h3>Tick as you go</h3>
+    <p style="font-size:8.8pt;color:var(--ink-mid);">The device counts readings, but not which direction they came from. One box per roll.</p>
+    <div class="tally">
+      <div class="tally__col">
+        <div class="tally__hd">6 faces</div>
+        <div class="tally__row"><span class="tally__lbl">Face 1</span><span class="box"></span><span class="box"></span><span class="box"></span><span class="box"></span></div>
+        <div class="tally__row"><span class="tally__lbl">Face 2</span><span class="box"></span><span class="box"></span><span class="box"></span><span class="box"></span></div>
+        <div class="tally__row"><span class="tally__lbl">Face 3</span><span class="box"></span><span class="box"></span><span class="box"></span><span class="box"></span></div>
+        <div class="tally__row"><span class="tally__lbl">Face 4</span><span class="box"></span><span class="box"></span><span class="box"></span><span class="box"></span></div>
+        <div class="tally__row"><span class="tally__lbl">Face 5</span><span class="box"></span><span class="box"></span><span class="box"></span><span class="box"></span></div>
+        <div class="tally__row"><span class="tally__lbl">Face 6</span><span class="box"></span><span class="box"></span><span class="box"></span><span class="box"></span></div>
+      </div>
+      <div class="tally__col">
+        <div class="tally__hd">Corners 1&ndash;4</div>
+        <div class="tally__row"><span class="tally__lbl">Cnr 1</span><span class="box"></span><span class="box"></span><span class="box"></span><span class="box"></span></div>
+        <div class="tally__row"><span class="tally__lbl">Cnr 2</span><span class="box"></span><span class="box"></span><span class="box"></span><span class="box"></span></div>
+        <div class="tally__row"><span class="tally__lbl">Cnr 3</span><span class="box"></span><span class="box"></span><span class="box"></span><span class="box"></span></div>
+        <div class="tally__row"><span class="tally__lbl">Cnr 4</span><span class="box"></span><span class="box"></span><span class="box"></span><span class="box"></span></div>
+      </div>
+      <div class="tally__col">
+        <div class="tally__hd">Corners 5&ndash;8</div>
+        <div class="tally__row"><span class="tally__lbl">Cnr 5</span><span class="box"></span><span class="box"></span><span class="box"></span><span class="box"></span></div>
+        <div class="tally__row"><span class="tally__lbl">Cnr 6</span><span class="box"></span><span class="box"></span><span class="box"></span><span class="box"></span></div>
+        <div class="tally__row"><span class="tally__lbl">Cnr 7</span><span class="box"></span><span class="box"></span><span class="box"></span><span class="box"></span></div>
+        <div class="tally__row"><span class="tally__lbl">Cnr 8</span><span class="box"></span><span class="box"></span><span class="box"></span><span class="box"></span></div>
+      </div>
+    </div>
+
+    <div class="foot"><span>Panel <b>2</b> · Part 1</span><span>Continues on sheet 2 &rarr;</span></div>
+  </div>
+</div>
+
+<!-- ════════════════════ SHEET 2 ════════════════════ -->
+<div class="sheet">
+  <div class="fold"><span>fold</span></div>
+
+  <!-- ── PANEL 3 · Part 2 ── -->
+  <div class="panel panel--l">
+    <p class="kicker">Stage 2 · 24 readings</p>
+    <h2>Part 2 — Alignment</h2>
+    <p class="lede">Corrects the residual error between the sensors and the laser, which can never be mounted perfectly square to the beam. Keys are the same as Part 1 — see panel 1.</p>
+
+    <div class="hr"></div>
+
+    <h3>The procedure</h3>
+    <ol class="steps">
+      <li>Pick a target and put the laser on it. A small, distinct mark at a comfortable distance works best.</li>
+      <li>Take <strong>8 readings</strong> of that same target, barrel-rolling the device around the laser axis between each so the 8 are spread evenly around the full turn.</li>
+      <li>Move to a target in a <strong>completely different direction</strong> and repeat. Then a third. <strong>3 targets × 8 = 24 readings.</strong></li>
+    </ol>
+
+    <div class="dia">
+      <svg width="152" height="100" viewBox="0 0 152 100" fill="none" stroke="#111" stroke-width="1.5" stroke-linejoin="round">
+        <!-- the device, side on -->
+        <rect x="7" y="37" width="27" height="26" rx="3.5" fill="#fff"/>
+        <path d="M13 43 H28" stroke="#cfc8bd" stroke-width="1.4"/>
+        <rect x="34" y="45.5" width="5" height="9" rx="1" fill="#fff"/>
+        <!-- the beam, held on one spot -->
+        <path d="M39 50 H104" stroke="#d92b1c" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <!-- the target it stays on -->
+        <circle cx="117" cy="50" r="11" stroke-width="1.4" fill="#fff"/>
+        <path d="M117 35 V42 M117 58 V65 M102 50 H109 M125 50 H132" stroke="#6c655c" stroke-width="1.2"/>
+        <circle cx="117" cy="50" r="4.6" fill="#d92b1c" opacity=".22" stroke="none"/>
+        <circle cx="117" cy="50" r="2.6" fill="#d92b1c" stroke="none"/>
+        <!-- the roll: 8 positions spaced around the beam axis -->
+        <ellipse cx="68" cy="50" rx="8" ry="24" stroke="#b0a89c" stroke-width="1"/>
+          <circle cx="76.0" cy="50.0" r="2.4" fill="#b35c00" stroke="none"/>
+          <circle cx="73.7" cy="67.0" r="2.4" fill="#b35c00" stroke="none"/>
+          <circle cx="68.0" cy="74.0" r="2.4" fill="#b35c00" stroke="none"/>
+          <circle cx="62.3" cy="67.0" r="2.4" fill="#b35c00" stroke="none"/>
+          <circle cx="60.0" cy="50.0" r="2.4" fill="#b35c00" stroke="none"/>
+          <circle cx="62.3" cy="33.0" r="2.4" fill="#b35c00" stroke="none"/>
+          <circle cx="68.0" cy="26.0" r="2.4" fill="#b35c00" stroke="none"/>
+          <circle cx="73.7" cy="33.0" r="2.4" fill="#b35c00" stroke="none"/>
+        <g stroke="#45403a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M60 21 A 12 10 0 0 1 76 21"/>
+          <path d="M72.5 17.5 L77 21.5 L71.5 24"/>
+        </g>
+      </svg>
+      <div class="dia__cap">
+        Take the shot, roll the device a little, take the next — <b>8 in all</b>, spread evenly around the full turn. Roughly 45° between each; covering the whole circle matters more than hitting the angles.
+        <br><br>
+        The laser stays on the <b>same spot</b> throughout. The device turns about the beam, it does not move around the target.
+      </div>
+    </div>
+
+    <div class="note">
+      <div class="note__t">The steadiest hold I have found</div>
+      Sit down with your head and back supported. Rest the back of the device against your nose, lock your arms to your sides, and roll from there. It removes nearly every degree of freedom between you and the device, and this is the stage where a wobble really costs you.
+    </div>
+
+    <h3>The result</h3>
+    <p>The screen shows a single <strong>Accuracy</strong> figure in degrees. Save it if it is good; discard and re-run if it is not.</p>
+
+    <div class="scale">
+      <span style="color:#2f7d4f;">&lt; 0.25° EXCELLENT</span>
+      <span class="scale__bar"></span>
+      <span style="color:#a33a22;">&lt; 0.5° ACCEPTABLE</span>
+    </div>
+    <p style="font-size:9pt;color:var(--ink-mid);">Above 0.5°, something went wrong — most often movement during the readings, or metal nearby. Re-run rather than survey on it.</p>
+
+    <div class="foot"><span>Panel <b>3</b> · Part 2</span><span>discox.co.uk</span></div>
+  </div>
+
+  <!-- ── PANEL 4 · field check + metrics ── -->
+  <div class="panel panel--r">
+    <p class="kicker">Every trip · 3+ pairs</p>
+    <h2>Mag Field Check</h2>
+    <p class="lede">Checks the calibration you already have, at the site you are about to survey. The one to do at the bottom of the entrance pitch.</p>
+
+    <div class="hr"></div>
+
+    <ol class="steps">
+      <li>Shoot a fixed target — the <strong>foresight</strong>.</li>
+      <li>Walk to the target, turn round, and shoot back at where you stood — the <strong>backsight</strong>.</li>
+      <li>Repeat for <strong>3 or more pairs</strong>, pointing in genuinely different directions each time.</li>
+      <li>Press <strong>Up</strong> to finish. The device reports a correction amplitude from the bearing error in each pair.</li>
+    </ol>
+
+    <div class="keys">
+      <div class="keys__hd">Field check keys</div>
+      <table>
+        <tr><td>Trigger</td><td>take a shot</td></tr>
+        <tr><td>Up</td><td>finish (after 2+ pairs)</td></tr>
+        <tr><td>Hold Down</td><td>exit</td></tr>
+      </table>
+    </div>
+
+    <p><strong>Reading it:</strong> low amplitude means the calibration is holding up. A consistently high one means hard-iron error the device cannot correct — run a full Part 1 + Part 2 before trusting the survey.</p>
+
+    <div class="hr hr--light"></div>
+
+    <h3>Checking what the device is running on</h3>
+    <p><strong>Menu &rarr; Enter Calibration &rarr; View Last Cal</strong> shows the stored <strong>Mag</strong> and <strong>Grav</strong> figures from Part 1 and the <strong>Accuracy</strong> from Part 2 — any time, without re-calibrating. Lower is better in all three. Worth a look before a trip rather than at the bottom of a pitch.</p>
+
+    <div class="hr hr--light"></div>
+
+    <h3>Warnings on a shot</h3>
+    <table class="warn">
+      <tr><td>MagErr</td><td>Field strength is not what the calibration expects — something ferrous is close.</td></tr>
+      <tr><td>GravErr</td><td>Gravity reading is off. Almost always movement during the shot.</td></tr>
+      <tr><td>DipErr</td><td>Dip angle disagrees with the calibration — local disturbance.</td></tr>
+    </table>
+    <p style="font-size:9pt;color:var(--ink-mid);">A flagged shot is shown but <strong>not stored and not sent</strong> — shoot it again.</p>
+
+    <div class="foot"><span>Panel <b>4</b> · Field check</span><span>Print A4 landscape · 100% · fold down the middle</span></div>
+  </div>
+</div>
+
+</body>
+</html>
