@@ -622,7 +622,7 @@
                 Download mrzappy-v2.0.1.uf2
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v14M6 13l6 6 6-6M5 21h14"/></svg>
               </a>
-              <a href="https://github.com/blhall195/Mr_Zappy/releases" target="_blank" class="btn-link btn-link--outline">
+              <a href="https://github.com/blhall195/DiscoX-V2/releases" target="_blank" class="btn-link btn-link--outline">
                 All releases on GitHub
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
               </a>
@@ -797,8 +797,21 @@
             <div class="docs-section__num">05 · What's new</div>
             <h2>Changelog</h2>
 
-            <h3>v0.1.0 — 2026-06-19</h3>
-            <ul>
+            <h3 data-ver="v2">v2.0.1 — 2026-09-15</h3>
+            <ul data-ver="v2">
+              <li>First public release for the new device, built on the single-processor board.</li>
+              <li>Survey legs are held on the device until your phone confirms it has them — pull the device out of range mid-trip and nothing is lost.</li>
+              <li>The firmware version is now shown on the boot splash, so you can check what a device is running without opening it up.</li>
+              <li>Laser shots that can't be trusted are rejected rather than recorded, and error messages say what actually went wrong.</li>
+              <li>The laser now switches off with DOWN while idling, saving battery between legs.</li>
+              <li>Calibration: undo a recorded point with DOWN, save with UP+DOWN, and a dry-run test before committing.</li>
+              <li>Settings, calibration and unsent readings are editable over USB as a plain drive (Menu → Settings → USB Drive Mode).</li>
+              <li>Disco mode, with the Mario theme hidden in it.</li>
+              <li>Numerous storage-reliability fixes around calibration saves and reflashing.</li>
+            </ul>
+
+            <h3 data-ver="v1">v0.1.0 — 2026-06-19</h3>
+            <ul data-ver="v1">
               <li>Initial public release of the DiscoX firmware.</li>
               <li>Main board and BLE board UF2 builds published via automated GitHub releases.</li>
             </ul>
