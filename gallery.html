@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery — DiscoX Cave Survey Device</title>
+  <meta name="description" content="Photographs of the DiscoX cave survey device — size, build detail and how it sits in the hand." />
+  <script>
+    (function () {
+      var m = document.cookie.match(/(?:^|;\s*)googtrans=\/[^\/]+\/([a-z\-]+)/);
+      if (m && m[1] && m[1] !== 'en') document.documentElement.classList.add('gt-translated');
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --accent-hue: 38; --accent-chroma: 0.18;
+      --bg: #0a0907; --bg-2: #121010; --surface: #17140f; --surface-2: #1f1b14;
+      --border: #2b251b; --border-2: #3a3225;
+      --text: #f0ebdf; --text-mid: #b5a88f; --text-dim: #8a7e68;
+      --accent: oklch(0.78 var(--accent-chroma) var(--accent-hue));
+      --accent-2: oklch(0.62 var(--accent-chroma) var(--accent-hue));
+      --accent-soft: oklch(0.78 var(--accent-chroma) var(--accent-hue) / 0.12);
+      --font-sans: 'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      --font-display: 'Space Grotesk', 'Inter Tight', sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+      --max-w: 1200px; --radius: 6px; --radius-lg: 14px;
+    }
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+    body { font-family: var(--font-sans); background: var(--bg); color: var(--text); line-height: 1.65; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    ::selection { background: var(--accent); color: #000; }
+    img { max-width: 100%; display: block; }
+    a { color: var(--accent); text-decoration: none; transition: opacity .2s; }
+    a:hover { opacity: .85; }
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 32px; position: relative; }
+    .mono-label { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .18em; color: var(--text-dim); }
+    .mono-label::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+
+    /* NAV */
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(10,9,7,.75); backdrop-filter: blur(20px) saturate(140%); -webkit-backdrop-filter: blur(20px) saturate(140%); border-bottom: 1px solid var(--border); }
+    .nav__inner { max-width: var(--max-w); margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .nav__logo { font-family: var(--font-display); font-weight: 600; font-size: 1.15rem; color: var(--text); letter-spacing: -.02em; display: flex; align-items: center; gap: 10px; }
+    .nav__logo img { height: 30px; width: auto; display: block; }
+    .nav__logo em { font-style: normal; color: var(--accent); }
+    .nav__links { display: flex; gap: 2px; align-items: center; }
+    .nav__links a { font-size: .86rem; font-weight: 500; color: var(--text-mid); padding: 8px 14px; border-radius: 6px; transition: all .2s; }
+    .nav__links a:hover { color: var(--text); background: var(--surface-2); opacity: 1; }
+    .nav__links a.active { color: var(--accent); }
+    .nav__cta { background: var(--accent) !important; color: #000 !important; font-weight: 600 !important; padding: 9px 18px !important; margin-left: 6px; display: inline-flex !important; align-items: center; gap: 8px; }
+    .nav__cta:hover { background: var(--accent-2) !important; }
+    .nav__toggle { display: none; background: none; border: none; color: var(--text); cursor: pointer; padding: 8px; }
+    .nav__toggle svg { width: 22px; height: 22px; }
+    @media (max-width: 920px) {
+      .nav__toggle { display: block; }
+      .nav__links { display: none; flex-direction: column; position: absolute; top: 68px; left: 0; right: 0; background: rgba(10,9,7,.96); backdrop-filter: blur(18px); border-bottom: 1px solid var(--border); padding: 16px 20px 20px; align-items: stretch; }
+      .nav__links.open { display: flex; }
+      .nav__links a { padding: 12px 14px; width: 100%; }
+      .nav__cta { margin: 8px 0 0; justify-content: center; }
+    }
+
+    /* PAGE HEADER */
+    .page-header { padding: 140px 0 50px; position: relative; overflow: hidden; border-bottom: 1px solid var(--border); }
+    .page-header::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(to right, rgba(255,255,255,.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,.02) 1px, transparent 1px); background-size: 56px 56px; mask-image: radial-gradient(ellipse at 50% 100%, #000 10%, transparent 70%); -webkit-mask-image: radial-gradient(ellipse at 50% 100%, #000 10%, transparent 70%); pointer-events: none; }
+    .page-header h1 { font-family: var(--font-display); font-size: clamp(2.4rem, 5.2vw, 4rem); font-weight: 500; letter-spacing: -.035em; line-height: 1.02; margin: 16px 0 14px; position: relative; }
+    .page-header h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
+    .page-header p { color: var(--text-mid); max-width: 560px; font-size: 1.05rem; position: relative; }
+
+    /* GALLERY GRID (masonry via columns) */
+    .gallery { padding: 56px 0 90px; }
+    .grid { columns: 3; column-gap: 20px; }
+    @media (max-width: 980px) { .grid { columns: 2; } }
+    @media (max-width: 620px)  { .grid { columns: 1; } }
+
+    .shot {
+      break-inside: avoid; -webkit-column-break-inside: avoid; page-break-inside: avoid;
+      margin: 0 0 20px; display: block; width: 100%;
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg);
+      overflow: hidden; cursor: zoom-in; text-align: left; color: inherit; font: inherit;
+      padding: 0; transition: border-color .2s, transform .2s;
+    }
+    .shot:hover, .shot:focus-visible { border-color: var(--border-2); transform: translateY(-2px); }
+    .shot:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    .shot__media { position: relative; background: var(--bg-2); }
+    .shot__media img { width: 100%; height: auto; }
+    .shot__zoom {
+      position: absolute; top: 10px; right: 10px; width: 30px; height: 30px; border-radius: 50%;
+      background: rgba(10,9,7,.72); backdrop-filter: blur(8px); border: 1px solid var(--border-2);
+      display: grid; place-items: center; opacity: 0; transition: opacity .2s;
+    }
+    .shot__zoom svg { width: 14px; height: 14px; stroke: var(--text); }
+    .shot:hover .shot__zoom, .shot:focus-visible .shot__zoom { opacity: 1; }
+    .shot__cap { padding: 14px 16px 16px; border-top: 1px solid var(--border); }
+    .shot__num { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 6px; }
+    .shot__desc { display: block; font-size: .88rem; color: var(--text-mid); line-height: 1.55; }
+
+    /* LIGHTBOX */
+    .lb { position: fixed; inset: 0; z-index: 200; background: rgba(6,5,4,.94); backdrop-filter: blur(10px); display: none; }
+    .lb.open { display: grid; grid-template-rows: 1fr auto; }
+    body.lb-lock { overflow: hidden; }
+    .lb__stage { position: relative; display: flex; align-items: center; justify-content: center; padding: 60px 72px 8px; min-height: 0; overflow: hidden; }
+    .lb__stage img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: var(--radius); }
+    .lb__foot { padding: 14px 72px 26px; text-align: center; }
+    .lb__num { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+    .lb__cap { color: var(--text-mid); font-size: .92rem; max-width: 620px; margin: 6px auto 0; }
+    .lb__btn {
+      position: absolute; background: rgba(23,20,15,.9); border: 1px solid var(--border-2); color: var(--text);
+      width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; cursor: pointer;
+      transition: all .2s;
+    }
+    .lb__btn:hover { background: var(--accent); color: #000; border-color: var(--accent); }
+    .lb__btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    .lb__btn svg { width: 20px; height: 20px; }
+    .lb__close { top: 18px; right: 18px; }
+    .lb__prev { left: 14px; top: 50%; transform: translateY(-50%); }
+    .lb__next { right: 14px; top: 50%; transform: translateY(-50%); }
+    @media (max-width: 620px) {
+      .lb__stage { padding: 56px 12px 8px; }
+      .lb__foot { padding: 12px 16px 22px; }
+      .lb__prev { left: 8px; } .lb__next { right: 8px; }
+      .lb__btn { width: 38px; height: 38px; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border); padding: 48px 0 32px; font-size: .82rem; color: var(--text-dim); background: var(--bg); }
+    .footer__top { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; padding-bottom: 32px; border-bottom: 1px solid var(--border); margin-bottom: 24px; }
+    @media (max-width: 680px) { .footer__top { grid-template-columns: 1fr; } }
+    .footer__brand-logo { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; color: var(--text); margin-bottom: 10px; }
+    .footer__brand-logo img { height: 26px; }
+    .footer__brand-logo em { font-style: normal; color: var(--accent); }
+    .footer__brand p { font-size: .85rem; max-width: 320px; }
+    .footer__col h4 { font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .14em; color: var(--text); margin-bottom: 14px; font-weight: 500; }
+    .footer__col a { display: block; color: var(--text-dim); margin-bottom: 8px; font-size: .85rem; }
+    .footer__col a:hover { color: var(--accent); }
+    .footer__bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); letter-spacing: .06em; }
+    .i18n-switch { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-top: 18px; padding-top: 16px; border-top: 1px dashed var(--border-2); }
+    .i18n-switch button { background: transparent; color: var(--text-dim); border: 1px solid var(--border-2); border-radius: 100px; padding: 4px 12px; cursor: pointer; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; transition: all .15s; }
+    .i18n-switch button:hover { color: var(--text); border-color: var(--text-mid); }
+    .i18n-switch button.active { color: #000; background: var(--accent); border-color: var(--accent); }
+    #google_translate_element { display: none !important; }
+    html.gt-translated .nav { top: 40px; }
+  </style>
+</head>
+<body>
+
+  <!-- ════ NAV ════ -->
+  <nav class="nav" role="navigation">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo"><img src="logo.png" alt="DiscoX logo" /><span>Disco<em>X</em></span></a>
+      <button class="nav__toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav__links').classList.toggle('open')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="nav__links">
+        <a href="index.html">Home</a>
+        <a href="index.html#features">Features</a>
+        <a href="index.html#specs">Specs</a>
+        <a href="gallery.html" class="active">Gallery</a>
+        <a href="user-guide.html">User Guide</a>
+        <a href="firmware.html">Firmware</a>
+        <a href="news.html">News</a>
+        <a href="order.html" class="nav__cta">Order</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ════ PAGE HEADER ════ -->
+  <header class="page-header">
+    <div class="container">
+      <p class="mono-label">Gallery</p>
+      <h1>The device, <em>in the flesh</em>.</h1>
+      <p>Photographs of the DiscoX as it actually is — the size of it, how it sits in the hand, and the details of the build. Click any photo to see it full size.</p>
+    </div>
+  </header>
+
+  <!-- ════ GALLERY ════
+       TO ADD A PHOTO:
+       1. Put the web-sized files in gallery/ as <nn>-<slug>-thumb.jpg (900px longest edge)
+          and <nn>-<slug>-full.jpg (1800px longest edge). Keep the original in Gallary/.
+       2. Copy a <button class="shot"> block below and update the paths, the width/height
+          attributes (they must match the thumb, or the page will jump as it loads),
+          the alt text and the caption. The lightbox picks the new photo up automatically.
+  -->
+  <section class="gallery">
+    <div class="container">
+      <div class="grid" id="grid">
+
+        <button class="shot" type="button" data-full="gallery/01-three-quarter-full.jpg">
+          <span class="shot__media">
+            <img src="gallery/01-three-quarter-thumb.jpg" width="900" height="782" loading="eager" decoding="async"
+                 alt="Three-quarter view of the assembled DiscoX, showing the orange shot button, the four-button keypad, the brass corner fixings and a display reading 8.40 m, 150.5 degrees and plus 5.9 degrees." />
+            <span class="shot__zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6"/></svg></span>
+          </span>
+          <span class="shot__cap">
+            <span class="shot__num">01 — Assembled</span>
+            <span class="shot__desc">The finished instrument. Orange shot button under the thumb, four-button keypad beside it, brass fixings at every corner. The display is holding a leg: 8.40 m, 150.5°, +5.9°.</span>
+          </span>
+        </button>
+
+        <button class="shot" type="button" data-full="gallery/02-scale-flatlay-full.jpg">
+          <span class="shot__media">
+            <img src="gallery/02-scale-flatlay-thumb.jpg" width="900" height="600" loading="eager" decoding="async"
+                 alt="The DiscoX laid flat beside an ace of spades playing card and a coin, showing it is a little longer and slightly wider than the card." />
+            <span class="shot__zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6"/></svg></span>
+          </span>
+          <span class="shot__cap">
+            <span class="shot__num">02 — Scale</span>
+            <span class="shot__desc">Next to a playing card and a coin, because millimetres on a spec sheet never quite land. It is a pocket instrument.</span>
+          </span>
+        </button>
+
+        <button class="shot" type="button" data-full="gallery/03-in-hand-full.jpg">
+          <span class="shot__media">
+            <img src="gallery/03-in-hand-thumb.jpg" width="665" height="900" loading="lazy" decoding="async"
+                 alt="The DiscoX held upright in one hand with the thumb resting on the orange shot button and the lit display facing the camera." />
+            <span class="shot__zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6"/></svg></span>
+          </span>
+          <span class="shot__cap">
+            <span class="shot__num">03 — One-handed</span>
+            <span class="shot__desc">Everything you need mid-survey is reachable with the thumb of the hand already holding it, with the screen still in your line of sight.</span>
+          </span>
+        </button>
+
+        <button class="shot" type="button" data-full="gallery/04-profile-card-full.jpg">
+          <span class="shot__media">
+            <img src="gallery/04-profile-card-thumb.jpg" width="900" height="416" loading="lazy" decoding="async"
+                 alt="The DiscoX lying on its side next to a playing card held upright, showing the clear top plate, the brass screws along its length and the lens housing at one end." />
+            <span class="shot__zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6"/></svg></span>
+          </span>
+          <span class="shot__cap">
+            <span class="shot__num">04 — Profile</span>
+            <span class="shot__desc">Side on against the same card. The clear top plate and its row of brass screws run the full length of the body; the laser housing sits proud at the end.</span>
+          </span>
+        </button>
+
+        <button class="shot" type="button" data-full="gallery/05-side-profile-full.jpg">
+          <span class="shot__media">
+            <img src="gallery/05-side-profile-thumb.jpg" width="900" height="559" loading="lazy" decoding="async"
+                 alt="The DiscoX held side on, showing the faceted underside of the printed case below the clear top plate." />
+            <span class="shot__zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6"/></svg></span>
+          </span>
+          <span class="shot__cap">
+            <span class="shot__num">05 — Case</span>
+            <span class="shot__desc">The printed case from the side, with its faceted underside. The top plate seals against it and comes off with the corner screws when you need to get inside.</span>
+          </span>
+        </button>
+
+        <button class="shot" type="button" data-full="gallery/06-grip-full.jpg">
+          <span class="shot__media">
+            <img src="gallery/06-grip-thumb.jpg" width="900" height="537" loading="lazy" decoding="async"
+                 alt="The DiscoX gripped in a closed fist seen from behind, the body sitting across the palm." />
+            <span class="shot__zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6"/></svg></span>
+          </span>
+          <span class="shot__cap">
+            <span class="shot__num">06 — Grip</span>
+            <span class="shot__desc">Closed fist, from behind. The waisted body is shaped to be held this way — gloved, cold, and not looking at what your hand is doing.</span>
+          </span>
+        </button>
+
+        <button class="shot" type="button" data-full="gallery/07-front-face-full.jpg">
+          <span class="shot__media">
+            <img src="gallery/07-front-face-thumb.jpg" width="900" height="569" loading="lazy" decoding="async"
+                 alt="The DiscoX held head on with its flat front face towards the camera, showing the shallow depth of the case." />
+            <span class="shot__zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6"/></svg></span>
+          </span>
+          <span class="shot__cap">
+            <span class="shot__num">07 — Head on</span>
+            <span class="shot__desc">Straight down the barrel — the face you point at the station. Flat, unfussy, and no deeper than it has to be.</span>
+          </span>
+        </button>
+
+        <button class="shot" type="button" data-full="gallery/08-prototype-laser-full.jpg">
+          <span class="shot__media">
+            <img src="gallery/08-prototype-laser-thumb.jpg" width="803" height="900" loading="lazy" decoding="async"
+                 alt="An earlier printed prototype of the DiscoX on a worktop, angled to show the open laser aperture at the front with the red laser visible inside." />
+            <span class="shot__zoom"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6"/></svg></span>
+          </span>
+          <span class="shot__cap">
+            <span class="shot__num">08 — Prototype</span>
+            <span class="shot__desc">An earlier printed prototype on the bench, powered up with the laser live behind the front aperture. Rougher than the finished article, and the reason the finished article works.</span>
+          </span>
+        </button>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ LIGHTBOX ════ -->
+  <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer">
+    <div class="lb__stage">
+      <img id="lbImg" src="" alt="" />
+      <button class="lb__btn lb__close" id="lbClose" type="button" aria-label="Close viewer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <button class="lb__btn lb__prev" id="lbPrev" type="button" aria-label="Previous photo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <button class="lb__btn lb__next" id="lbNext" type="button" aria-label="Next photo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+    </div>
+    <div class="lb__foot">
+      <span class="lb__num" id="lbNum"></span>
+      <p class="lb__cap" id="lbCap"></p>
+    </div>
+  </div>
+
+  <!-- ════ FOOTER ════ -->
+  <footer>
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <div class="footer__brand-logo"><img src="logo.png" alt="" /> <span>Disco<em>X</em></span></div>
+          <p>A cave survey device built for modern caving. Hand-built in the UK, fully repairable, fully yours.</p>
+        </div>
+        <div class="footer__col">
+          <h4>Product</h4>
+          <a href="index.html#features">Features</a>
+          <a href="index.html#specs">Specs</a>
+          <a href="gallery.html">Gallery</a>
+          <a href="order.html">Order</a>
+        </div>
+        <div class="footer__col">
+          <h4>Resources</h4>
+          <a href="user-guide.html">User guide</a>
+          <a href="firmware.html">Firmware</a>
+          <a href="news.html">News</a>
+          <a href="https://github.com/blhall195/Mr_Zappy" target="_blank">GitHub</a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© 2026 DISCOX · BUILT ON <a href="https://stic.readthedocs.io/" target="_blank">SAP6</a></span>
+        <span>MADE IN THE UNITED KINGDOM</span>
+      </div>
+      <div class="i18n-switch" role="group" aria-label="Language">
+        <button type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="fr">FR</button>
+        <button type="button" data-lang="de">DE</button>
+        <button type="button" data-lang="es">ES</button>
+        <button type="button" data-lang="it">IT</button>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.nav__links a').forEach(a => {
+      a.addEventListener('click', () => document.querySelector('.nav__links').classList.remove('open'));
+    });
+  </script>
+
+  <script>
+    (function () {
+      var shots  = Array.prototype.slice.call(document.querySelectorAll('.shot'));
+      if (!shots.length) return;
+      var lb     = document.getElementById('lb'),
+          lbImg  = document.getElementById('lbImg'),
+          lbNum  = document.getElementById('lbNum'),
+          lbCap  = document.getElementById('lbCap'),
+          i      = 0,
+          opener = null;
+
+      function show(n) {
+        i = (n + shots.length) % shots.length;
+        var s = shots[i], img = s.querySelector('img');
+        lbImg.src = s.dataset.full;
+        lbImg.alt = img.alt;
+        lbNum.textContent = s.querySelector('.shot__num').textContent;
+        lbCap.textContent = s.querySelector('.shot__desc').textContent;
+        // Warm the neighbours so arrowing through is instant.
+        [i + 1, i - 1].forEach(function (k) {
+          new Image().src = shots[(k + shots.length) % shots.length].dataset.full;
+        });
+      }
+
+      function open(n) {
+        opener = document.activeElement;
+        show(n);
+        lb.classList.add('open');
+        document.body.classList.add('lb-lock');
+        document.getElementById('lbClose').focus();
+      }
+
+      function close() {
+        lb.classList.remove('open');
+        document.body.classList.remove('lb-lock');
+        lbImg.src = '';
+        if (opener) opener.focus();
+      }
+
+      shots.forEach(function (s, n) { s.addEventListener('click', function () { open(n); }); });
+      document.getElementById('lbClose').addEventListener('click', close);
+      document.getElementById('lbPrev').addEventListener('click', function () { show(i - 1); });
+      document.getElementById('lbNext').addEventListener('click', function () { show(i + 1); });
+
+      // Click the backdrop (but not a control or the photo) to dismiss.
+      lb.addEventListener('click', function (e) {
+        if (e.target === lb || e.target.classList.contains('lb__stage') || e.target.classList.contains('lb__foot')) close();
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (!lb.classList.contains('open')) return;
+        if (e.key === 'Escape')     { close(); }
+        if (e.key === 'ArrowLeft')  { show(i - 1); }
+        if (e.key === 'ArrowRight') { show(i + 1); }
+      });
+
+      // Swipe on touch screens.
+      var x0 = null;
+      lb.addEventListener('touchstart', function (e) { x0 = e.changedTouches[0].clientX; }, { passive: true });
+      lb.addEventListener('touchend', function (e) {
+        if (x0 === null) return;
+        var dx = e.changedTouches[0].clientX - x0;
+        if (Math.abs(dx) > 50) show(dx < 0 ? i + 1 : i - 1);
+        x0 = null;
+      }, { passive: true });
+    })();
+  </script>
+
+  <script src="assets/i18n.js"></script>
+</body>
+</html>
