@@ -545,6 +545,63 @@
 
     /* When translated, Google injects a 40px banner at top:0. Shift the fixed nav down to clear it. */
     html.gt-translated .nav { top: 40px; }
+    .dl-btn {
+      display: inline-flex; align-items: center; gap: 9px;
+      margin-top: 18px; padding: 10px 18px;
+      border: 1px solid var(--border-2); border-radius: var(--radius);
+      color: var(--text); font-size: .9rem; font-weight: 500;
+      transition: border-color .15s, color .15s, background .15s;
+    }
+    .dl-btn:hover { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
+    .dl-btn svg { flex-shrink: 0; }
+
+
+    /* ════════════════════════════════════════════════════════════════
+       PRINT — the downloadable manual is generated from this page, so
+       the screen theme is flipped to ink on paper and the site chrome
+       is dropped. Everything is tokenised, so redefining the custom
+       properties re-themes the components for free.
+       ════════════════════════════════════════════════════════════════ */
+    @media print {
+      @page { size: A4; margin: 16mm 15mm 16mm; }
+
+      :root {
+        --bg: #ffffff;      --bg-2: #ffffff;
+        --surface: #faf8f4; --surface-2: #f2efe8;
+        --border: #d9d3c7;  --border-2: #c3bbab;
+        --text: #16130f;    --text-mid: #3c372e; --text-dim: #6b6354;
+        --accent: #a6570b;  --accent-2: #8a4708;
+        --accent-soft: #fbf2e5; --accent-glow: transparent;
+        --red: #b3301f;     --green: #1d7a4e; --blue: #1d5c94; --purple: #6b3fa0;
+      }
+
+      html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      html, body { background: #fff !important; color: var(--text) !important; }
+
+      /* site furniture has no place in a manual */
+      .nav, .docs-nav, .ver-switch, footer, .i18n-switch,
+      .page-header::before, .dl-btn { display: none !important; }
+
+      .container { max-width: none; padding: 0; }
+      .docs-grid { display: block; }
+      .docs-content { max-width: none; }
+      .docs { padding: 0; }
+      .page-header { padding: 0 0 10mm; border: none; }
+      .page-header h1 { font-size: 34pt; }
+      .toc-card { break-inside: avoid; }
+
+      /* one section per page, headings kept with what follows */
+      .docs-section {
+        break-before: page; border-top: none;
+        margin-top: 0; padding-top: 0;
+      }
+      .docs-section__num, h2, h3, h4 { break-after: avoid; }
+      figure, table, .cb, .keys, .setting-table, li { break-inside: avoid; }
+      p { orphans: 3; widows: 3; }
+
+      img, svg { max-width: 100% !important; height: auto; }
+      a { color: var(--text); text-decoration: none; }
+    }
   </style>
 </head>
 <body>
@@ -585,6 +642,10 @@
           </div>
           <p class="ver-note" data-ver="v2">Showing the new device — the one with the large orange trigger button.</p>
           <p class="ver-note" data-ver="v1">Showing the original device — four identical blue buttons, no orange trigger.</p>
+          <a class="dl-btn" id="guidePdf" href="discox-user-guide.pdf" download>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+            Download as PDF
+          </a>
         </div>
         <div class="toc-card">
           <h4>On this page</h4>
@@ -594,7 +655,8 @@
           <a href="#disco"><span>Disco mode</span><span>04</span></a>
           <a href="#bluetooth"><span>Bluetooth</span><span>05</span></a>
           <a href="#calibration"><span>Calibration</span><span>06</span></a>
-          <a href="#settings"><span>Settings</span><span>07</span></a>
+          <a href="#firmware-update"><span>Firmware update</span><span>07</span></a>
+          <a href="#settings"><span>Settings</span><span>08</span></a>
         </div>
       </div>
     </div>
@@ -618,7 +680,8 @@
           <a href="#disco"      data-n="04">Disco mode</a>
           <a href="#bluetooth"  data-n="05">Bluetooth</a>
           <a href="#calibration" data-n="06">Calibration</a>
-          <a href="#settings"   data-n="07">Settings</a>
+          <a href="#firmware-update" data-n="07">Firmware update</a>
+          <a href="#settings"   data-n="08">Settings</a>
         </nav>
 
         <div class="docs-content">
@@ -926,9 +989,23 @@
             </div>
           </article>
 
-          <!-- ── 07 SETTINGS ── -->
+          <!-- ── 07 FIRMWARE UPDATE ── -->
+          <article class="docs-section" id="firmware-update">
+            <div class="docs-section__num">07 · Maintenance</div>
+            <h2>Firmware update</h2>
+            <div data-ver="v2">
+            <p>Plug the DiscoX into your computer first, then go to <strong>Menu → Update Firmware → Yes</strong>. The device enters the UF2 bootloader and appears as a removable drive. Drag and drop the new <code>.uf2</code> file onto it — the DiscoX reboots when flashing is complete. Your settings, calibration and any unsent shots survive the update.</p>
+            <p>The device has to be connected before you pick Yes: the bootloader only waits a few seconds for the USB connection before dropping back into the normal firmware.</p>
+            </div>
+
+            <div data-ver="v1">
+            <p>Go to <strong>Menu → Update / Settings → Update Firmware</strong>. The device enters the UF2 bootloader and appears as a removable drive. Drag and drop the new <code>.uf2</code> file onto it — the DiscoX reboots when flashing is complete.</p>
+            </div>
+          </article>
+
+          <!-- ── 08 SETTINGS ── -->
           <article class="docs-section" id="settings">
-            <div class="docs-section__num">07 · Configuration</div>
+            <div class="docs-section__num">08 · Configuration</div>
             <h2>Settings</h2>
             <div data-ver="v2">
             <p>All common settings are accessible from the onboard menu — press <strong>Menu</strong> to open it, <strong>Up</strong>/<strong>Down</strong> to scroll, and the <strong>orange trigger</strong> or <strong>Menu</strong> to select.</p>
@@ -1014,9 +1091,6 @@
               <tr><td>ble_name<small>default "SAP6_DiscoX"</small></td><td>Bluetooth device name advertised to survey apps. Max 20 characters; the <code>SAP6_</code> prefix is added for you if you leave it out.</td></tr>
             </table>
 
-            <h3>Firmware update</h3>
-            <p>Plug the DiscoX into your computer first, then go to <strong>Menu → Update Firmware → Yes</strong>. The device enters the UF2 bootloader and appears as a removable drive. Drag and drop the new <code>.uf2</code> file onto it — the DiscoX reboots when flashing is complete. Your settings, calibration and any unsent shots survive the update.</p>
-            <p>The device has to be connected before you pick Yes: the bootloader only waits a few seconds for the USB connection before dropping back into the normal firmware.</p>
             </div>
 
             <div data-ver="v1">
@@ -1082,8 +1156,6 @@
               <tr><td>ble_name<small>default "SAP6_Unicorn"</small></td><td>Bluetooth device name advertised to survey apps. Max 20 characters.</td></tr>
             </table>
 
-            <h3>Firmware update</h3>
-            <p>Go to <strong>Menu → Update / Settings → Update Firmware</strong>. The device enters the UF2 bootloader and appears as a removable drive. Drag and drop the new <code>.uf2</code> file onto it — the DiscoX reboots when flashing is complete.</p>
             </div>
           </article>
 
@@ -1147,6 +1219,13 @@
           b.classList.toggle('active', on);
           b.setAttribute('aria-pressed', on ? 'true' : 'false');
         });
+        // the PDF manual comes in one flavour per device
+        var pdf = document.getElementById('guidePdf');
+        if (pdf) {
+          pdf.setAttribute('href', ver === 'v1'
+            ? 'discox-user-guide-original.pdf'
+            : 'discox-user-guide.pdf');
+        }
       }
 
       function setVer(ver) {
