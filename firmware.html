@@ -619,8 +619,8 @@
             <p class="ver-note" data-ver="v1">Showing the original device — four identical blue buttons, no orange trigger.</p>
 
             <div class="download-row" data-ver="v2">
-              <a href="mrzappy-v2.0.1.uf2" download="mrzappy-v2.0.1.uf2" class="btn-link btn-link--primary">
-                Download mrzappy-v2.0.1.uf2
+              <a href="mrzappy-v2.0.2.uf2" download="mrzappy-v2.0.2.uf2" class="btn-link btn-link--primary">
+                Download mrzappy-v2.0.2.uf2
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v14M6 13l6 6 6-6M5 21h14"/></svg>
               </a>
               <a href="https://github.com/blhall195/DiscoX-V2/releases" target="_blank" class="btn-link btn-link--outline">
@@ -630,7 +630,7 @@
             </div>
 
             <p data-ver="v2" style="font-family: var(--font-mono); font-size: .8rem; color: var(--text-dim); letter-spacing: .04em; margin-top: 8px;">
-              v2.0.1 · released 2026-09-15 · sha256 <code>3d4f…d200</code>
+              v2.0.2 · released 2026-09-19 · sha256 <code>52d8…3d2a</code>
             </p>
 
             <div class="download-row" data-ver="v1">
@@ -724,7 +724,7 @@
             <p>With the device in Firmware Update Mode and the <code>DISCOX</code> drive mounted, you're ready to flash.</p>
 
             <div class="dropzone" aria-hidden="true">
-              <div class="dropzone__file" data-ver="v2">mrzappy-v2.0.1.uf2</div>
+              <div class="dropzone__file" data-ver="v2">mrzappy-v2.0.2.uf2</div>
               <div class="dropzone__file" data-ver="v1">discox-v0.1.0.uf2</div>
               <div class="dropzone__arrow"><span></span>drop<span></span></div>
               <div class="dropzone__drive">
@@ -797,6 +797,12 @@
           <article class="docs-section" id="changelog">
             <div class="docs-section__num">05 · What's new</div>
             <h2>Changelog</h2>
+
+            <h3 data-ver="v2">v2.0.2 — 2026-09-19</h3>
+            <ul data-ver="v2">
+              <li>Fixed the compass reading backwards. Turning east from north showed 270° instead of 90°, and the error grew worse on steeply inclined legs. Inclination and distance were never affected. Everyone on v2.0.1 should update.</li>
+              <li>If you calibrated your device on v2.0.1, please re-run the calibration after updating — the old one was recorded against the mirrored compass. The new firmware will not let a stale calibration undo the fix.</li>
+            </ul>
 
             <h3 data-ver="v2">v2.0.1 — 2026-09-15</h3>
             <ul data-ver="v2">
