@@ -1,4 +1,10 @@
-.claude/
+# Machine-local Claude Code state only. The rest of .claude/ -- the skills in
+# .claude/skills/ -- MUST stay committed: a Claude cloud session (the Code tab
+# in the phone app) clones this repo from GitHub and only ever sees committed
+# files. Ignoring .claude/ wholesale is what leaves a phone session with no
+# house style to follow.
+.claude/settings.local.json
+
 zoho-import/
 
 # Local editor workspace
