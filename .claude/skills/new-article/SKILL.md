@@ -105,6 +105,9 @@ whoever edits the file by hand.
 - the title, date and excerpt agree between the two files
 - nothing outside the article body and the index block changed — in particular
   the `<style>` block should be byte-identical to the template's
+- the Cloudflare Web Analytics `<script>` is still just before `</body>`, with
+  the same token as every other page — without it the article's visits are not
+  counted, and nothing else tells you
 
 ## Writing
 

@@ -31,6 +31,12 @@ installed, which is the whole reason this site is maintainable from a phone.
 The two shared files are `logo.png` and `assets/i18n.js`. That is the extent of
 it.
 
+Every page also ends with the same Cloudflare Web Analytics `<script>` just
+before `</body>`: cookie-free visit counts, so no consent banner is needed. It
+is the one external script on the site. A new page must carry it, with the same
+token, or its visits silently go uncounted. The dashboard is in Cloudflare under
+Analytics & Logs → Web Analytics.
+
 ## Pages
 
 | File | What it is |
