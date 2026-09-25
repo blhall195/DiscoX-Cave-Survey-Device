@@ -619,8 +619,8 @@
             <p class="ver-note" data-ver="v1">Showing the original device — four identical blue buttons, no orange trigger.</p>
 
             <div class="download-row" data-ver="v2">
-              <a href="mrzappy-v2.0.2.uf2" download="DiscoX2-v2.0.2.uf2" class="btn-link btn-link--primary">
-                Download DiscoX2-v2.0.2.uf2
+              <a href="mrzappy-v2.0.3.uf2" download="DiscoX2-v2.0.3.uf2" class="btn-link btn-link--primary">
+                Download DiscoX2-v2.0.3.uf2
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v14M6 13l6 6 6-6M5 21h14"/></svg>
               </a>
               <a href="https://github.com/blhall195/DiscoX-V2/releases" target="_blank" class="btn-link btn-link--outline">
@@ -630,7 +630,7 @@
             </div>
 
             <p data-ver="v2" style="font-family: var(--font-mono); font-size: .8rem; color: var(--text-dim); letter-spacing: .04em; margin-top: 8px;">
-              v2.0.2 · released 2026-09-19 · sha256 <code>52d8…3d2a</code>
+              v2.0.3 · released 2026-09-25 · sha256 <code>ed9e…b054</code>
             </p>
 
             <div class="download-row" data-ver="v1">
@@ -724,7 +724,7 @@
             <p>With the device in Firmware Update Mode and the <code>DISCOX</code> drive mounted, you're ready to flash.</p>
 
             <div class="dropzone" aria-hidden="true">
-              <div class="dropzone__file" data-ver="v2">DiscoX2-v2.0.2.uf2</div>
+              <div class="dropzone__file" data-ver="v2">DiscoX2-v2.0.3.uf2</div>
               <div class="dropzone__file" data-ver="v1">discox-v0.1.0.uf2</div>
               <div class="dropzone__arrow"><span></span>drop<span></span></div>
               <div class="dropzone__drive">
@@ -797,6 +797,13 @@
           <article class="docs-section" id="changelog">
             <div class="docs-section__num">05 · What's new</div>
             <h2>Changelog</h2>
+
+            <h3 data-ver="v2">v2.0.3 — 2026-09-25</h3>
+            <ul data-ver="v2">
+              <li>Fixed the device freezing on the start-up screen if its internal storage gets damaged — for example by power being cut while it was saving a calibration. Before, the only clue was a device that never finished booting, and re-flashing the firmware didn't help. Now it restarts into a STORAGE DAMAGED screen: hold FIRE for 3 seconds to repair it and the device boots normally again. Everyone on v2.0.2 should update.</li>
+              <li>Your settings and calibration are now backed up automatically. If the storage ever has to be reset — through the repair screen, Menu → Settings → Reformat Storage, or holding DOWN + MENU at power-on — they are put back on the next start-up, so you don't have to calibrate again. Unsent readings can't be recovered, so let the device send its readings to your phone before you reset it.</li>
+              <li>After updating, turn the device on once so it can make its first backup. There is nothing else to do and you don't need to calibrate again.</li>
+            </ul>
 
             <h3 data-ver="v2">v2.0.2 — 2026-09-19</h3>
             <ul data-ver="v2">
