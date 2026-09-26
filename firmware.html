@@ -619,8 +619,8 @@
             <p class="ver-note" data-ver="v1">Showing the original device — four identical blue buttons, no orange trigger.</p>
 
             <div class="download-row" data-ver="v2">
-              <a href="mrzappy-v2.0.3.uf2" download="DiscoX2-v2.0.3.uf2" class="btn-link btn-link--primary">
-                Download DiscoX2-v2.0.3.uf2
+              <a href="mrzappy-v2.0.4.uf2" download="DiscoX2-v2.0.4.uf2" class="btn-link btn-link--primary">
+                Download DiscoX2-v2.0.4.uf2
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v14M6 13l6 6 6-6M5 21h14"/></svg>
               </a>
               <a href="https://github.com/blhall195/DiscoX-V2/releases" target="_blank" class="btn-link btn-link--outline">
@@ -630,7 +630,7 @@
             </div>
 
             <p data-ver="v2" style="font-family: var(--font-mono); font-size: .8rem; color: var(--text-dim); letter-spacing: .04em; margin-top: 8px;">
-              v2.0.3 · released 2026-09-25 · sha256 <code>ed9e…b054</code>
+              v2.0.4 · released 2026-09-26 · sha256 <code>d596…0fab</code>
             </p>
 
             <div class="download-row" data-ver="v1">
@@ -724,7 +724,7 @@
             <p>With the device in Firmware Update Mode and the <code>DISCOX</code> drive mounted, you're ready to flash.</p>
 
             <div class="dropzone" aria-hidden="true">
-              <div class="dropzone__file" data-ver="v2">DiscoX2-v2.0.3.uf2</div>
+              <div class="dropzone__file" data-ver="v2">DiscoX2-v2.0.4.uf2</div>
               <div class="dropzone__file" data-ver="v1">discox-v0.1.0.uf2</div>
               <div class="dropzone__arrow"><span></span>drop<span></span></div>
               <div class="dropzone__drive">
@@ -797,6 +797,19 @@
           <article class="docs-section" id="changelog">
             <div class="docs-section__num">05 · What's new</div>
             <h2>Changelog</h2>
+
+            <h3 data-ver="v2">v2.0.4 — 2026-09-26</h3>
+            <ul data-ver="v2">
+              <li>Fixed compass readings on tilted and rolled shots. The fix in v2.0.2 corrected readings taken with the device level and screen-up, but on inclined legs, or with the device rolled onto its side, the azimuth could still be out by several degrees, sometimes much more. Inclination and distance were never affected. Everyone on v2.0.2 or v2.0.3 should update.</li>
+              <li>If you calibrated your device on v2.0.2 or v2.0.3, please re-run the full calibration after updating. The device shows RECAL NEEDED at start-up until you do. Calibrations made on earlier firmware are converted automatically and don't need redoing.</li>
+              <li>Taking a shot is quicker. The device now needs about a third of a second of steady aim rather than a longer, stricter hold, and it records the average over that moment instead of a single instant, so ordinary hand shake no longer holds a shot up or nudges the reading.</li>
+              <li>The compass and inclination on screen are steadier while you aim.</li>
+              <li>Calibration now spots points thrown off by nearby metal and leaves them out of the result. It also warns you if the second part was done somewhere magnetically different from the first (half a metre from a radiator is enough), and says so in plain words instead of showing a good-looking accuracy figure.</li>
+              <li>The calibration results screens show a new Dip spread figure. In a clear spot expect about 1° after part 1 and 0.1–0.2° after part 2; a much larger number means something magnetic was nearby.</li>
+              <li>A calibration point that never settles is no longer recorded anyway. The device beeps three times and you take that point again.</li>
+              <li>The CAL? warning at start-up appears far less often. It could be set off by a single noisy reading or by moving the device as you switched it on.</li>
+              <li>config.json on the USB drive now lists only the settings you might want to change, and your existing values are kept when you update. The steadiness setting is now called steady_tolerance (default 1.5°).</li>
+            </ul>
 
             <h3 data-ver="v2">v2.0.3 — 2026-09-25</h3>
             <ul data-ver="v2">
