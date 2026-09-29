@@ -619,8 +619,8 @@
             <p class="ver-note" data-ver="v1">Showing the original device — four identical blue buttons, no orange trigger.</p>
 
             <div class="download-row" data-ver="v2">
-              <a href="mrzappy-v2.0.4.uf2" download="DiscoX2-v2.0.4.uf2" class="btn-link btn-link--primary">
-                Download DiscoX2-v2.0.4.uf2
+              <a href="mrzappy-v2.0.5.uf2" download="DiscoX2-v2.0.5.uf2" class="btn-link btn-link--primary">
+                Download DiscoX2-v2.0.5.uf2
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v14M6 13l6 6 6-6M5 21h14"/></svg>
               </a>
               <a href="https://github.com/blhall195/DiscoX-V2/releases" target="_blank" class="btn-link btn-link--outline">
@@ -630,7 +630,7 @@
             </div>
 
             <p data-ver="v2" style="font-family: var(--font-mono); font-size: .8rem; color: var(--text-dim); letter-spacing: .04em; margin-top: 8px;">
-              v2.0.4 · released 2026-09-26 · sha256 <code>d596…0fab</code>
+              v2.0.5 · released 2026-09-29 · sha256 <code>92e1…2215</code>
             </p>
 
             <div class="download-row" data-ver="v1">
@@ -724,7 +724,7 @@
             <p>With the device in Firmware Update Mode and the <code>DISCOX</code> drive mounted, you're ready to flash.</p>
 
             <div class="dropzone" aria-hidden="true">
-              <div class="dropzone__file" data-ver="v2">DiscoX2-v2.0.4.uf2</div>
+              <div class="dropzone__file" data-ver="v2">DiscoX2-v2.0.5.uf2</div>
               <div class="dropzone__file" data-ver="v1">discox-v0.1.0.uf2</div>
               <div class="dropzone__arrow"><span></span>drop<span></span></div>
               <div class="dropzone__drive">
@@ -797,6 +797,17 @@
           <article class="docs-section" id="changelog">
             <div class="docs-section__num">05 · What's new</div>
             <h2>Changelog</h2>
+
+            <h3 data-ver="v2">v2.0.5 — 2026-09-29</h3>
+            <ul data-ver="v2">
+              <li>The Mag Field Check is now a simpler F/B Check (Menu → Calibration → F/B Check). Shoot a leg forward and back and it shows how well each pair agrees, with a verdict of Good, OK or Recal. It no longer changes your calibration: the old automatic correction was mostly fitting hand-aiming noise and could nudge a good calibration the wrong way.</li>
+              <li>If your device shows RECAL NEEDED (calibrated on v2.0.2 or v2.0.3), choosing Part 2 on its own now runs the full calibration, so the warning can only be cleared by actually fixing the calibration.</li>
+              <li>Calibration Phase 1 now shows two circles that fill in as you take readings, instead of bars that never filled completely. The instructions on screen describe the method: aim at every face and corner of an imaginary cube (14 positions), rolling the device a quarter turn four times at each.</li>
+              <li>The results after Phase 1 are now in plain words: an overall verdict, the heading accuracy to expect, whether the magnetic field was steady (if not, there was probably metal nearby), and how many bad points were left out. Menu → Calibration → View Last Cal shows the same summary for both phases. It reads "No quality data" until your first calibration after updating.</li>
+              <li>Calibration readings and F/B Check shots now light up and sound exactly like survey shots. A calibration point that never settles gives the same red flashes and falling tone as a failed laser shot; just take it again. This replaces the three beeps from v2.0.4.</li>
+              <li>New, louder sounds tuned to the buzzer's loudest pitch: a rising two-note chime when a survey reading is taken, and a single beep for a splay, so you can tell them apart without looking.</li>
+              <li>The steady_tolerance setting on the USB drive is now kept between 0.5° and 5°, so a typo can't make shots fire mid-swing.</li>
+            </ul>
 
             <h3 data-ver="v2">v2.0.4 — 2026-09-26</h3>
             <ul data-ver="v2">
