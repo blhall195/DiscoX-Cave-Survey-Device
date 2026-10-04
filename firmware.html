@@ -619,8 +619,8 @@
             <p class="ver-note" data-ver="v1">Showing the original device — four identical blue buttons, no orange trigger.</p>
 
             <div class="download-row" data-ver="v2">
-              <a href="mrzappy-v2.0.6.uf2" download="DiscoX2-v2.0.6.uf2" class="btn-link btn-link--primary">
-                Download DiscoX2-v2.0.6.uf2
+              <a href="mrzappy-v2.0.7.uf2" download="DiscoX2-v2.0.7.uf2" class="btn-link btn-link--primary">
+                Download DiscoX2-v2.0.7.uf2
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v14M6 13l6 6 6-6M5 21h14"/></svg>
               </a>
               <a href="https://github.com/blhall195/DiscoX-V2/releases" target="_blank" class="btn-link btn-link--outline">
@@ -630,7 +630,7 @@
             </div>
 
             <p data-ver="v2" style="font-family: var(--font-mono); font-size: .8rem; color: var(--text-dim); letter-spacing: .04em; margin-top: 8px;">
-              v2.0.6 · released 2026-09-29 · sha256 <code>fb41…fc69</code>
+              v2.0.7 · released 2026-10-04 · sha256 <code>4b1c…32b0</code>
             </p>
 
             <div class="download-row" data-ver="v1">
@@ -724,7 +724,7 @@
             <p>With the device in Firmware Update Mode and the <code>DISCOX</code> drive mounted, you're ready to flash.</p>
 
             <div class="dropzone" aria-hidden="true">
-              <div class="dropzone__file" data-ver="v2">DiscoX2-v2.0.6.uf2</div>
+              <div class="dropzone__file" data-ver="v2">DiscoX2-v2.0.7.uf2</div>
               <div class="dropzone__file" data-ver="v1">discox-v0.1.0.uf2</div>
               <div class="dropzone__arrow"><span></span>drop<span></span></div>
               <div class="dropzone__drive">
@@ -797,6 +797,17 @@
           <article class="docs-section" id="changelog">
             <div class="docs-section__num">05 · What's new</div>
             <h2>Changelog</h2>
+
+            <h3 data-ver="v2">v2.0.7 — 2026-10-04</h3>
+            <ul data-ver="v2">
+              <li>New standby mode, so the device is ready again instantly between stations. A short press of the power button shows "Standby mode" for a second, then switches off the screen and laser. Press any button and you're straight back on the reading screen, with no start-up wait. After 10 minutes in standby it switches itself off fully. Your phone stays connected while it's in standby; any readings not yet sent go across as soon as you wake it.</li>
+              <li>To switch off fully, hold the power button until the bar fills. To switch on from fully off, hold the power button until the bar fills; a quick tap shows "Hold the power button to turn on" and the device stays off, so it won't turn itself on in a bag.</li>
+              <li>The standby time can be changed with the new standby_timeout setting in CONFIG.JSON on the USB drive (Menu → Settings → USB Drive Mode). It's in seconds: 600 is 10 minutes, and 0 turns standby off, so a short press does nothing and holding switches off.</li>
+              <li>New start-up animation: a spinning disco ball. Six others are available, including a laser engraving the name, a compass that settles on north and a flight down a cave passage. Choose one with the splash_style setting in CONFIG.JSON; the README.TXT on the USB drive lists them.</li>
+              <li>Start-up is quicker: after the animation the device goes straight to the reading screen and finishes starting up behind it, so readings appear a moment later rather than the animation freezing.</li>
+              <li>Fixed a flash of static on the screen when switching on from fully off.</li>
+              <li>No re-calibration is needed. Your settings and calibration are kept when you update.</li>
+            </ul>
 
             <h3 data-ver="v2">v2.0.6 — 2026-09-29</h3>
             <ul data-ver="v2">
