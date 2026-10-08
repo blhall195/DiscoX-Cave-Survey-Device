@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>DiscoX — Target Card (print source)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  /* ════════════════════════════════════════════════════════════════
+     DiscoX target card — print source for discox-target-card.pdf
+
+     The back of the retro-reflective target card. One credit-card-sized
+     page (85.6 × 54 mm, ISO/IEC 7810 ID-1), no bleed; the rounded corners
+     are a guide for the cutter and are not printed.
+
+     Regenerate the PDF with:
+       google-chrome --headless --disable-gpu --no-pdf-header-footer \
+         --print-to-pdf=discox-target-card.pdf target-card.html
+     ════════════════════════════════════════════════════════════════ */
+
+  @page { size: 85.6mm 54mm; margin: 0; }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ink: #111;
+    --ink-mid: #45403a;
+    --ink-dim: #6c655c;
+    --accent: #b35c00;
+    --font-display: 'Space Grotesk', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { background: #fff; color: var(--ink); }
+
+  @media screen {
+    body { background: #e6e0d6; min-height: 100vh; display: grid; place-items: center; }
+    .card { box-shadow: 0 2mm 6mm rgba(0,0,0,.18); border-radius: 3.18mm; zoom: 2.5; }
+  }
+
+  .card {
+    width: 85.6mm; height: 54mm; background: #fff; overflow: hidden;
+    position: relative;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 4mm 6mm 5mm;
+  }
+
+  /* The same rainbow as the logo's outline, as a thin band along the bottom edge. */
+  .card::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1.6mm;
+    background: linear-gradient(90deg, #7be36a, #5ecfb6, #62a8f0, #8f8be0, #b27fc0, #d8406a);
+  }
+
+  .logo { width: 52mm; height: auto; display: block; }
+
+  .msg {
+    margin-top: 3.4mm; text-align: center;
+    font-family: var(--font-display); font-weight: 600;
+    font-size: 8.6pt; line-height: 1.2; letter-spacing: -.005em;
+    max-width: 66mm;
+  }
+
+  .url {
+    margin-top: 2mm;
+    font-family: var(--font-mono); font-size: 5.6pt; font-weight: 500;
+    letter-spacing: .2em; text-transform: uppercase; color: var(--ink-dim);
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <img class="logo" src="logo.png" alt="The DiscoX logo: a black survey device outline with a rainbow edge, four square buttons on the left and a disco ball on its screen, firing a red laser that bursts into a starburst on the right." />
+    <p class="msg">Use this card as a target in case of poor reflective&nbsp;surfaces.</p>
+    <p class="url">discox.co.uk</p>
+  </div>
+  <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "e2c51fa092094d9da89de784e022f89b"}'></script>
+</body>
+</html>
