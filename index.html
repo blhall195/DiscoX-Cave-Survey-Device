@@ -312,6 +312,7 @@
     }
     .price-pill b { color: var(--accent); font-weight: 500; }
     .price-pill .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); animation: pulse 2s infinite; }
+    .price-pill .dot--out { background: var(--red); box-shadow: 0 0 10px var(--red); animation: none; }
     @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .5; } }
     .price-pill .pill-end {
       font-family: var(--font-sans); background: var(--accent); color: #000;
@@ -824,8 +825,8 @@
       <div class="hero__inner">
         <div class="hero__copy">
           <div class="price-pill">
-            <span class="dot"></span>
-            <span>Available now — <b>£525</b></span>
+            <span class="dot dot--out"></span>
+            <span>Out of stock — <b>£525</b></span>
             <a href="order.html" class="pill-end">Order</a>
           </div>
           <h1>
