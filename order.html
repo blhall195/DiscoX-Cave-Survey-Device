@@ -463,11 +463,9 @@
           <h2>Your details</h2>
           <p>UK or international — add your address and contact info below and I'll set up your order, confirm shipping to your location, and come back to you with payment.</p>
 
-          <form class="order-form" id="orderForm" action="https://formspree.io/f/mvgwqgyq" method="POST">
-            <!-- Formspree — emails the enquiry straight to info@discox.co.uk -->
-            <input type="hidden" name="_next" value="https://discox.co.uk/submitted" />
-            <!-- Subject is auto-built from name + country on submit -->
-            <input type="hidden" name="_subject" id="orderSubject" />
+          <form class="order-form" id="orderForm" action="https://discox-api.discox-api.workers.dev/order" method="POST">
+            <!-- discox-api Worker (github.com/blhall195/discox-api) — stores the order for the CRM
+                 and redirects to /submitted/. Field names below are what the Worker reads; keep them in step. -->
             <!-- Honeypot: bots fill this, people never see it -->
             <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true" />
             <div class="form-row">
@@ -527,23 +525,6 @@
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </button>
           </form>
-          <script>
-            (function () {
-              var form = document.getElementById('orderForm');
-              if (!form) return;
-              form.addEventListener('submit', function () {
-                function v(id) {
-                  var el = document.getElementById(id);
-                  return el && el.value ? el.value.trim() : '';
-                }
-                var name = [v('firstName'), v('lastName')].filter(Boolean).join(' ');
-                var subject = name;
-                if (v('country')) subject += (subject ? ' — ' : '') + v('country');
-                document.getElementById('orderSubject').value =
-                  'DiscoX order enquiry' + (subject ? ' — ' + subject : '');
-              });
-            })();
-          </script>
         </div>
 
       </div>
