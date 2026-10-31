@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order status — DiscoX</title>
+  <!-- The URL carries the order reference, which is the only key to an order's
+       status: keep it out of search engines and out of Referer headers. -->
+  <meta name="robots" content="noindex" />
+  <meta name="referrer" content="no-referrer" />
+  <link rel="icon" href="/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --accent-hue: 38;
+      --accent-chroma: 0.18;
+      --bg: #0a0907;
+      --bg-2: #121010;
+      --surface: #17140f;
+      --surface-2: #1f1b14;
+      --border: #2b251b;
+      --border-2: #3a3225;
+      --text: #f0ebdf;
+      --text-mid: #b5a88f;
+      --text-dim: #8a7e68;
+      --accent: oklch(0.78 var(--accent-chroma) var(--accent-hue));
+      --accent-2: oklch(0.62 var(--accent-chroma) var(--accent-hue));
+      --accent-soft: oklch(0.78 var(--accent-chroma) var(--accent-hue) / 0.12);
+      --accent-glow: oklch(0.78 var(--accent-chroma) var(--accent-hue) / 0.22);
+      --font-sans: 'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      --font-display: 'Space Grotesk', 'Inter Tight', sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+      --max-w: 1200px;
+      --radius: 6px;
+      --radius-lg: 14px;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      font-feature-settings: "ss01", "cv11";
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+    ::selection { background: var(--accent); color: #000; }
+    img { max-width: 100%; display: block; }
+    a { color: var(--accent); text-decoration: none; transition: color .2s, opacity .2s; }
+    a:hover { opacity: .85; }
+    button { font-family: inherit; }
+
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 32px; position: relative; width: 100%; }
+
+    /* ==== NAV ==== */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(10,9,7,.75);
+      backdrop-filter: blur(20px) saturate(140%);
+      -webkit-backdrop-filter: blur(20px) saturate(140%);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav__inner {
+      max-width: var(--max-w); margin: 0 auto; padding: 0 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 68px;
+    }
+    .nav__logo {
+      font-family: var(--font-display); font-weight: 600; font-size: 1.15rem;
+      color: var(--text); letter-spacing: -.02em;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .nav__logo img { height: 30px; width: auto; display: block; }
+    .nav__logo em { font-style: normal; color: var(--accent); }
+    .nav__links { display: flex; gap: 2px; align-items: center; }
+    .nav__links a {
+      font-size: .86rem; font-weight: 500; color: var(--text-mid);
+      padding: 8px 14px; border-radius: 6px; transition: all .2s;
+    }
+    .nav__links a:hover { color: var(--text); background: var(--surface-2); opacity: 1; }
+    @media (max-width: 620px) { .nav__links a:not(.nav__home) { display: none; } }
+
+    /* ==== BUTTONS ==== */
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 22px; border-radius: var(--radius); font-weight: 600;
+      font-size: .92rem; transition: all .18s; border: 1px solid transparent;
+      cursor: pointer; font-family: var(--font-sans); letter-spacing: -.005em;
+    }
+    .btn--primary { background: var(--accent); color: #000; }
+    .btn--primary:hover { background: var(--accent-2); color: #000; opacity: 1; }
+
+    .mono-label {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: .18em; color: var(--accent);
+    }
+    .mono-label::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+
+    /* ==== STATUS ==== */
+    .status {
+      flex: 1; position: relative; padding: 128px 0 80px; overflow: hidden;
+    }
+    .status__grid-bg {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 46px 46px;
+      -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000 0%, transparent 75%);
+      mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000 0%, transparent 75%);
+      opacity: .5;
+    }
+    .status__card { position: relative; max-width: 560px; margin: 0 auto; }
+    .status h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 500;
+      letter-spacing: -.03em; line-height: 1.05;
+      margin: 18px 0 14px;
+    }
+    .status h1 em { font-style: normal; color: var(--accent); }
+    .status p { color: var(--text-mid); font-size: 1.04rem; }
+    .status__meta {
+      font-family: var(--font-mono); font-size: 12px; letter-spacing: .04em;
+      color: var(--text-dim); margin-bottom: 28px;
+    }
+    .status__meta strong { color: var(--text); font-weight: 500; }
+
+    /* lookup form */
+    .lookup { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 26px; }
+    .lookup input {
+      flex: 1 1 220px; min-width: 0;
+      padding: 13px 14px; border-radius: var(--radius);
+      background: var(--surface); border: 1px solid var(--border-2);
+      color: var(--text); font-family: var(--font-mono); font-size: 1rem;
+      letter-spacing: .06em; text-transform: uppercase;
+    }
+    .lookup input:focus { outline: none; border-color: var(--accent); }
+    .notice {
+      margin-top: 18px; padding: 12px 14px; border-radius: var(--radius);
+      border: 1px solid var(--border-2); background: var(--surface);
+      color: var(--text-mid); font-size: .95rem;
+    }
+
+    /* progress */
+    .steps { list-style: none; margin: 8px 0 0; position: relative; }
+    .step {
+      position: relative; padding: 0 0 22px 40px;
+    }
+    .step::before {             /* the line down to the next step */
+      content: ''; position: absolute; left: 11px; top: 26px; bottom: 0;
+      width: 2px; background: var(--border-2);
+    }
+    .step:last-child::before { display: none; }
+    .step__dot {
+      position: absolute; left: 0; top: 2px; width: 24px; height: 24px;
+      border-radius: 50%; border: 2px solid var(--border-2); background: var(--bg);
+      display: grid; place-items: center;
+    }
+    .step__dot svg { width: 12px; height: 12px; display: none; }
+    .step__title { font-weight: 600; color: var(--text-dim); }
+    .step__note { font-size: .92rem; color: var(--text-dim); }
+    .step.done::before { background: var(--accent-2); }
+    .step.done .step__dot { background: var(--accent); border-color: var(--accent); }
+    .step.done .step__dot svg { display: block; }
+    .step.done .step__title { color: var(--text); }
+    .step.current .step__dot { border-color: var(--accent); box-shadow: 0 0 0 5px var(--accent-soft); }
+    .step.current .step__title { color: var(--accent); }
+    .step.current .step__note { color: var(--text-mid); }
+
+    .status__help {
+      margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border);
+      font-size: .92rem;
+    }
+
+    [hidden] { display: none !important; }
+
+    /* ==== FOOTER ==== */
+    footer {
+      border-top: 1px solid var(--border); padding: 26px 0;
+      font-size: .8rem; color: var(--text-dim);
+    }
+    .footer__row {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      font-family: var(--font-mono); letter-spacing: .04em; flex-wrap: wrap;
+    }
+    @media (max-width: 620px) {
+      .container, .nav__inner { padding: 0 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════ NAV ════ -->
+  <nav class="nav" role="navigation">
+    <div class="nav__inner">
+      <a href="/index.html" class="nav__logo"><img src="/logo.png" alt="DiscoX logo" /><span>Disco<em>X</em></span></a>
+      <div class="nav__links">
+        <a href="/index.html" class="nav__home">Home</a>
+        <a href="/user-guide.html">User Guide</a>
+        <a href="/firmware.html">Firmware</a>
+        <a href="/order.html">Order</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ════ STATUS ════ -->
+  <section class="status">
+    <div class="status__grid-bg"></div>
+    <div class="container">
+      <div class="status__card">
+
+        <!-- Shown until a reference is entered, or when one is not found. -->
+        <div id="lookupView">
+          <p class="mono-label">Order status</p>
+          <h1>Where is my <em>order</em>?</h1>
+          <p>Enter the order reference from the page you saw after ordering. It looks
+             like <span style="font-family:var(--font-mono);color:var(--text)">K7Q2-9XMF-4LTA</span>.</p>
+          <form class="lookup" id="lookupForm">
+            <input id="refInput" name="ref" autocomplete="off" spellcheck="false"
+                   placeholder="XXXX-XXXX-XXXX" maxlength="20" aria-label="Order reference" required />
+            <button class="btn btn--primary" type="submit">Check status</button>
+          </form>
+          <p class="notice" id="lookupMsg" hidden></p>
+        </div>
+
+        <p class="notice" id="loadingView" hidden>Looking up your order…</p>
+
+        <!-- Filled in from discox-api once the order is found. -->
+        <div id="orderView" hidden>
+          <p class="mono-label">Order status</p>
+          <h1 id="orderGreeting">Your <em>order</em></h1>
+          <p class="status__meta">Reference <strong id="orderRef"></strong> · placed <span id="orderPlaced"></span></p>
+          <p class="notice" id="cancelledMsg" hidden>This order was cancelled. If that is unexpected,
+             email <a href="mailto:info@discox.co.uk">info@discox.co.uk</a> quoting your reference.</p>
+          <ol class="steps" id="steps"></ol>
+          <p class="status__help">Questions about your order? Email
+             <a href="mailto:info@discox.co.uk">info@discox.co.uk</a> and quote your reference.
+             I update this page by hand, so it can lag a day or so behind what you hear from me.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ FOOTER ════ -->
+  <footer>
+    <div class="container">
+      <div class="footer__row">
+        <span>© 2026 DISCOX</span>
+        <span>MADE IN THE UNITED KINGDOM</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Order status, read from the discox-api Worker. The ref in ?ref= is the
+    // only key -- refs are random and unguessable -- and the Worker returns
+    // nothing but a first name, the order date and the statuses, so there is
+    // no address or contact detail anywhere in this page. Everything from the
+    // Worker is inserted as text, never as HTML.
+    (function () {
+      var API = 'https://discox-api.discox-api.workers.dev';
+      var REF = /^[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}$/;
+      var $ = function (id) { return document.getElementById(id); };
+
+      function show(view) {
+        ['lookupView', 'loadingView', 'orderView'].forEach(function (v) { $(v).hidden = v !== view; });
+      }
+      function lookupMessage(text) {
+        show('lookupView');
+        $('lookupMsg').textContent = text;
+        $('lookupMsg').hidden = !text;
+      }
+      // People type refs with spaces, lowercase, or no dashes.
+      function normalise(s) {
+        var c = (s || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+        return c.length === 12 ? c.slice(0, 4) + '-' + c.slice(4, 8) + '-' + c.slice(8) : (s || '').trim().toUpperCase();
+      }
+
+      var TICK = '<svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+
+      // The five steps a DiscoX order goes through, from the CRM's three
+      // independent statuses. They can move in any order (a device can ship
+      // before it is invoiced), so each step is judged on its own.
+      function steps(o) {
+        var paid = o.payment_status === 'paid';
+        var refunded = o.payment_status === 'returned';
+        var invoiced = o.payment_status === 'invoiced' || paid || refunded;
+        var shipped = ['sent', 'received', 'returned'].indexOf(o.device_status) >= 0;
+        var delivered = o.device_status === 'received';
+        var returned = o.device_status === 'returned';
+        return [
+          { title: 'Order received', done: true,
+            note: 'Your order is in. I check every one by hand.' },
+          { title: 'Payment requested', done: invoiced,
+            note: invoiced ? 'I’ve emailed you about payment.'
+                           : 'I’ll confirm shipping to your address and email you about payment.' },
+          { title: refunded ? 'Refunded' : 'Payment received', done: paid || refunded,
+            note: refunded ? 'Your payment has been refunded.'
+                 : paid ? 'Thank you.' : 'Waiting for payment — check your email (and spam folder) for my message.' },
+          { title: 'Shipped', done: shipped,
+            note: shipped ? 'Your DiscoX is on its way.' : 'Each device is built and tested before it goes out.' },
+          { title: returned ? 'Returned' : 'Delivered', done: delivered || returned,
+            note: returned ? 'The device has come back to me.'
+                 : delivered ? 'Delivered. The user guide is at discox.co.uk/user-guide.html.' : '' },
+        ];
+      }
+
+      function render(o) {
+        $('orderRef').textContent = o.ref;
+        $('orderPlaced').textContent = new Date(o.placed_at).toLocaleDateString('en-GB',
+          { day: 'numeric', month: 'long', year: 'numeric' });
+        var h = $('orderGreeting');
+        h.textContent = '';
+        if (o.first_name) {
+          h.appendChild(document.createTextNode('Hi ' + o.first_name + ', here’s your '));
+        } else {
+          h.appendChild(document.createTextNode('Your '));
+        }
+        var em = document.createElement('em'); em.textContent = 'order';
+        h.appendChild(em);
+
+        var cancelled = o.order_status === 'cancelled';
+        $('cancelledMsg').hidden = !cancelled;
+        var list = $('steps');
+        list.textContent = '';
+        list.hidden = cancelled;
+        var currentSet = false;
+        steps(o).forEach(function (s) {
+          var li = document.createElement('li');
+          li.className = 'step' + (s.done ? ' done' : '');
+          if (!s.done && !currentSet && o.order_status !== 'complete') {
+            li.className += ' current';
+            currentSet = true;
+          }
+          var dot = document.createElement('span');
+          dot.className = 'step__dot';
+          dot.innerHTML = TICK;                       // a fixed icon, not data
+          var title = document.createElement('div');
+          title.className = 'step__title';
+          title.textContent = s.title;
+          li.appendChild(dot); li.appendChild(title);
+          if (s.note && (s.done || li.className.indexOf('current') >= 0)) {
+            var note = document.createElement('div');
+            note.className = 'step__note';
+            note.textContent = s.note;
+            li.appendChild(note);
+          }
+          list.appendChild(li);
+        });
+        show('orderView');
+      }
+
+      function load(ref) {
+        if (!REF.test(ref)) {
+          lookupMessage('That doesn’t look like an order reference. It is 12 letters and numbers, like K7Q2-9XMF-4LTA.');
+          return;
+        }
+        show('loadingView');
+        fetch(API + '/status/' + encodeURIComponent(ref), { cache: 'no-store' })
+          .then(function (res) {
+            if (res.status === 404) { throw new Error('notfound'); }
+            if (!res.ok) { throw new Error('server'); }
+            return res.json();
+          })
+          .then(render)
+          .catch(function (err) {
+            $('refInput').value = ref;
+            lookupMessage(err.message === 'notfound'
+              ? 'I can’t find an order with reference ' + ref + '. Check it against the one on your confirmation page, or email info@discox.co.uk.'
+              : 'The order status service didn’t answer. Please try again in a few minutes.');
+          });
+      }
+
+      $('lookupForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        var ref = normalise($('refInput').value);
+        // Put the ref in the address bar so the page can be bookmarked.
+        history.replaceState(null, '', '?ref=' + encodeURIComponent(ref));
+        load(ref);
+      });
+
+      var initial = new URLSearchParams(location.search).get('ref');
+      if (initial) { load(normalise(initial)); } else { show('lookupView'); }
+    })();
+  </script>
+
+  <!-- Cloudflare Web Analytics: cookie-free page view counts, no consent banner needed -->
+  <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "e2c51fa092094d9da89de784e022f89b"}'></script>
+</body>
+</html>
