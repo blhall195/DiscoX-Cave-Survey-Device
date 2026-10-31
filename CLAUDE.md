@@ -103,6 +103,22 @@ newest two and deletes older ones, so the repo does not grow an 835 KB binary
 per release for ever. (Deleting from the working tree does not shrink git
 history; this only stops it getting worse.)
 
+## The order form posts to discox-api
+
+`order.html`'s form posts to the
+[`discox-api`](https://github.com/blhall195/discox-api) Cloudflare Worker, which
+stores the order for Brendan's CRM to import and redirects to `/submitted/`.
+The homepage contact form still uses Formspree.
+
+The form's `name` attributes are what the Worker reads (`FIELDS` in its
+`src/index.js`). Renaming, adding or removing a field here needs the matching
+change there, or that data is silently dropped.
+
+Anything that needs a secret, storage or a call to another service (payments,
+DHL, order status, emails) belongs in `discox-api`, not in a page here. Its
+`CLAUDE.md` has the overall plan and the current state, including the DNS move
+to Cloudflare.
+
 ## Voice
 
 Plain, specific, first person, no marketing language. The site explains what
@@ -129,3 +145,6 @@ British spelling.
   firmware. Builds and publishes the `.uf2` this site hands out.
 - [`blhall195/Mr_Zappy`](https://github.com/blhall195/Mr_Zappy) — the original
   V1 device, still linked from the v1 sections here.
+- [`blhall195/discox-api`](https://github.com/blhall195/discox-api) (private) —
+  the Cloudflare Worker backend: order intake now, payments, shipping and order
+  status later.
