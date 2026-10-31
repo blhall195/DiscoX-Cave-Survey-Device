@@ -517,11 +517,15 @@
               </div>
             </div>
             <div>
+              <label for="quantity">How many units?</label>
+              <input type="number" name="Quantity" id="quantity" min="1" max="50" step="1" value="1" required inputmode="numeric" />
+            </div>
+            <div>
               <label for="message">Message</label>
               <textarea name="message" id="message" rows="4" placeholder="Any questions or details about your order…"></textarea>
             </div>
             <button type="submit" class="btn-link btn-link--outline">
-              Send enquiry
+              Send Order Enquiry
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </button>
           </form>
