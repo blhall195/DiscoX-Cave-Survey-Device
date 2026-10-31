@@ -634,8 +634,8 @@
             </p>
 
             <div class="download-row" data-ver="v1">
-              <a href="firmware.uf2" download="discox-v0.1.0.uf2" class="btn-link btn-link--primary">
-                Download discox-v0.1.0.uf2
+              <a href="firmware.uf2" download="discox-v0.2.0.uf2" class="btn-link btn-link--primary">
+                Download discox-v0.2.0.uf2
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v14M6 13l6 6 6-6M5 21h14"/></svg>
               </a>
               <a href="https://github.com/blhall195/Mr_Zappy/releases" target="_blank" class="btn-link btn-link--outline">
@@ -645,7 +645,7 @@
             </div>
 
             <p data-ver="v1" style="font-family: var(--font-mono); font-size: .8rem; color: var(--text-dim); letter-spacing: .04em; margin-top: 8px;">
-              v0.1.0 · released 2026-06-19 · sha256 <code>4c5c…23e0a</code>
+              v0.2.0 · released 2026-10-22 · sha256 <code>51fc…a2d39</code>
             </p>
           </article>
 
@@ -725,7 +725,7 @@
 
             <div class="dropzone" aria-hidden="true">
               <div class="dropzone__file" data-ver="v2">DiscoX2-v2.0.9.uf2</div>
-              <div class="dropzone__file" data-ver="v1">discox-v0.1.0.uf2</div>
+              <div class="dropzone__file" data-ver="v1">discox-v0.2.0.uf2</div>
               <div class="dropzone__arrow"><span></span>drop<span></span></div>
               <div class="dropzone__drive">
                 <span class="icon">D</span>
@@ -869,6 +869,20 @@
               <li>Settings, calibration and unsent readings are editable over USB as a plain drive (Menu → Settings → USB Drive Mode).</li>
               <li>Disco mode, with the Mario theme hidden in it.</li>
               <li>Numerous storage-reliability fixes around calibration saves and reflashing.</li>
+            </ul>
+
+            <h3 data-ver="v1">v0.2.0 — 2026-10-22</h3>
+            <ul data-ver="v1">
+              <li>Fixed GravErr appearing on good shots. The check looked at a single accelerometer reading taken while your thumb was still pressing the button, so a firm press could fail a perfectly steady shot and the reading was thrown away. It now looks at the whole steady hold, so a press or a shaky hand no longer sets it off. A genuine fault still does.</li>
+              <li>Shots are taken from a short steady hold: once your aim has stayed within 1.5° for about a third of a second, the device records the average. Before, it waited for 0.5°, which ordinary hand tremor often missed, so a press could hang before the shot was taken.</li>
+              <li>Splays use the same averaging with a looser limit, so they are still quick but no longer taken mid-press.</li>
+              <li>Calibration now spots points thrown off by nearby metal and leaves them out of the result. It also warns you if part 2 was done somewhere magnetically different from part 1, and part 1 results are given in plain words (Excellent, Good or Redo, with how far the heading can be trusted) instead of raw fit numbers.</li>
+              <li>A calibration point that never settles is no longer recorded anyway. The device flashes red and beeps, and you take that point again.</li>
+              <li>The part 1 progress bar is replaced by two discs, screen up and screen down, that fill in as you go, so a missed set of positions shows up as a gap.</li>
+              <li>Mag Field Check is now F/B Check and only measures: shoot a leg forwards and back, and it shows how far each pair disagrees with a Good, OK or Recal verdict. The old version worked out a correction but never saved it, and the correction itself was wrong, so it has gone.</li>
+              <li>A new start-up animation that ends on the firmware version, so you can see what a device is running without connecting it to anything.</li>
+              <li>config.json on the USB drive now lists only the settings you might want to change, and your existing values are kept when you update. The steadiness setting is now called steady_tolerance (default 1.5°).</li>
+              <li>You don't need to recalibrate after updating; your existing calibration keeps working. View Last Cal shows "No quality data" until your next calibration. This file updates the main board only; the Bluetooth board doesn't need updating.</li>
             </ul>
 
             <h3 data-ver="v1">v0.1.0 — 2026-06-19</h3>
