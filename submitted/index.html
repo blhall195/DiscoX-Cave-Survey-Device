@@ -231,7 +231,9 @@
         </p>
         <p class="success__ref" id="orderRef" hidden>
           Your order reference is <strong id="orderRefValue"></strong>.
-          Quote it if you get in touch about this order.
+          Quote it if you get in touch about this order, and bookmark your
+          <a id="orderStatusLink" href="/order-status.html">order status page</a>
+          to follow its progress.
         </p>
         <div class="success__btns">
           <a href="/index.html" class="btn btn--primary">
@@ -263,6 +265,7 @@
         'Thanks for your order. I’ll check the details, confirm shipping to ' +
         'your address and email you about payment, usually within a day or two.';
       document.getElementById('orderRefValue').textContent = ref;
+      document.getElementById('orderStatusLink').href = '/order-status.html?ref=' + encodeURIComponent(ref);
       document.getElementById('orderRef').hidden = false;
       document.getElementById('confirmNote').textContent =
         'I’ll email you from info@discox.co.uk — worth checking your spam folder if nothing arrives.';

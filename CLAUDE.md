@@ -43,6 +43,7 @@ Analytics & Logs → Web Analytics.
 |------|-----------|
 | `index.html` | Home. Features, specs, the pitch. The largest page. |
 | `order.html` | Ordering and pricing. |
+| `order-status.html` | A customer's order progress, looked up by `?ref=` from discox-api. |
 | `build.html` | Build-it-yourself instructions. |
 | `firmware.html` | Firmware downloads, flashing guide, changelog. See below. |
 | `user-guide.html` | The full user guide, mirrored by `discox-user-guide.pdf`. |
@@ -109,6 +110,14 @@ history; this only stops it getting worse.)
 [`discox-api`](https://github.com/blhall195/discox-api) Cloudflare Worker, which
 stores the order for Brendan's CRM to import and redirects to `/submitted/`.
 The homepage contact form still uses Formspree.
+
+`/submitted/` shows the order ref when it arrives with `?ref=` (an order) and
+links to `order-status.html?ref=…`, which `fetch()`es `GET /status/<ref>` from
+the Worker. The Worker returns only a first name, the order date and three
+statuses -- never an address or contact detail -- and allows only
+`https://discox.co.uk` to read it (CORS), so the page cannot be previewed from a
+local file against the live Worker. Statuses come from Brendan's CRM, which
+pushes them every few minutes. The page inserts everything as text, never HTML.
 
 The form's `name` attributes are what the Worker reads (`FIELDS` in its
 `src/index.js`). Renaming, adding or removing a field here needs the matching
