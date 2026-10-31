@@ -169,6 +169,13 @@
       display: flex; gap: 14px; margin-top: 34px; flex-wrap: wrap;
       justify-content: center;
     }
+    .success__ref {
+      margin-top: 18px !important;
+    }
+    .success__ref strong {
+      font-family: var(--font-mono); color: var(--text); letter-spacing: .04em;
+      white-space: nowrap;
+    }
     .success__note {
       margin-top: 30px; font-family: var(--font-mono); font-size: 11px;
       letter-spacing: .06em; color: var(--text-dim);
@@ -216,11 +223,15 @@
             <path class="tick" d="M15 24.5l6 6 12-13" />
           </svg>
         </div>
-        <p class="mono-label">Confirmation · Message sent</p>
-        <h1>Message <em>received</em></h1>
-        <p>
+        <p class="mono-label" id="confirmLabel">Confirmation · Message sent</p>
+        <h1 id="confirmTitle">Message <em>received</em></h1>
+        <p id="confirmText">
           Thanks for getting in touch — your message has landed straight in my
           inbox. I'll try to get back to you soon, usually within a day or two.
+        </p>
+        <p class="success__ref" id="orderRef" hidden>
+          Your order reference is <strong id="orderRefValue"></strong>.
+          Quote it if you get in touch about this order.
         </p>
         <div class="success__btns">
           <a href="/index.html" class="btn btn--primary">
@@ -229,10 +240,34 @@
           </a>
           <a href="/user-guide.html" class="btn btn--outline">Read the user guide</a>
         </div>
-        <p class="success__note">A copy of your enquiry is on its way to your email.</p>
+        <p class="success__note" id="confirmNote">A copy of your enquiry is on its way to your email.</p>
       </div>
     </div>
   </section>
+
+  <script>
+    // Two forms land here. The homepage contact form (Formspree) arrives with
+    // no query string and gets the page as written above. The order form posts
+    // to the discox-api Worker, which redirects here with ?ref=XXXX-XXXX-XXXX:
+    // show that ref, and say what actually happens next -- the Worker sends no
+    // email, so the "copy on its way" note would be untrue for an order.
+    (function () {
+      var ref = new URLSearchParams(location.search).get('ref') || '';
+      // Exactly the Worker's format, and set as text, never as HTML: anyone can
+      // craft a link to this page with any ?ref= they like.
+      if (!/^[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(ref)) return;
+      document.title = 'Order received — DiscoX';
+      document.getElementById('confirmLabel').textContent = 'Confirmation · Order received';
+      document.getElementById('confirmTitle').innerHTML = 'Order <em>received</em>';
+      document.getElementById('confirmText').textContent =
+        'Thanks for your order. I’ll check the details, confirm shipping to ' +
+        'your address and email you about payment, usually within a day or two.';
+      document.getElementById('orderRefValue').textContent = ref;
+      document.getElementById('orderRef').hidden = false;
+      document.getElementById('confirmNote').textContent =
+        'I’ll email you from info@discox.co.uk — worth checking your spam folder if nothing arrives.';
+    })();
+  </script>
 
   <!-- ════ FOOTER ════ -->
   <footer>
@@ -244,5 +279,7 @@
     </div>
   </footer>
 
+  <!-- Cloudflare Web Analytics: cookie-free page view counts, no consent banner needed -->
+  <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "e2c51fa092094d9da89de784e022f89b"}'></script>
 </body>
 </html>
