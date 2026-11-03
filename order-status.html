@@ -330,8 +330,16 @@
         var paid = o.payment_status === 'paid';
         var refunded = o.payment_status === 'returned';
         var invoiced = o.payment_status === 'invoiced' || paid || refunded;
-        var shipped = ['sent', 'received', 'returned'].indexOf(o.device_status) >= 0 || !!t;
         var returned = o.device_status === 'returned';
+        // A DHL label is not a dispatch. Until DHL's first scan (any event --
+        // the API lists physical checkpoints only) the step reads "Preparing
+        // shipment"; the scan makes it Shipped. With no DHL parcel at all, the
+        // device status set in the CRM decides, as before. Received/Returned
+        // set by hand always count as shipped.
+        var scanned = !!(t && t.events && t.events.length);
+        var handled = o.device_status === 'received' || returned;
+        var shipped = scanned || handled || (!t && o.device_status === 'sent');
+        var preparing = !!t && !shipped;
         // DHL saying delivered counts too: it is DHL's own record, and the
         // customer would otherwise see "Delivered" in the tracking below a
         // step that still says it is on its way.
@@ -345,9 +353,10 @@
           { title: refunded ? 'Refunded' : 'Payment received', done: paid || refunded,
             note: refunded ? 'Your payment has been refunded.'
                  : paid ? 'Thank you.' : 'Waiting for payment — check your email (and spam folder) for my message.' },
-          { title: 'Shipped', done: shipped,
-            note: shipped ? (t ? 'Your DiscoX is on its way with DHL Express — tracking is below.' : 'Your DiscoX is on its way.')
-                          : 'Each device is built and tested before it goes out.' },
+          { title: preparing ? 'Preparing shipment' : 'Shipped', done: shipped, active: preparing,
+            note: preparing ? 'Your DiscoX is packed and labelled for DHL Express. Tracking appears here once DHL has it.'
+                 : shipped ? (scanned ? 'Your DiscoX is on its way with DHL Express — tracking is below.' : 'Your DiscoX is on its way.')
+                 : 'Each device is built and tested before it goes out.' },
           { title: returned ? 'Returned' : 'Delivered', done: delivered || returned,
             note: returned ? 'The device has come back to me.'
                  : delivered ? 'Delivered' + (t && t.delivered_at ? ' on ' + day(t.delivered_at) : '') +
@@ -377,7 +386,9 @@
       function renderTracking(o) {
         var t = o.tracking;
         var view = $('trackView');
-        view.hidden = !t || o.order_status === 'cancelled';
+        // Only once DHL has scanned it: before that the Shipped step already
+        // says "Preparing shipment", and an empty tracking card says nothing.
+        view.hidden = !t || !(t.events && t.events.length) || o.order_status === 'cancelled';
         if (view.hidden) return;
         $('trackNumber').textContent = t.number;
         // The waybill was validated by the Worker; check again before it goes in a URL.
@@ -389,14 +400,7 @@
         eta.textContent = eta.hidden ? '' : 'DHL expects to deliver it by ' + day(t.estimated_delivery) + '.';
         var list = $('trackEvents');
         list.textContent = '';
-        var events = t.events || [];
-        if (!events.length) {
-          var li = document.createElement('li');
-          li.className = 'track__event';
-          li.textContent = 'No scans yet — DHL’s first one appears when they collect the parcel.';
-          list.appendChild(li);
-        }
-        events.forEach(function (e) {                // newest first, as sent
+        t.events.forEach(function (e) {              // newest first, as sent
           var li = document.createElement('li');
           li.className = 'track__event';
           var when = document.createElement('span');
@@ -439,7 +443,9 @@
         steps(o).forEach(function (s) {
           var li = document.createElement('li');
           li.className = 'step' + (s.done ? ' done' : '');
-          if (!s.done && !currentSet && o.order_status !== 'complete') {
+          // A step under way (Preparing shipment) is current even if an
+          // earlier one is still open -- a device can go before it is paid for.
+          if (!s.done && (s.active || !currentSet) && o.order_status !== 'complete') {
             li.className += ' current';
             currentSet = true;
           }

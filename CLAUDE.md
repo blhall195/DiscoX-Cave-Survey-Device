@@ -126,7 +126,12 @@ refreshed hourly from DHL. The page inserts everything as text, never HTML.
 zone, and are shown exactly as given** -- `stamp()`/`day()` format them
 without a `Date` conversion, which would shift them into the reader's time
 zone. The Delivered step ticks itself when DHL says delivered, even before the
-CRM's device status is set to Received.
+CRM's device status is set to Received. **A DHL label is not a dispatch**
+(Brendan, 2026-11-03): while a parcel has tracking but no scans, the step reads
+**Preparing shipment** and the Tracking card stays hidden; DHL's first scan
+makes it **Shipped** and shows the card. That is decided from the scans, not
+from the CRM's Sent flag. With no DHL parcel, the device status decides as
+before, and Received / Returned set by hand always win.
 
 The form's `name` attributes are what the Worker reads (`FIELDS` in its
 `src/index.js`). Renaming, adding or removing a field here needs the matching
