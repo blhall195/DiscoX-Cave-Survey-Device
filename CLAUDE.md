@@ -113,11 +113,17 @@ The homepage contact form still uses Formspree.
 
 `/submitted/` shows the order ref when it arrives with `?ref=` (an order) and
 links to `order-status.html?ref=…`, which `fetch()`es `GET /status/<ref>` from
-the Worker. The Worker returns only a first name, the order date and three
-statuses -- never an address or contact detail -- and allows only
+the Worker. The Worker returns only a first name, the order date, three
+statuses and, once shipped, DHL's tracking scans (time, wording, depot town)
+-- never an address or contact detail -- and allows only
 `https://discox.co.uk` to read it (CORS), so the page cannot be previewed from a
 local file against the live Worker. Statuses come from Brendan's CRM, which
-pushes them every few minutes. The page inserts everything as text, never HTML.
+pushes them every few minutes; tracking is refreshed hourly from DHL. The page
+inserts everything as text, never HTML. **Scan times are the local clock time
+where DHL scanned the parcel, with no zone, and are shown exactly as given** --
+`stamp()`/`day()` format them without a `Date` conversion, which would shift
+them into the reader's time zone. The Delivered step ticks itself when DHL says
+delivered, even before the CRM's device status is set to Received.
 
 The form's `name` attributes are what the Worker reads (`FIELDS` in its
 `src/index.js`). Renaming, adding or removing a field here needs the matching
