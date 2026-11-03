@@ -111,23 +111,31 @@ history; this only stops it getting worse.)
 stores the order for Brendan's CRM to import and redirects to `/submitted/`.
 The homepage contact form still uses Formspree.
 
-`/submitted/` shows the order ref when it arrives with `?ref=` (an order) and
-links to `order-status.html?ref=…`, which `fetch()`es `GET /status/<ref>` from
+`/submitted/` shows the order ref when it arrives with `?ref=` (an order),
+and its second button becomes **View order status** (it is "Read the user
+guide" for the contact form, which arrives with no ref). The status page,
+`order-status.html?ref=…`, `fetch()`es `GET /status/<ref>` from
 the Worker. The Worker returns only a first name, the order date, three
 statuses and, once shipped, DHL's tracking scans (time, wording, depot town)
 -- never an address or contact detail -- and allows only
 `https://discox.co.uk` to read it (CORS), so the page cannot be previewed from a
 local file against the live Worker. Statuses come from Brendan's CRM, which
-pushes them every few minutes; tracking is refreshed hourly from DHL. The page
-inserts everything as text, never HTML. **Scan times are the local clock time
-where DHL scanned the parcel, with no zone, and are shown exactly as given** --
-`stamp()`/`day()` format them without a `Date` conversion, which would shift
-them into the reader's time zone. The Delivered step ticks itself when DHL says
-delivered, even before the CRM's device status is set to Received.
+pushes them within seconds of an order being saved there; tracking is
+refreshed hourly from DHL. The page inserts everything as text, never HTML.
+**Scan times are the local clock time where DHL scanned the parcel, with no
+zone, and are shown exactly as given** -- `stamp()`/`day()` format them
+without a `Date` conversion, which would shift them into the reader's time
+zone. The Delivered step ticks itself when DHL says delivered, even before the
+CRM's device status is set to Received.
 
 The form's `name` attributes are what the Worker reads (`FIELDS` in its
 `src/index.js`). Renaming, adding or removing a field here needs the matching
-change there, or that data is silently dropped.
+change there, or that data is silently dropped. **"How many units?"**
+(`name="Quantity"`, 1-50, default 1) is read separately by the Worker as a
+number and becomes the order's quantity in the CRM. The submit button reads
+**Send Order Enquiry**. Deploy order for a new field: the Worker first, then
+this site -- the other way round, the field is ignored until the Worker
+catches up.
 
 Anything that needs a secret, storage or a call to another service (payments,
 DHL, order status, emails) belongs in `discox-api`, not in a page here. Its
