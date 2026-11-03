@@ -175,6 +175,29 @@
     .step.current .step__title { color: var(--accent); }
     .step.current .step__note { color: var(--text-mid); }
 
+    /* courier tracking */
+    .track {
+      margin-top: 8px; padding: 18px 20px; border-radius: var(--radius-lg);
+      border: 1px solid var(--border-2); background: var(--surface);
+    }
+    .track__head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+    .track__head strong { font-family: var(--font-display); font-weight: 600; font-size: 1.1rem; color: var(--text); }
+    .track__meta { font-family: var(--font-mono); font-size: 12px; letter-spacing: .04em; color: var(--text-dim); }
+    .track__eta { margin-top: 4px; font-size: .95rem; }
+    .track__events { list-style: none; margin: 14px 0 0; }
+    .track__event {
+      display: grid; grid-template-columns: 7.5rem 1fr; gap: 2px 14px;
+      padding: 9px 0; border-top: 1px solid var(--border); font-size: .94rem;
+    }
+    .track__when { font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); padding-top: 2px; }
+    .track__what { color: var(--text-mid); }
+    .track__event:first-child .track__what { color: var(--text); font-weight: 600; }
+    .track__where { display: block; font-size: .86rem; color: var(--text-dim); font-weight: 400; }
+    .track__link { display: inline-block; margin-top: 12px; font-size: .92rem; font-weight: 600; }
+    @media (max-width: 420px) {
+      .track__event { grid-template-columns: 1fr; }
+    }
+
     .status__help {
       margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border);
       font-size: .92rem;
@@ -241,9 +264,20 @@
           <p class="notice" id="cancelledMsg" hidden>This order was cancelled. If that is unexpected,
              email <a href="mailto:info@discox.co.uk">info@discox.co.uk</a> quoting your reference.</p>
           <ol class="steps" id="steps"></ol>
+          <!-- DHL's scans for the parcel, once it has shipped. -->
+          <div class="track" id="trackView" hidden>
+            <div class="track__head">
+              <strong>Tracking</strong>
+              <span class="track__meta">DHL Express · <span id="trackNumber"></span></span>
+            </div>
+            <p class="track__eta" id="trackEta" hidden></p>
+            <ol class="track__events" id="trackEvents"></ol>
+            <a class="track__link" id="trackLink" target="_blank" rel="noopener">Track it on DHL’s site →</a>
+          </div>
           <p class="status__help">Questions about your order? Email
              <a href="mailto:info@discox.co.uk">info@discox.co.uk</a> and quote your reference.
-             I update this page by hand, so it can lag a day or so behind what you hear from me.</p>
+             Tracking comes from DHL and refreshes about once an hour; the other steps I update
+             by hand, so they can lag a day or so behind what you hear from me.</p>
         </div>
 
       </div>
@@ -263,9 +297,10 @@
   <script>
     // Order status, read from the discox-api Worker. The ref in ?ref= is the
     // only key -- refs are random and unguessable -- and the Worker returns
-    // nothing but a first name, the order date and the statuses, so there is
-    // no address or contact detail anywhere in this page. Everything from the
-    // Worker is inserted as text, never as HTML.
+    // nothing but a first name, the order date, the statuses and DHL's scans
+    // (time, wording, depot town), so there is no address or contact detail
+    // anywhere in this page. Everything from the Worker is inserted as text,
+    // never as HTML.
     (function () {
       var API = 'https://discox-api.discox-api.workers.dev';
       var REF = /^[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}$/;
@@ -291,12 +326,16 @@
       // independent statuses. They can move in any order (a device can ship
       // before it is invoiced), so each step is judged on its own.
       function steps(o) {
+        var t = o.tracking;
         var paid = o.payment_status === 'paid';
         var refunded = o.payment_status === 'returned';
         var invoiced = o.payment_status === 'invoiced' || paid || refunded;
-        var shipped = ['sent', 'received', 'returned'].indexOf(o.device_status) >= 0;
-        var delivered = o.device_status === 'received';
+        var shipped = ['sent', 'received', 'returned'].indexOf(o.device_status) >= 0 || !!t;
         var returned = o.device_status === 'returned';
+        // DHL saying delivered counts too: it is DHL's own record, and the
+        // customer would otherwise see "Delivered" in the tracking below a
+        // step that still says it is on its way.
+        var delivered = o.device_status === 'received' || (!returned && !!(t && t.delivered_at));
         return [
           { title: 'Order received', done: true,
             note: 'Your order is in. I check every one by hand.' },
@@ -307,11 +346,74 @@
             note: refunded ? 'Your payment has been refunded.'
                  : paid ? 'Thank you.' : 'Waiting for payment — check your email (and spam folder) for my message.' },
           { title: 'Shipped', done: shipped,
-            note: shipped ? 'Your DiscoX is on its way.' : 'Each device is built and tested before it goes out.' },
+            note: shipped ? (t ? 'Your DiscoX is on its way with DHL Express — tracking is below.' : 'Your DiscoX is on its way.')
+                          : 'Each device is built and tested before it goes out.' },
           { title: returned ? 'Returned' : 'Delivered', done: delivered || returned,
             note: returned ? 'The device has come back to me.'
-                 : delivered ? 'Delivered. The user guide is at discox.co.uk/user-guide.html.' : '' },
+                 : delivered ? 'Delivered' + (t && t.delivered_at ? ' on ' + day(t.delivered_at) : '') +
+                               '. The user guide is at discox.co.uk/user-guide.html.' : '' },
         ];
+      }
+
+      // Courier times are the local clock time where DHL scanned the parcel,
+      // with no time zone, and are shown exactly as DHL shows them. Formatting
+      // them as UTC stops the browser shifting them into the reader's zone.
+      var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      function parts(s) {
+        var m = /^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2}))?/.exec(s || '');
+        return m && { y: +m[1], mo: +m[2], d: +m[3], h: m[4], mi: m[5] };
+      }
+      function day(s) {
+        var p = parts(s);
+        if (!p) return '';
+        var wd = new Date(Date.UTC(p.y, p.mo - 1, p.d)).toLocaleDateString('en-GB', { weekday: 'long', timeZone: 'UTC' });
+        return wd + ' ' + p.d + ' ' + MONTHS[p.mo - 1];
+      }
+      function stamp(s) {
+        var p = parts(s);
+        return p ? p.d + ' ' + MONTHS[p.mo - 1] + (p.h ? ', ' + p.h + ':' + p.mi : '') : '';
+      }
+
+      function renderTracking(o) {
+        var t = o.tracking;
+        var view = $('trackView');
+        view.hidden = !t || o.order_status === 'cancelled';
+        if (view.hidden) return;
+        $('trackNumber').textContent = t.number;
+        // The waybill was validated by the Worker; check again before it goes in a URL.
+        $('trackLink').hidden = !/^[0-9A-Z]{6,20}$/.test(t.number);
+        $('trackLink').href = 'https://www.dhl.com/gb-en/home/tracking/tracking-express.html?submit=1&tracking-id=' +
+          encodeURIComponent(t.number);
+        var eta = $('trackEta');
+        eta.hidden = !(t.estimated_delivery && !t.delivered_at);
+        eta.textContent = eta.hidden ? '' : 'DHL expects to deliver it by ' + day(t.estimated_delivery) + '.';
+        var list = $('trackEvents');
+        list.textContent = '';
+        var events = t.events || [];
+        if (!events.length) {
+          var li = document.createElement('li');
+          li.className = 'track__event';
+          li.textContent = 'No scans yet — DHL’s first one appears when they collect the parcel.';
+          list.appendChild(li);
+        }
+        events.forEach(function (e) {                // newest first, as sent
+          var li = document.createElement('li');
+          li.className = 'track__event';
+          var when = document.createElement('span');
+          when.className = 'track__when';
+          when.textContent = stamp(e.at);
+          var what = document.createElement('span');
+          what.className = 'track__what';
+          what.textContent = e.text;
+          if (e.place) {
+            var where = document.createElement('span');
+            where.className = 'track__where';
+            where.textContent = e.place;
+            what.appendChild(where);
+          }
+          li.appendChild(when); li.appendChild(what);
+          list.appendChild(li);
+        });
       }
 
       function render(o) {
@@ -356,6 +458,7 @@
           }
           list.appendChild(li);
         });
+        renderTracking(o);
         show('orderView');
       }
 
