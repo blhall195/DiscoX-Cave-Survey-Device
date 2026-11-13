@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cancellations &amp; Returns — DiscoX</title>
+  <script>
+    (function () {
+      var m = document.cookie.match(/(?:^|;\s*)googtrans=\/[^\/]+\/([a-z\-]+)/);
+      if (m && m[1] && m[1] !== 'en') document.documentElement.classList.add('gt-translated');
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --accent-hue: 38; --accent-chroma: 0.18;
+      --bg: #0a0907; --bg-2: #121010; --surface: #17140f; --surface-2: #1f1b14;
+      --border: #2b251b; --border-2: #3a3225;
+      --text: #f0ebdf; --text-mid: #b5a88f; --text-dim: #8a7e68;
+      --accent: oklch(0.78 var(--accent-chroma) var(--accent-hue));
+      --accent-2: oklch(0.62 var(--accent-chroma) var(--accent-hue));
+      --accent-soft: oklch(0.78 var(--accent-chroma) var(--accent-hue) / 0.12);
+      --font-sans: 'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      --font-display: 'Space Grotesk', 'Inter Tight', sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+      --max-w: 1200px; --radius: 6px; --radius-lg: 14px;
+    }
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+    body { font-family: var(--font-sans); background: var(--bg); color: var(--text); line-height: 1.65; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    ::selection { background: var(--accent); color: #000; }
+    img { max-width: 100%; display: block; }
+    a { color: var(--accent); text-decoration: none; transition: opacity .2s; }
+    a:hover { opacity: .85; }
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 32px; position: relative; }
+    .mono-label { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .18em; color: var(--text-dim); }
+    .mono-label::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+
+    /* NAV */
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(10,9,7,.75); backdrop-filter: blur(20px) saturate(140%); -webkit-backdrop-filter: blur(20px) saturate(140%); border-bottom: 1px solid var(--border); }
+    .nav__inner { max-width: var(--max-w); margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .nav__logo { font-family: var(--font-display); font-weight: 600; font-size: 1.15rem; color: var(--text); letter-spacing: -.02em; display: flex; align-items: center; gap: 10px; }
+    .nav__logo img { height: 30px; width: auto; display: block; }
+    .nav__logo em { font-style: normal; color: var(--accent); }
+    .nav__links { display: flex; gap: 2px; align-items: center; }
+    .nav__links a { font-size: .86rem; font-weight: 500; color: var(--text-mid); padding: 8px 14px; border-radius: 6px; transition: all .2s; }
+    .nav__links a:hover { color: var(--text); background: var(--surface-2); opacity: 1; }
+    .nav__links a.active { color: var(--accent); }
+    .nav__cta { background: var(--accent) !important; color: #000 !important; font-weight: 600 !important; padding: 9px 18px !important; margin-left: 6px; display: inline-flex !important; align-items: center; gap: 8px; }
+    .nav__cta:hover { background: var(--accent-2) !important; }
+    .nav__toggle { display: none; background: none; border: none; color: var(--text); cursor: pointer; padding: 8px; }
+    .nav__toggle svg { width: 22px; height: 22px; }
+    @media (max-width: 920px) {
+      .nav__toggle { display: block; }
+      .nav__links { display: none; flex-direction: column; position: absolute; top: 68px; left: 0; right: 0; background: rgba(10,9,7,.96); backdrop-filter: blur(18px); border-bottom: 1px solid var(--border); padding: 16px 20px 20px; align-items: stretch; }
+      .nav__links.open { display: flex; }
+      .nav__links a { padding: 12px 14px; width: 100%; }
+      .nav__cta { margin: 8px 0 0; justify-content: center; }
+    }
+
+    /* PAGE HEADER */
+    .page-header { padding: 140px 0 50px; position: relative; overflow: hidden; border-bottom: 1px solid var(--border); }
+    .page-header::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(to right, rgba(255,255,255,.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,.02) 1px, transparent 1px); background-size: 56px 56px; mask-image: radial-gradient(ellipse at 50% 100%, #000 10%, transparent 70%); -webkit-mask-image: radial-gradient(ellipse at 50% 100%, #000 10%, transparent 70%); pointer-events: none; }
+    .page-header h1 { font-family: var(--font-display); font-size: clamp(2.4rem, 5.2vw, 4rem); font-weight: 500; letter-spacing: -.035em; line-height: 1.02; margin: 16px 0 14px; position: relative; }
+    .page-header h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
+    .page-header p { color: var(--text-mid); max-width: 560px; font-size: 1.05rem; position: relative; }
+
+
+    /* POLICY */
+    .policy { padding: 48px 0 90px; }
+    .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 48px; }
+    @media (max-width: 760px) { .summary { grid-template-columns: 1fr; } }
+    .summary__item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px 22px; }
+    .summary__item h3 { font-family: var(--font-display); font-weight: 500; font-size: 1.15rem; color: var(--accent); margin-bottom: 6px; }
+    .summary__item p { color: var(--text-mid); font-size: .95rem; }
+    .prose { max-width: 720px; }
+    .prose h2 { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.35rem, 2.4vw, 1.7rem); letter-spacing: -.02em; margin: 40px 0 12px; }
+    .prose h2:first-child { margin-top: 0; }
+    .prose p, .prose li { color: var(--text-mid); font-size: 1rem; }
+    .prose p { margin-bottom: 14px; }
+    .prose strong { color: var(--text); font-weight: 600; }
+    .prose ul { margin: 0 0 16px 20px; }
+    .prose li { margin-bottom: 8px; }
+    .formbox { border: 1px dashed var(--border-2); border-radius: var(--radius); padding: 18px 20px; font-family: var(--font-mono); font-size: .82rem; margin-bottom: 20px; }
+    .formbox p { margin-bottom: 10px; color: var(--text-mid); font-size: .82rem; }
+    .updated { font-family: var(--font-mono); font-size: .74rem; color: var(--text-dim); margin-top: 32px; }
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border); padding: 48px 0 32px; font-size: .82rem; color: var(--text-dim); background: var(--bg); }
+    .footer__top { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; padding-bottom: 32px; border-bottom: 1px solid var(--border); margin-bottom: 24px; }
+    @media (max-width: 680px) { .footer__top { grid-template-columns: 1fr; } }
+    .footer__brand-logo { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; color: var(--text); margin-bottom: 10px; }
+    .footer__brand-logo img { height: 26px; }
+    .footer__brand-logo em { font-style: normal; color: var(--accent); }
+    .footer__brand p { font-size: .85rem; max-width: 320px; }
+    .footer__col h4 { font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .14em; color: var(--text); margin-bottom: 14px; font-weight: 500; }
+    .footer__col a { display: block; color: var(--text-dim); margin-bottom: 8px; font-size: .85rem; }
+    .footer__col a:hover { color: var(--accent); }
+    .footer__bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); letter-spacing: .06em; }
+    .i18n-switch { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-top: 18px; padding-top: 16px; border-top: 1px dashed var(--border-2); }
+    .i18n-switch button { background: transparent; color: var(--text-dim); border: 1px solid var(--border-2); border-radius: 100px; padding: 4px 12px; cursor: pointer; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; transition: all .15s; }
+    .i18n-switch button:hover { color: var(--text); border-color: var(--text-mid); }
+    .i18n-switch button.active { color: #000; background: var(--accent); border-color: var(--accent); }
+    #google_translate_element { display: none !important; }
+    html.gt-translated .nav { top: 40px; }
+  </style>
+</head>
+<body>
+
+  <!-- ════ NAV ════ -->
+  <nav class="nav" role="navigation">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo"><img src="logo.png" alt="DiscoX logo" /><span>Disco<em>X</em></span></a>
+      <button class="nav__toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav__links').classList.toggle('open')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="nav__links">
+        <a href="index.html">Home</a>
+        <a href="index.html#features">Features</a>
+        <a href="index.html#specs">Specs</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="user-guide.html">User Guide</a>
+        <a href="firmware.html">Firmware</a>
+        <a href="news.html">News</a>
+        <a href="order.html" class="nav__cta">Order</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ════ PAGE HEADER ════ -->
+  <header class="page-header">
+    <div class="container">
+      <p class="mono-label">Policies</p>
+      <h1>Cancellations &amp; <em>returns</em>.</h1>
+      <p>The DiscoX cancellations and returns policy for online orders.</p>
+    </div>
+  </header>
+
+  <!-- ════ POLICY ════ -->
+  <main class="policy">
+    <div class="container">
+
+      <div class="summary">
+        <div class="summary__item">
+          <h3>Before it ships</h3>
+          <p>Cancel any time before it's dispatched, for any reason. Full refund.</p>
+        </div>
+        <div class="summary__item">
+          <h3>After delivery</h3>
+          <p>14 days to change your mind, then 14 days to send it back.</p>
+        </div>
+        <div class="summary__item">
+          <h3>Faulty?</h3>
+          <p>I'll repair, replace or refund it, and pay the postage.</p>
+        </div>
+      </div>
+
+      <div class="prose">
+
+        <h2>Cancelling before it ships</h2>
+        <p>Orders are dispatched by DHL within 2 working days of payment. Until your DiscoX has been handed to DHL you can cancel at any time, for any reason: email <a href="mailto:info@discox.co.uk">info@discox.co.uk</a> with your order reference. I'll refund everything you paid &mdash; the device, shipping, and any import taxes you prepaid &mdash; to the card you paid with, within 14 days of you asking.</p>
+        <p>If I can't dispatch within 2 working days I'll tell you as soon as I know, and you can cancel for a full refund.</p>
+
+        <h2>Changing your mind after delivery</h2>
+        <p>You have <strong>14 days</strong> to cancel, starting the day after your DiscoX is delivered to you (or to someone you nominated). This is your right under the UK Consumer Contracts Regulations 2013, and I offer the same to business and club customers too.</p>
+        <p><strong>To cancel</strong>, tell me before the 14 days are up. An email to <a href="mailto:info@discox.co.uk">info@discox.co.uk</a> with your order reference is enough; you can use the form at the bottom of this page, but you don't have to. You don't need to give a reason.</p>
+        <p><strong>Then send it back</strong> within 14 days of telling me. Email first and I'll send you the return address. Please:</p>
+        <ul>
+          <li>Return the device with everything it came with, packed well enough to survive the trip.</li>
+          <li>Outside the UK, <strong>ask me for a DHL returns label</strong>. That way I can arrange the right re-import paperwork, so no taxes are charged as it comes back into the UK. I'll tell you the cost before I book it, and take it off your refund.</li>
+          <li>Inside the UK, post it back to me with a tracked service and send me the tracking information.</li>
+        </ul>
+        <p><strong>You pay for sending it back</strong> when you've changed your mind. If the device is faulty or not as described, I pay for sending it back instead.</p>
+
+        <h2>Your refund</h2>
+        <p>When you cancel within the 14 days, I'll refund you within 14 days of the device reaching me, or of you sending me proof that you've posted it back, whichever is sooner, to the card you paid with. The refund covers:</p>
+        <ul>
+          <li><strong>The device</strong>, in full.</li>
+          <li><strong>The delivery charge you paid to get it to you</strong>, up to the cost of the cheapest delivery option I offered you. If you chose a faster service (such as Express Worldwide instead of Economy Select), the difference isn't refunded. (The cost of sending it back isn't included &mdash; see above.)</li>
+          <li><strong>Import taxes you prepaid to me</strong> at checkout, in full.</li>
+        </ul>
+        <p><strong>Import taxes you paid to DHL on delivery</strong> went to your own country's customs, not to me, so I can't refund them. Many countries let you reclaim duty and VAT on goods you send back &mdash; DHL or your customs authority can tell you how.</p>
+        <p><strong>Handling it is fine.</strong> You can unbox it, switch it on, take readings and try the app, just as you could in a shop. If it comes back damaged, missing parts, or clearly used for real surveying, I may reduce the refund to cover the loss in value. I'll always explain any deduction.</p>
+
+        <h2>If something is wrong with it</h2>
+        <p>Every DiscoX is calibrated and bench-tested before it leaves, but if yours is faulty, damaged in transit, or not as described, the Consumer Rights Act 2015 protects you, and I pay for sending it back to me (and for getting a repaired or replacement device to you):</p>
+        <ul>
+          <li><strong>Within 30 days of delivery</strong>, you can reject it for a full refund.</li>
+          <li><strong>After that</strong>, I'll repair or replace it. If that doesn't fix the problem, you can have a refund (which may be reduced for the use you've had, if it's more than six months after delivery).</li>
+          <li>For the first <strong>six months</strong> after delivery, a fault is assumed to have been there from the start unless shown otherwise. After that you can still claim for a fault that was there at delivery for up to <strong>six years</strong> (five in Scotland).</li>
+          <li><strong>1-year warranty:</strong> on top of these rights, if a fault develops in normal use within the <strong>first year</strong>, I'll repair or replace it free of charge &mdash; contact me to arrange it.</li>
+        </ul>
+        <p>The warranty doesn't cover accidental damage (drops, crushing, impacts), water or mud getting in beyond what the device is built to withstand, damage from opening the case or modifying the device, or normal wear such as the battery gradually holding less charge. None of this limits your legal rights above.</p>
+        <p>Often a fault is something I can sort out remotely &mdash; a firmware update or recalibration &mdash; so email me first and we'll work out the quickest fix.</p>
+
+        <h2>Who you're buying from</h2>
+        <p>DiscoX is run by Brendan Hall, trading as DiscoX, 34 Ormonde Road, Chester, Cheshire CH2 2AH, United Kingdom. Email <a href="mailto:info@discox.co.uk">info@discox.co.uk</a>. Payments are processed by Stripe; I never see or store your card details.</p>
+        <p>This policy doesn't affect your statutory rights. If you live outside the UK, your local consumer law may give you further rights, and those still apply.</p>
+
+        <h2 id="cancellation-form">Cancellation form</h2>
+        <p>Copy this into an email to <a href="mailto:info@discox.co.uk">info@discox.co.uk</a> if you'd like to use it, this gives me all the info I need.</p>
+        <div class="formbox">
+          <p>To: Brendan Hall, DiscoX, 34 Ormonde Road, Chester, Cheshire CH2 2AH, United Kingdom, info@discox.co.uk</p>
+          <p>I hereby give notice that I cancel my contract of sale of the following goods:</p>
+          <p>Order reference: ____________________</p>
+          <p>Ordered on: ______________ &nbsp; Received on: ______________</p>
+          <p>Name: ________________________________</p>
+          <p>Address: ________________________________</p>
+          <p>Date: ______________</p>
+        </div>
+
+        <p class="updated">Last updated 13 November 2026.</p>
+      </div>
+    </div>
+  </main>
+
+
+  <!-- ════ FOOTER ════ -->
+  <footer>
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <div class="footer__brand-logo"><img src="logo.png" alt="" /> <span>Disco<em>X</em></span></div>
+          <p>A cave survey device built for modern caving. Built in the UK.</p>
+        </div>
+        <div class="footer__col">
+          <h4>Product</h4>
+          <a href="index.html#features">Features</a>
+          <a href="index.html#specs">Specs</a>
+          <a href="gallery.html">Gallery</a>
+          <a href="order.html">Order</a>
+          <a href="returns.html">Cancellations &amp; returns</a>
+          <a href="privacy.html">Privacy</a>
+        </div>
+        <div class="footer__col">
+          <h4>Resources</h4>
+          <a href="user-guide.html">User guide</a>
+          <a href="firmware.html">Firmware</a>
+          <a href="news.html">News</a>
+          <a href="https://github.com/blhall195/Mr_Zappy" target="_blank">GitHub</a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© 2026 DISCOX · BUILT ON <a href="https://stic.readthedocs.io/" target="_blank">SAP6</a></span>
+        <span>MADE IN THE UNITED KINGDOM</span>
+      </div>
+      <div class="i18n-switch" role="group" aria-label="Language">
+        <button type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="fr">FR</button>
+        <button type="button" data-lang="de">DE</button>
+        <button type="button" data-lang="es">ES</button>
+        <button type="button" data-lang="it">IT</button>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.nav__links a').forEach(a => {
+      a.addEventListener('click', () => document.querySelector('.nav__links').classList.remove('open'));
+    });
+  </script>
+  <script src="assets/i18n.js"></script>
+  <!-- Cloudflare Web Analytics: cookie-free page view counts, no consent banner needed -->
+  <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "e2c51fa092094d9da89de784e022f89b"}'></script>
+</body>
+</html>

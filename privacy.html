@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Notice — DiscoX</title>
+  <script>
+    (function () {
+      var m = document.cookie.match(/(?:^|;\s*)googtrans=\/[^\/]+\/([a-z\-]+)/);
+      if (m && m[1] && m[1] !== 'en') document.documentElement.classList.add('gt-translated');
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --accent-hue: 38; --accent-chroma: 0.18;
+      --bg: #0a0907; --bg-2: #121010; --surface: #17140f; --surface-2: #1f1b14;
+      --border: #2b251b; --border-2: #3a3225;
+      --text: #f0ebdf; --text-mid: #b5a88f; --text-dim: #8a7e68;
+      --accent: oklch(0.78 var(--accent-chroma) var(--accent-hue));
+      --accent-2: oklch(0.62 var(--accent-chroma) var(--accent-hue));
+      --accent-soft: oklch(0.78 var(--accent-chroma) var(--accent-hue) / 0.12);
+      --font-sans: 'Inter Tight', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      --font-display: 'Space Grotesk', 'Inter Tight', sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+      --max-w: 1200px; --radius: 6px; --radius-lg: 14px;
+    }
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+    body { font-family: var(--font-sans); background: var(--bg); color: var(--text); line-height: 1.65; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    ::selection { background: var(--accent); color: #000; }
+    img { max-width: 100%; display: block; }
+    a { color: var(--accent); text-decoration: none; transition: opacity .2s; }
+    a:hover { opacity: .85; }
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 32px; position: relative; }
+    .mono-label { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .18em; color: var(--text-dim); }
+    .mono-label::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+
+    /* NAV */
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(10,9,7,.75); backdrop-filter: blur(20px) saturate(140%); -webkit-backdrop-filter: blur(20px) saturate(140%); border-bottom: 1px solid var(--border); }
+    .nav__inner { max-width: var(--max-w); margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .nav__logo { font-family: var(--font-display); font-weight: 600; font-size: 1.15rem; color: var(--text); letter-spacing: -.02em; display: flex; align-items: center; gap: 10px; }
+    .nav__logo img { height: 30px; width: auto; display: block; }
+    .nav__logo em { font-style: normal; color: var(--accent); }
+    .nav__links { display: flex; gap: 2px; align-items: center; }
+    .nav__links a { font-size: .86rem; font-weight: 500; color: var(--text-mid); padding: 8px 14px; border-radius: 6px; transition: all .2s; }
+    .nav__links a:hover { color: var(--text); background: var(--surface-2); opacity: 1; }
+    .nav__links a.active { color: var(--accent); }
+    .nav__cta { background: var(--accent) !important; color: #000 !important; font-weight: 600 !important; padding: 9px 18px !important; margin-left: 6px; display: inline-flex !important; align-items: center; gap: 8px; }
+    .nav__cta:hover { background: var(--accent-2) !important; }
+    .nav__toggle { display: none; background: none; border: none; color: var(--text); cursor: pointer; padding: 8px; }
+    .nav__toggle svg { width: 22px; height: 22px; }
+    @media (max-width: 920px) {
+      .nav__toggle { display: block; }
+      .nav__links { display: none; flex-direction: column; position: absolute; top: 68px; left: 0; right: 0; background: rgba(10,9,7,.96); backdrop-filter: blur(18px); border-bottom: 1px solid var(--border); padding: 16px 20px 20px; align-items: stretch; }
+      .nav__links.open { display: flex; }
+      .nav__links a { padding: 12px 14px; width: 100%; }
+      .nav__cta { margin: 8px 0 0; justify-content: center; }
+    }
+
+    /* PAGE HEADER */
+    .page-header { padding: 140px 0 50px; position: relative; overflow: hidden; border-bottom: 1px solid var(--border); }
+    .page-header::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(to right, rgba(255,255,255,.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,.02) 1px, transparent 1px); background-size: 56px 56px; mask-image: radial-gradient(ellipse at 50% 100%, #000 10%, transparent 70%); -webkit-mask-image: radial-gradient(ellipse at 50% 100%, #000 10%, transparent 70%); pointer-events: none; }
+    .page-header h1 { font-family: var(--font-display); font-size: clamp(2.4rem, 5.2vw, 4rem); font-weight: 500; letter-spacing: -.035em; line-height: 1.02; margin: 16px 0 14px; position: relative; }
+    .page-header h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
+    .page-header p { color: var(--text-mid); max-width: 560px; font-size: 1.05rem; position: relative; }
+
+
+    /* POLICY */
+    .policy { padding: 48px 0 90px; }
+    .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 48px; }
+    @media (max-width: 760px) { .summary { grid-template-columns: 1fr; } }
+    .summary__item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px 22px; }
+    .summary__item h3 { font-family: var(--font-display); font-weight: 500; font-size: 1.15rem; color: var(--accent); margin-bottom: 6px; }
+    .summary__item p { color: var(--text-mid); font-size: .95rem; }
+    .prose { max-width: 720px; }
+    .prose h2 { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.35rem, 2.4vw, 1.7rem); letter-spacing: -.02em; margin: 40px 0 12px; }
+    .prose h2:first-child { margin-top: 0; }
+    .prose p, .prose li { color: var(--text-mid); font-size: 1rem; }
+    .prose p { margin-bottom: 14px; }
+    .prose strong { color: var(--text); font-weight: 600; }
+    .prose ul { margin: 0 0 16px 20px; }
+    .prose li { margin-bottom: 8px; }
+    .formbox { border: 1px dashed var(--border-2); border-radius: var(--radius); padding: 18px 20px; font-family: var(--font-mono); font-size: .82rem; margin-bottom: 20px; }
+    .formbox p { margin-bottom: 10px; color: var(--text-mid); font-size: .82rem; }
+    .updated { font-family: var(--font-mono); font-size: .74rem; color: var(--text-dim); margin-top: 32px; }
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border); padding: 48px 0 32px; font-size: .82rem; color: var(--text-dim); background: var(--bg); }
+    .footer__top { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; padding-bottom: 32px; border-bottom: 1px solid var(--border); margin-bottom: 24px; }
+    @media (max-width: 680px) { .footer__top { grid-template-columns: 1fr; } }
+    .footer__brand-logo { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; color: var(--text); margin-bottom: 10px; }
+    .footer__brand-logo img { height: 26px; }
+    .footer__brand-logo em { font-style: normal; color: var(--accent); }
+    .footer__brand p { font-size: .85rem; max-width: 320px; }
+    .footer__col h4 { font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .14em; color: var(--text); margin-bottom: 14px; font-weight: 500; }
+    .footer__col a { display: block; color: var(--text-dim); margin-bottom: 8px; font-size: .85rem; }
+    .footer__col a:hover { color: var(--accent); }
+    .footer__bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); letter-spacing: .06em; }
+    .i18n-switch { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-top: 18px; padding-top: 16px; border-top: 1px dashed var(--border-2); }
+    .i18n-switch button { background: transparent; color: var(--text-dim); border: 1px solid var(--border-2); border-radius: 100px; padding: 4px 12px; cursor: pointer; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; transition: all .15s; }
+    .i18n-switch button:hover { color: var(--text); border-color: var(--text-mid); }
+    .i18n-switch button.active { color: #000; background: var(--accent); border-color: var(--accent); }
+    #google_translate_element { display: none !important; }
+    html.gt-translated .nav { top: 40px; }
+  </style>
+</head>
+<body>
+
+  <!-- ════ NAV ════ -->
+  <nav class="nav" role="navigation">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo"><img src="logo.png" alt="DiscoX logo" /><span>Disco<em>X</em></span></a>
+      <button class="nav__toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav__links').classList.toggle('open')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="nav__links">
+        <a href="index.html">Home</a>
+        <a href="index.html#features">Features</a>
+        <a href="index.html#specs">Specs</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="user-guide.html">User Guide</a>
+        <a href="firmware.html">Firmware</a>
+        <a href="news.html">News</a>
+        <a href="order.html" class="nav__cta">Order</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ════ PAGE HEADER ════ -->
+  <header class="page-header">
+    <div class="container">
+      <p class="mono-label">Policies</p>
+      <h1>Privacy <em>notice</em>.</h1>
+      <p>What I collect when you contact me or buy a DiscoX, why, who else handles it, and your rights. Plain English, and as short as I can make it.</p>
+    </div>
+  </header>
+
+  <!-- ════ POLICY ════ -->
+  <main class="policy">
+    <div class="container">
+
+      <div class="summary">
+        <div class="summary__item">
+          <h3>Only what's needed</h3>
+          <p>Your contact details and address, to answer you and get your DiscoX to you.</p>
+        </div>
+        <div class="summary__item">
+          <h3>Never sold</h3>
+          <p>No marketing lists, no advertising trackers, no selling or swapping your details.</p>
+        </div>
+        <div class="summary__item">
+          <h3>Card details</h3>
+          <p>Handled by Stripe on their payment page. I never see or store them.</p>
+        </div>
+      </div>
+
+      <div class="prose">
+
+        <h2>Who I am</h2>
+        <p>DiscoX is run by Brendan Hall, a sole trader trading as DiscoX, 34 Ormonde Road, Chester, Cheshire CH2 2AH, United Kingdom. I'm the &ldquo;controller&rdquo; of your personal data under UK data protection law (the UK GDPR and the Data Protection Act 2018). For anything to do with your data, email <a href="mailto:info@discox.co.uk">info@discox.co.uk</a>.</p>
+
+        <h2>What I collect</h2>
+        <ul>
+          <li><strong>When you get in touch</strong> (contact form or email): your name, email address and what you write.</li>
+          <li><strong>When you order or send an order enquiry</strong>: your name, email, phone number, delivery address, how many devices you want and any message.</li>
+          <li><strong>When you pay</strong>: what you bought, the amounts, and Stripe's payment reference. Your card details go straight to Stripe and never reach me.</li>
+          <li><strong>When your order ships</strong>: DHL's waybill number and tracking updates.</li>
+          <li><strong>When you visit the website</strong>: anonymous page-view counts (Cloudflare Web Analytics, which uses no cookies and doesn't identify you), and the technical information any website receives, such as your IP address, held briefly by the hosting providers below.</li>
+        </ul>
+
+        <h2>Why, and the legal basis</h2>
+        <ul>
+          <li><strong>To take, fulfil and support your order</strong> &mdash; pricing, payment, building, shipping, customs, order updates, refunds, returns and repairs. Basis: <em>contract</em> (doing what you asked me to).</li>
+          <li><strong>To answer your questions</strong> before you buy. Basis: <em>legitimate interests</em> (replying to people who write to me).</li>
+          <li><strong>To keep business and tax records</strong> that HMRC requires. Basis: <em>legal obligation</em>.</li>
+          <li><strong>To keep the shop safe</strong> &mdash; stopping fraud and bots, and keeping the systems secure. Basis: <em>legitimate interests</em>.</li>
+        </ul>
+        <p>I don't send marketing emails, and I don't use your data for profiling or automated decisions. The emails you'll get are about your order: a confirmation with your receipt, and messages from me or DHL about delivery.</p>
+
+        <h2>Who else handles it</h2>
+        <p>I use a small number of services to run the shop. They handle your data only to provide their service to me:</p>
+        <ul>
+          <li><strong>Stripe</strong> &mdash; card payments and fraud checks.</li>
+          <li><strong>DHL Express</strong> &mdash; delivery, customs clearance and, where you choose to pay them on delivery, collecting import duty and taxes. Your country's customs authority also receives the shipping and customs details.</li>
+          <li><strong>Cloudflare</strong> &mdash; runs the ordering system behind the website, the &ldquo;verify you are human&rdquo; check and the anonymous page counts.</li>
+          <li><strong>GitHub</strong> &mdash; hosts the website itself.</li>
+          <li><strong>Resend</strong> &mdash; sends your order confirmation email.</li>
+          <li><strong>Zoho Mail</strong> &mdash; my email, at info@discox.co.uk.</li>
+          <li><strong>Formspree</strong> &mdash; passes on messages sent through the contact form on the home page.</li>
+          <li><strong>netcup</strong> &mdash; the server, in Germany, where I keep my order and customer records.</li>
+          <li><strong>Telegram</strong> &mdash; notifies me when an order comes in, including your name and country.</li>
+          <li><strong>Anthropic</strong> &mdash; an AI assistant I sometimes use to help me read and sort emails and orders.</li>
+          <li><strong>Google</strong> &mdash; the website's fonts, and the language switcher if you use it.</li>
+        </ul>
+        <p>I'll also share information where the law requires it, for example with HMRC.</p>
+
+        <h2>Data outside the UK</h2>
+        <p>Some of these services are based in, or store data in, other countries, including the EU and the United States, and an international parcel's details naturally go to the destination country. Where data leaves the UK, it's protected by UK &ldquo;adequacy&rdquo; arrangements or by the contract safeguards approved for that purpose.</p>
+
+        <h2>How long I keep it</h2>
+        <ul>
+          <li><strong>Orders, payments and invoices</strong>: six years after the end of the tax year they belong to, because HMRC requires it.</li>
+          <li><strong>Emails and enquiries</strong>: while they're useful for supporting your device &mdash; warranty questions, repairs, firmware help &mdash; and reviewed regularly. Ask me and I'll delete anything I don't have to keep.</li>
+          <li><strong>Payment and delivery records held by Stripe and DHL</strong>: under their own retention rules, as the law requires of them.</li>
+        </ul>
+
+        <h2>Your order status page</h2>
+        <p>Each order has a status page at a link containing its order reference. It shows only your first name, the order date, its progress and the DHL tracking &mdash; never your address or contact details. Anyone with the link can see it, so share it only with people you're happy to.</p>
+
+        <h2>Cookies</h2>
+        <p>This website doesn't use advertising or tracking cookies, so there's no cookie banner. If you use the language switcher, a small cookie remembers your choice. Cloudflare's human-check and Stripe's payment page may set their own short-lived cookies for security and fraud prevention.</p>
+
+        <h2>Your rights</h2>
+        <p>You can ask me for a copy of your data, to correct it, to delete it, to restrict or object to how I use it, or to receive it in a portable format. Email <a href="mailto:info@discox.co.uk">info@discox.co.uk</a>; I'll reply within a month. Some things I must keep for tax reasons even if you ask me to delete them, and I'll tell you if that applies.</p>
+        <p>If you're unhappy with how I've handled your data, please tell me first. You also have the right to complain to the Information Commissioner's Office (ICO) at <a href="https://ico.org.uk/make-a-complaint/" target="_blank" rel="noopener">ico.org.uk/make-a-complaint</a>, or to your own country's data protection authority.</p>
+
+        <h2>Changes</h2>
+        <p>If I change how I handle your data, I'll update this page and the date below.</p>
+
+        <p class="updated">Last updated 13 November 2026.</p>
+      </div>
+    </div>
+  </main>
+
+
+  <!-- ════ FOOTER ════ -->
+  <footer>
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <div class="footer__brand-logo"><img src="logo.png" alt="" /> <span>Disco<em>X</em></span></div>
+          <p>A cave survey device built for modern caving. Built in the UK.</p>
+        </div>
+        <div class="footer__col">
+          <h4>Product</h4>
+          <a href="index.html#features">Features</a>
+          <a href="index.html#specs">Specs</a>
+          <a href="gallery.html">Gallery</a>
+          <a href="order.html">Order</a>
+          <a href="returns.html">Cancellations &amp; returns</a>
+          <a href="privacy.html">Privacy</a>
+        </div>
+        <div class="footer__col">
+          <h4>Resources</h4>
+          <a href="user-guide.html">User guide</a>
+          <a href="firmware.html">Firmware</a>
+          <a href="news.html">News</a>
+          <a href="https://github.com/blhall195/Mr_Zappy" target="_blank">GitHub</a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© 2026 DISCOX · BUILT ON <a href="https://stic.readthedocs.io/" target="_blank">SAP6</a></span>
+        <span>MADE IN THE UNITED KINGDOM</span>
+      </div>
+      <div class="i18n-switch" role="group" aria-label="Language">
+        <button type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="fr">FR</button>
+        <button type="button" data-lang="de">DE</button>
+        <button type="button" data-lang="es">ES</button>
+        <button type="button" data-lang="it">IT</button>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.nav__links a').forEach(a => {
+      a.addEventListener('click', () => document.querySelector('.nav__links').classList.remove('open'));
+    });
+  </script>
+  <script src="assets/i18n.js"></script>
+  <!-- Cloudflare Web Analytics: cookie-free page view counts, no consent banner needed -->
+  <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "e2c51fa092094d9da89de784e022f89b"}'></script>
+</body>
+</html>
