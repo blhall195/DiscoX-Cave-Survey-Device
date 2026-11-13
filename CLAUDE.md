@@ -142,6 +142,33 @@ number and becomes the order's quantity in the CRM. The submit button reads
 this site -- the other way round, the field is ignored until the Worker
 catches up.
 
+**Paying online (published 2026-11-13; payments switch on at go-live).** With
+JavaScript, the form shows **Get price**: it `fetch()`es the Worker's
+`POST /quote`, lists the DHL options (service, and outside the UK import
+taxes paid now or on delivery) as radio cards built with `textContent`, and
+**Pay £X securely** submits the same form to `POST /checkout`
+(`formaction`), which redirects to Stripe. Changing country, postcode, city
+or quantity clears the price. "Send an enquiry instead" is the old submit to
+`/order`. Without JavaScript the page is exactly the old enquiry form. The
+page never computes a price -- it only shows the Worker's. `Country` is now a
+`<select>` of ISO codes, generated in discox-api by `node
+tools/countries.mjs`; regenerate it there rather than editing it here.
+`TURNSTILE_SITEKEY` in the page's script is Cloudflare Turnstile's public
+site key (blank = no widget, which the Worker accepts only in sandbox mode).
+`/submitted/?ref=…&paid=1` is Stripe's return; it says "order placed" but is
+not proof of payment -- the Worker learns that from Stripe's webhook.
+It was published while the Worker was still in test mode: the Worker then
+reports **0 in stock to discox.co.uk** (its test-mode gate), so the page
+shows "Out of stock" and offers only enquiries until DHL and Stripe go live.
+
+**Stock, not pre-orders (2026-11-13).** The order page and the homepage
+price pill read the live count from the Worker's `GET /stock`. In stock: "In
+stock — N", Get price and Pay work, "dispatched within 2 working days". Zero
+(or the Worker unreachable, or the Worker still in test mode): "Out of
+stock", Get price is hidden and the enquiry button is the main action. The
+markup is written as out of stock, so a page whose script fails can never
+offer to sell. Brendan sets the count in the CRM; never hard-code stock here.
+
 Anything that needs a secret, storage or a call to another service (payments,
 DHL, order status, emails) belongs in `discox-api`, not in a page here. Its
 `CLAUDE.md` has the overall plan and the current state, including the DNS move

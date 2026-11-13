@@ -188,6 +188,11 @@
       background: var(--green); box-shadow: 0 0 10px var(--green);
       animation: stockPulse 2s ease-in-out infinite;
     }
+    .order-card__stocknote { color: var(--red); font-size: .9rem; margin-top: -4px; }
+    .order-card__stocknote[hidden] { display: none; }
+    .stock-indicator__dot--pre {
+      background: var(--accent); box-shadow: 0 0 10px var(--accent);
+    }
     .stock-indicator__dot--out {
       background: var(--red); box-shadow: 0 0 10px var(--red);
       animation: none;
@@ -319,6 +324,53 @@
     }
     .order-form textarea { resize: vertical; min-height: 110px; line-height: 1.55; }
     .order-form .btn-link { margin-top: 6px; }
+    .order-form select {
+      width: 100%; padding: 11px 14px;
+      border: 1px solid var(--border); background: var(--bg-2);
+      color: var(--text); border-radius: var(--radius);
+      font-family: var(--font-sans); font-size: .9rem;
+    }
+    .order-form select:focus { outline: none; border-color: var(--accent); background: var(--surface); }
+
+    /* ============ PRICE + PAYMENT ============ */
+    .order-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; margin-top: 6px; }
+    .order-actions .btn-link { margin-top: 0; }
+    .btn-plain {
+      background: none; border: 0; padding: 0; cursor: pointer;
+      color: var(--text-mid); font-family: var(--font-sans); font-size: .85rem;
+      text-decoration: underline; text-underline-offset: 3px;
+    }
+    .btn-plain:hover { color: var(--text); }
+    .quote { display: grid; gap: 10px; }
+    .quote[hidden], .order-form [hidden] { display: none !important; }
+    .quote__head {
+      font-family: var(--font-mono); font-size: 10.5px;
+      text-transform: uppercase; letter-spacing: .14em; color: var(--text-dim);
+    }
+    .quote__test {
+      border: 1px dashed var(--accent); color: var(--accent); border-radius: var(--radius);
+      padding: 8px 12px; font-size: .8rem;
+    }
+    .quote__opt {
+      display: grid; grid-template-columns: auto 1fr auto; gap: 4px 12px; align-items: start;
+      border: 1px solid var(--border); background: var(--bg-2); border-radius: var(--radius);
+      padding: 12px 14px; cursor: pointer; transition: border-color .2s, background .2s;
+    }
+    .quote__opt:hover { border-color: var(--text-dim); }
+    .quote__opt:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
+    .quote__opt input { margin-top: 3px; accent-color: var(--accent); width: auto; }
+    .quote__name { font-weight: 600; color: var(--text); }
+    .quote__total { font-family: var(--font-display); font-weight: 600; color: var(--text); white-space: nowrap; }
+    .quote__detail { grid-column: 2 / 4; color: var(--text-mid); font-size: .82rem; line-height: 1.5; }
+    .quote__note { color: var(--text-mid); font-size: .82rem; line-height: 1.5; }
+    .form-error {
+      border: 1px solid var(--red); color: var(--red); border-radius: var(--radius);
+      padding: 10px 12px; font-size: .85rem; line-height: 1.5;
+    }
+    .form-notice {
+      border: 1px solid var(--border); color: var(--text-mid); border-radius: var(--radius);
+      padding: 10px 12px; font-size: .85rem; line-height: 1.5;
+    }
 
     /* ============ INFO STRIP ============ */
     .info-strip {
@@ -427,12 +479,12 @@
         <div class="page-header__text">
           <p class="mono-label">Order · DiscoX v1</p>
           <h1>Ready to go <em>surveying</em>.</h1>
-          <p>Each DiscoX is built, calibrated, and bench-tested in the UK before it ships. Devices are out of stock at the moment while I build the next batch. Get in touch and I'll let you know when yours can ship.</p>
+          <p>Each DiscoX is built, calibrated, and bench-tested in the UK, and dispatched by DHL within 2 working days of payment — tracked, UK and worldwide.</p>
         </div>
         <aside class="stock-indicator" aria-label="Current stock">
-          <span class="stock-indicator__label"><span class="stock-indicator__dot stock-indicator__dot--out"></span>Out of stock</span>
-          <span class="stock-indicator__count">0<small>units</small></span>
-          <span class="stock-indicator__note">More being built — order to reserve one.</span>
+          <span class="stock-indicator__label" id="stockLabel"><span class="stock-indicator__dot stock-indicator__dot--out" id="stockDot"></span><span id="stockWord">Out of stock</span></span>
+          <span class="stock-indicator__count"><span id="stockCount">0</span><small>in stock</small></span>
+          <span class="stock-indicator__note" id="stockNote">More on the way — send an enquiry and I'll let you know.</span>
         </aside>
       </div>
     </div>
@@ -445,9 +497,10 @@
 
         <!-- Product summary -->
         <div class="order-card order-card--featured">
-          <span class="order-card__tag">● Out of stock — 0 units</span>
+          <span class="order-card__tag" id="stockTag">● Out of stock</span>
           <h2>Order your DiscoX</h2>
-          <p>Every DiscoX is built, calibrated, and bench-tested in the UK. Devices are out of stock right now — fill in your details and I'll confirm when the next batch is ready, plus shipping and payment for your location, UK or international.</p>
+          <p>Every DiscoX is built, calibrated, and bench-tested in the UK, and dispatched within 2 working days of payment. Changed your mind? Cancel for a full refund before it ships, or return it within 14 days of delivery.</p>
+          <p class="order-card__stocknote" id="stockCardNote">Out of stock right now — send an enquiry below and I'll email you as soon as more are ready.</p>
           <div class="order-card__price">£525 <small>plus shipping</small></div>
           <ul class="order-card__list">
             <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Assembled and bench-tested</li>
@@ -461,7 +514,7 @@
         <div class="order-card">
           <span class="order-card__tag">● Order</span>
           <h2>Your details</h2>
-          <p>UK or international — add your address and contact info below and I'll set up your order, confirm shipping to your location, and come back to you with payment.</p>
+          <p id="formIntro">UK or international — add your address and how many you'd like, then press <strong>Get price</strong> to see shipping and import taxes for your country and pay securely by card. Rather talk first? Send an enquiry instead and I'll come back to you.</p>
 
           <form class="order-form" id="orderForm" action="https://discox-api.discox-api.workers.dev/order" method="POST">
             <!-- discox-api Worker (github.com/blhall195/discox-api) — stores the order for the CRM
@@ -513,7 +566,241 @@
               </div>
               <div>
                 <label for="country">Country</label>
-                <input type="text" name="Country" id="country" required placeholder="e.g. United Kingdom, France, USA" />
+                <select name="Country" id="country" required autocomplete="country">
+                  <option value="" disabled selected>Choose your country</option>
+                  <option value="GB">United Kingdom</option>
+                  <option disabled>──────────</option>
+                  <option value="AF">Afghanistan</option>
+                  <option value="AX">Åland Islands</option>
+                  <option value="AL">Albania</option>
+                  <option value="DZ">Algeria</option>
+                  <option value="AS">American Samoa</option>
+                  <option value="AD">Andorra</option>
+                  <option value="AO">Angola</option>
+                  <option value="AI">Anguilla</option>
+                  <option value="AG">Antigua and Barbuda</option>
+                  <option value="AR">Argentina</option>
+                  <option value="AM">Armenia</option>
+                  <option value="AW">Aruba</option>
+                  <option value="AU">Australia</option>
+                  <option value="AT">Austria</option>
+                  <option value="AZ">Azerbaijan</option>
+                  <option value="BS">Bahamas</option>
+                  <option value="BH">Bahrain</option>
+                  <option value="BD">Bangladesh</option>
+                  <option value="BB">Barbados</option>
+                  <option value="BY">Belarus</option>
+                  <option value="BE">Belgium</option>
+                  <option value="BZ">Belize</option>
+                  <option value="BJ">Benin</option>
+                  <option value="BM">Bermuda</option>
+                  <option value="BT">Bhutan</option>
+                  <option value="BO">Bolivia</option>
+                  <option value="BQ">Bonaire, Sint Eustatius and Saba</option>
+                  <option value="BA">Bosnia and Herzegovina</option>
+                  <option value="BW">Botswana</option>
+                  <option value="BR">Brazil</option>
+                  <option value="BN">Brunei</option>
+                  <option value="BG">Bulgaria</option>
+                  <option value="BF">Burkina Faso</option>
+                  <option value="BI">Burundi</option>
+                  <option value="CV">Cabo Verde</option>
+                  <option value="KH">Cambodia</option>
+                  <option value="CM">Cameroon</option>
+                  <option value="CA">Canada</option>
+                  <option value="KY">Cayman Islands</option>
+                  <option value="CF">Central African Republic</option>
+                  <option value="TD">Chad</option>
+                  <option value="CL">Chile</option>
+                  <option value="CN">China</option>
+                  <option value="CO">Colombia</option>
+                  <option value="KM">Comoros</option>
+                  <option value="CG">Congo</option>
+                  <option value="CD">Congo (Democratic Republic)</option>
+                  <option value="CK">Cook Islands</option>
+                  <option value="CR">Costa Rica</option>
+                  <option value="CI">Côte d'Ivoire</option>
+                  <option value="HR">Croatia</option>
+                  <option value="CU">Cuba</option>
+                  <option value="CW">Curaçao</option>
+                  <option value="CY">Cyprus</option>
+                  <option value="CZ">Czechia</option>
+                  <option value="DK">Denmark</option>
+                  <option value="DJ">Djibouti</option>
+                  <option value="DM">Dominica</option>
+                  <option value="DO">Dominican Republic</option>
+                  <option value="EC">Ecuador</option>
+                  <option value="EG">Egypt</option>
+                  <option value="SV">El Salvador</option>
+                  <option value="GQ">Equatorial Guinea</option>
+                  <option value="ER">Eritrea</option>
+                  <option value="EE">Estonia</option>
+                  <option value="SZ">Eswatini</option>
+                  <option value="ET">Ethiopia</option>
+                  <option value="FK">Falkland Islands</option>
+                  <option value="FO">Faroe Islands</option>
+                  <option value="FJ">Fiji</option>
+                  <option value="FI">Finland</option>
+                  <option value="FR">France</option>
+                  <option value="GF">French Guiana</option>
+                  <option value="PF">French Polynesia</option>
+                  <option value="GA">Gabon</option>
+                  <option value="GM">Gambia</option>
+                  <option value="GE">Georgia</option>
+                  <option value="DE">Germany</option>
+                  <option value="GH">Ghana</option>
+                  <option value="GI">Gibraltar</option>
+                  <option value="GR">Greece</option>
+                  <option value="GL">Greenland</option>
+                  <option value="GD">Grenada</option>
+                  <option value="GP">Guadeloupe</option>
+                  <option value="GU">Guam</option>
+                  <option value="GT">Guatemala</option>
+                  <option value="GG">Guernsey</option>
+                  <option value="GN">Guinea</option>
+                  <option value="GW">Guinea-Bissau</option>
+                  <option value="GY">Guyana</option>
+                  <option value="HT">Haiti</option>
+                  <option value="HN">Honduras</option>
+                  <option value="HK">Hong Kong</option>
+                  <option value="HU">Hungary</option>
+                  <option value="IS">Iceland</option>
+                  <option value="IN">India</option>
+                  <option value="ID">Indonesia</option>
+                  <option value="IR">Iran</option>
+                  <option value="IQ">Iraq</option>
+                  <option value="IE">Ireland</option>
+                  <option value="IM">Isle of Man</option>
+                  <option value="IL">Israel</option>
+                  <option value="IT">Italy</option>
+                  <option value="JM">Jamaica</option>
+                  <option value="JP">Japan</option>
+                  <option value="JE">Jersey</option>
+                  <option value="JO">Jordan</option>
+                  <option value="KZ">Kazakhstan</option>
+                  <option value="KE">Kenya</option>
+                  <option value="KI">Kiribati</option>
+                  <option value="KP">Korea (North)</option>
+                  <option value="KR">Korea (South)</option>
+                  <option value="XK">Kosovo</option>
+                  <option value="KW">Kuwait</option>
+                  <option value="KG">Kyrgyzstan</option>
+                  <option value="LA">Laos</option>
+                  <option value="LV">Latvia</option>
+                  <option value="LB">Lebanon</option>
+                  <option value="LS">Lesotho</option>
+                  <option value="LR">Liberia</option>
+                  <option value="LY">Libya</option>
+                  <option value="LI">Liechtenstein</option>
+                  <option value="LT">Lithuania</option>
+                  <option value="LU">Luxembourg</option>
+                  <option value="MO">Macao</option>
+                  <option value="MG">Madagascar</option>
+                  <option value="MW">Malawi</option>
+                  <option value="MY">Malaysia</option>
+                  <option value="MV">Maldives</option>
+                  <option value="ML">Mali</option>
+                  <option value="MT">Malta</option>
+                  <option value="MH">Marshall Islands</option>
+                  <option value="MQ">Martinique</option>
+                  <option value="MR">Mauritania</option>
+                  <option value="MU">Mauritius</option>
+                  <option value="YT">Mayotte</option>
+                  <option value="MX">Mexico</option>
+                  <option value="FM">Micronesia</option>
+                  <option value="MD">Moldova</option>
+                  <option value="MC">Monaco</option>
+                  <option value="MN">Mongolia</option>
+                  <option value="ME">Montenegro</option>
+                  <option value="MS">Montserrat</option>
+                  <option value="MA">Morocco</option>
+                  <option value="MZ">Mozambique</option>
+                  <option value="MM">Myanmar</option>
+                  <option value="NA">Namibia</option>
+                  <option value="NR">Nauru</option>
+                  <option value="NP">Nepal</option>
+                  <option value="NL">Netherlands</option>
+                  <option value="NC">New Caledonia</option>
+                  <option value="NZ">New Zealand</option>
+                  <option value="NI">Nicaragua</option>
+                  <option value="NE">Niger</option>
+                  <option value="NG">Nigeria</option>
+                  <option value="NU">Niue</option>
+                  <option value="MK">North Macedonia</option>
+                  <option value="MP">Northern Mariana Islands</option>
+                  <option value="NO">Norway</option>
+                  <option value="OM">Oman</option>
+                  <option value="PK">Pakistan</option>
+                  <option value="PW">Palau</option>
+                  <option value="PS">Palestine</option>
+                  <option value="PA">Panama</option>
+                  <option value="PG">Papua New Guinea</option>
+                  <option value="PY">Paraguay</option>
+                  <option value="PE">Peru</option>
+                  <option value="PH">Philippines</option>
+                  <option value="PL">Poland</option>
+                  <option value="PT">Portugal</option>
+                  <option value="PR">Puerto Rico</option>
+                  <option value="QA">Qatar</option>
+                  <option value="RE">Réunion</option>
+                  <option value="RO">Romania</option>
+                  <option value="RU">Russia</option>
+                  <option value="RW">Rwanda</option>
+                  <option value="KN">Saint Kitts and Nevis</option>
+                  <option value="LC">Saint Lucia</option>
+                  <option value="VC">Saint Vincent and the Grenadines</option>
+                  <option value="WS">Samoa</option>
+                  <option value="SM">San Marino</option>
+                  <option value="ST">São Tomé and Príncipe</option>
+                  <option value="SA">Saudi Arabia</option>
+                  <option value="SN">Senegal</option>
+                  <option value="RS">Serbia</option>
+                  <option value="SC">Seychelles</option>
+                  <option value="SL">Sierra Leone</option>
+                  <option value="SG">Singapore</option>
+                  <option value="SX">Sint Maarten</option>
+                  <option value="SK">Slovakia</option>
+                  <option value="SI">Slovenia</option>
+                  <option value="SB">Solomon Islands</option>
+                  <option value="SO">Somalia</option>
+                  <option value="ZA">South Africa</option>
+                  <option value="SS">South Sudan</option>
+                  <option value="ES">Spain</option>
+                  <option value="LK">Sri Lanka</option>
+                  <option value="SD">Sudan</option>
+                  <option value="SR">Suriname</option>
+                  <option value="SE">Sweden</option>
+                  <option value="CH">Switzerland</option>
+                  <option value="SY">Syria</option>
+                  <option value="TW">Taiwan</option>
+                  <option value="TJ">Tajikistan</option>
+                  <option value="TZ">Tanzania</option>
+                  <option value="TH">Thailand</option>
+                  <option value="TL">Timor-Leste</option>
+                  <option value="TG">Togo</option>
+                  <option value="TO">Tonga</option>
+                  <option value="TT">Trinidad and Tobago</option>
+                  <option value="TN">Tunisia</option>
+                  <option value="TR">Türkiye</option>
+                  <option value="TM">Turkmenistan</option>
+                  <option value="TC">Turks and Caicos Islands</option>
+                  <option value="TV">Tuvalu</option>
+                  <option value="UG">Uganda</option>
+                  <option value="UA">Ukraine</option>
+                  <option value="AE">United Arab Emirates</option>
+                  <option value="US">United States</option>
+                  <option value="UY">Uruguay</option>
+                  <option value="UZ">Uzbekistan</option>
+                  <option value="VU">Vanuatu</option>
+                  <option value="VA">Vatican City</option>
+                  <option value="VE">Venezuela</option>
+                  <option value="VN">Vietnam</option>
+                  <option value="VG">Virgin Islands (British)</option>
+                  <option value="VI">Virgin Islands (US)</option>
+                  <option value="YE">Yemen</option>
+                  <option value="ZM">Zambia</option>
+                  <option value="ZW">Zimbabwe</option>
+                </select>
               </div>
             </div>
             <div>
@@ -524,10 +811,35 @@
               <label for="message">Message</label>
               <textarea name="message" id="message" rows="4" placeholder="Any questions or details about your order…"></textarea>
             </div>
-            <button type="submit" class="btn-link btn-link--outline">
-              Send Order Enquiry
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </button>
+            <!-- Payments (discox-api POST /quote, then POST /checkout -> Stripe Checkout).
+                 Without JavaScript none of this shows and the form sends an enquiry as before. -->
+            <p class="form-notice" id="cancelledNote" hidden>Payment cancelled — nothing has been charged. You can choose an option and pay again, or send an enquiry.</p>
+            <div class="quote" id="quote" hidden aria-live="polite">
+              <div class="quote__head">Choose delivery and import taxes</div>
+              <div class="quote__test" id="quoteTest" hidden>Test mode — sample prices; no real payment is taken.</div>
+              <div id="quoteOptions"></div>
+              <p class="quote__note">By paying you agree to the <a href="returns.html">cancellations &amp; returns policy</a>: cancel for a full refund any time before your DiscoX ships, or within 14 days of delivery.</p>
+              <p class="quote__note">Prices are in GBP and held for 24 hours. Import duty and tax figures are DHL's estimate for your country; if you pay them now, nothing more is due on delivery.</p>
+              <p class="quote__note" id="quoteNotes" hidden></p>
+            </div>
+            <p class="form-error" id="quoteError" role="alert" hidden></p>
+            <div id="turnstile"></div>
+            <input type="hidden" name="quote_id" id="quoteId" />
+            <div class="order-actions">
+              <button type="button" class="btn-link" id="getPrice" hidden>
+                Get price
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </button>
+              <button type="submit" class="btn-link" id="payBtn" formaction="https://discox-api.discox-api.workers.dev/checkout" hidden>
+                Pay securely
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              </button>
+              <button type="submit" class="btn-link btn-link--outline" id="enquiryBtn">
+                Send Order Enquiry
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </button>
+            </div>
+            <p class="quote__note" style="margin-top:4px">How your details are used: <a href="privacy.html">privacy notice</a>.</p>
           </form>
         </div>
 
@@ -536,8 +848,8 @@
       <!-- Info strip -->
       <div class="info-strip">
         <div class="info-strip__item">
-          <h4>Lead time</h4>
-          <p>Most orders ship within 1–2 weeks. May take longer if devices are out of stock and I'm building more.</p>
+          <h4>Dispatch</h4>
+          <p>Dispatched by DHL within 2 working days of payment, with tracking on your order status page. Cancel for a full refund any time before it ships. See the <a href="returns.html">cancellations &amp; returns policy</a>.</p>
         </div>
         <div class="info-strip__item">
           <h4>Support</h4>
@@ -566,6 +878,8 @@
           <a href="index.html#specs">Specs</a>
           <a href="gallery.html">Gallery</a>
           <a href="order.html">Order</a>
+          <a href="returns.html">Cancellations &amp; returns</a>
+          <a href="privacy.html">Privacy</a>
         </div>
         <div class="footer__col">
           <h4>Resources</h4>
@@ -596,6 +910,200 @@
         document.querySelector('.nav__links').classList.remove('open');
       });
     });
+  </script>
+  <script>
+    // Get price -> options -> Pay (Stripe Checkout). Prices come only from the
+    // discox-api Worker; this page just shows them and posts the choice back.
+    (function () {
+      var API = 'https://discox-api.discox-api.workers.dev';
+      // Cloudflare Turnstile site key (public). Empty = no widget, which the
+      // Worker only accepts while DHL is in sandbox mode.
+      var TURNSTILE_SITEKEY = '0x4AAAAAAF_bNbZxIqtieozB';
+
+      var form = document.getElementById('orderForm');
+      var getPrice = document.getElementById('getPrice');
+      var payBtn = document.getElementById('payBtn');
+      var enquiryBtn = document.getElementById('enquiryBtn');
+      var quoteBox = document.getElementById('quote');
+      var quoteOptions = document.getElementById('quoteOptions');
+      var quoteNotes = document.getElementById('quoteNotes');
+      var quoteTest = document.getElementById('quoteTest');
+      var quoteError = document.getElementById('quoteError');
+      var quoteId = document.getElementById('quoteId');
+      var widget = null;
+
+      var gbp = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' });
+      var money = function (p) { return gbp.format(p / 100); };
+      var TRANSIT = { P: '1–3 working days', H: 'about 5 working days', N: 'next working day', '3': '1–2 working days' };
+
+      var qtyInput = document.getElementById('quantity');
+      var introHTML = document.getElementById('formIntro').innerHTML; // our own markup, restored when back in stock
+      var inStock = 0;
+
+      // Live stock from the Worker. Until it answers (or if it cannot be
+      // reached) the page stays as written: out of stock, enquiry only.
+      function showStock(n) {
+        inStock = n;
+        var has = n > 0;
+        document.getElementById('stockDot').className = 'stock-indicator__dot' + (has ? '' : ' stock-indicator__dot--out');
+        document.getElementById('stockWord').textContent = has ? 'In stock' : 'Out of stock';
+        document.getElementById('stockCount').textContent = String(n);
+        document.getElementById('stockNote').textContent = has
+          ? 'Dispatched within 2 working days.'
+          : 'More on the way — send an enquiry and I\'ll let you know.';
+        document.getElementById('stockTag').textContent = has ? '● In stock' : '● Out of stock';
+        document.getElementById('stockCardNote').hidden = has;
+        document.getElementById('turnstile').hidden = !has;
+        if (!has) document.getElementById('formIntro').textContent =
+          'DiscoX is out of stock right now. Add your details and send an enquiry, and I’ll email you as soon as more are ready.';
+        else document.getElementById('formIntro').innerHTML = introHTML;
+        getPrice.hidden = !has || !!quoteId.value;
+        enquiryBtn.firstChild.textContent = has ? 'Send an enquiry instead ' : 'Send an enquiry ';
+        enquiryBtn.classList.toggle('btn-link--outline', has);
+        if (has) {
+          qtyInput.max = String(Math.min(50, n));
+          if (+qtyInput.value > n) qtyInput.value = String(n);
+        }
+      }
+      function loadStock() {
+        return fetch(API + '/stock', { cache: 'no-store' })
+          .then(function (r) { return r.json(); })
+          .then(function (d) { if (typeof d.available === 'number') showStock(d.available); })
+          .catch(function () { /* stay out of stock: enquiries still work */ });
+      }
+      getPrice.hidden = true;
+      enquiryBtn.firstChild.textContent = 'Send an enquiry ';
+      enquiryBtn.classList.remove('btn-link--outline');
+      loadStock();
+      enquiryBtn.classList.add('btn-link--outline');
+
+      if (/[?&]cancelled=/.test(location.search)) document.getElementById('cancelledNote').hidden = false;
+
+      if (TURNSTILE_SITEKEY) {
+        window.onTurnstileLoad = function () {
+          widget = turnstile.render('#turnstile', { sitekey: TURNSTILE_SITEKEY, size: 'flexible' });
+        };
+        var ts = document.createElement('script');
+        ts.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileLoad';
+        ts.async = true;
+        document.head.appendChild(ts);
+      }
+
+      function el(tag, cls, text) {
+        var e = document.createElement(tag);
+        if (cls) e.className = cls;
+        if (text != null) e.textContent = text;
+        return e;
+      }
+
+      function clearQuote() {
+        quoteBox.hidden = true;
+        quoteOptions.textContent = '';
+        quoteId.value = '';
+        payBtn.hidden = true;
+        getPrice.hidden = inStock <= 0;
+      }
+      // A price is for one address and quantity: change either and it is gone.
+      ['country', 'postcode', 'city', 'quantity'].forEach(function (id) {
+        document.getElementById(id).addEventListener('input', clearQuote);
+        document.getElementById(id).addEventListener('change', clearQuote);
+      });
+
+      function showError(msg) {
+        quoteError.textContent = msg;
+        quoteError.hidden = !msg;
+      }
+
+      function describe(o) {
+        var parts = [];
+        parts.push('Devices ' + money(o.devices_p));
+        parts.push(o.shipping_p ? 'Shipping ' + money(o.shipping_p) : 'Free UK shipping');
+        if (o.duties === 'DDP') parts.push('Import duty & taxes ' + money(o.duty_tax_p));
+        var lines = [parts.join(' · ')];
+        var transit = o.days ? o.days + ' working day' + (o.days == 1 ? '' : 's') : TRANSIT[o.service];
+        if (transit) lines.push('In transit ' + transit + ' once shipped.');
+        if (o.duties === 'DDP') lines.push('Import taxes paid now — nothing to pay on delivery.');
+        if (o.duties === 'DAP') {
+          lines.push(o.duty_tax_estimate_p
+            ? 'Pay import taxes on delivery — DHL will ask you for about ' + money(o.duty_tax_estimate_p) + ' (plus any DHL handling fee) before delivering.'
+            : 'Pay import taxes on delivery — DHL will ask you for any import duty and tax before delivering.');
+        }
+        return lines.join(' ');
+      }
+
+      function render(q) {
+        quoteOptions.textContent = '';
+        q.options.forEach(function (o, i) {
+          var label = el('label', 'quote__opt');
+          var radio = el('input');
+          radio.type = 'radio';
+          radio.name = 'option';
+          radio.value = o.id;
+          radio.required = true;
+          if (i === 0) radio.checked = true;
+          radio.addEventListener('change', updatePay);
+          var title = o.service_name.replace(/^DHL /, 'DHL ') +
+            (o.duties === 'DDP' ? ' — taxes paid now' : o.duties === 'DAP' ? ' — taxes on delivery' : '');
+          label.appendChild(radio);
+          label.appendChild(el('span', 'quote__name', title));
+          label.appendChild(el('span', 'quote__total', money(o.total_p)));
+          label.appendChild(el('span', 'quote__detail', describe(o)));
+          label.dataset.total = o.total_p;
+          quoteOptions.appendChild(label);
+        });
+        quoteTest.hidden = !q.test;
+        quoteNotes.textContent = (q.notes || []).join(' ');
+        quoteNotes.hidden = !(q.notes && q.notes.length);
+        quoteId.value = q.quote_id;
+        quoteBox.hidden = false;
+        getPrice.hidden = true;
+        payBtn.hidden = false;
+        updatePay();
+      }
+
+      function updatePay() {
+        var checked = form.querySelector('input[name="option"]:checked');
+        var total = checked ? +checked.closest('.quote__opt').dataset.total : 0;
+        payBtn.firstChild.textContent = total ? 'Pay ' + money(total) + ' securely ' : 'Pay securely ';
+      }
+
+      getPrice.addEventListener('click', function () {
+        showError('');
+        if (!form.reportValidity()) return;
+        getPrice.disabled = true;
+        getPrice.firstChild.textContent = 'Getting price… ';
+        fetch(API + '/quote', { method: 'POST', body: new URLSearchParams(new FormData(form)) })
+          .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+          .then(function (res) {
+            if (res.d && typeof res.d.available === 'number') showStock(res.d.available);
+            if (!res.ok) throw new Error(res.d.error || 'Something went wrong.');
+            render(res.d);
+          })
+          .catch(function (err) {
+            showError((err && err.message && err.message !== 'Failed to fetch')
+              ? err.message
+              : 'We couldn’t reach the pricing service. Please try again, or send an enquiry instead.');
+          })
+          .then(function () {
+            getPrice.disabled = false;
+            getPrice.firstChild.textContent = 'Get price ';
+            if (widget !== null && window.turnstile) turnstile.reset(widget); // a token works once
+          });
+      });
+
+      // Paying needs a price; an enquiry must not carry one (it would be ignored, but keep it clean).
+      enquiryBtn.addEventListener('click', function () { quoteId.value = ''; });
+      payBtn.addEventListener('click', function () {
+        if (!quoteId.value) { clearQuote(); showError('Please press Get price first.'); }
+      });
+      form.addEventListener('submit', function (e) {
+        var viaPay = e.submitter === payBtn;
+        if (viaPay && !quoteId.value) { e.preventDefault(); return; }
+        // Disable after the browser has taken the submitter's formaction (double-click guard).
+        setTimeout(function () { (viaPay ? payBtn : enquiryBtn).disabled = true; }, 0);
+        setTimeout(function () { payBtn.disabled = false; enquiryBtn.disabled = false; }, 8000);
+      });
+    })();
   </script>
   <script src="assets/i18n.js"></script>
   <!-- Cloudflare Web Analytics: cookie-free page view counts, no consent banner needed -->

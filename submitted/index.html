@@ -271,6 +271,18 @@
       document.getElementById('orderRef').hidden = false;
       document.getElementById('confirmNote').textContent =
         'I’ll email you from info@discox.co.uk — worth checking your spam folder if nothing arrives.';
+      // Back from Stripe Checkout (?paid=1). This is only the redirect, not
+      // proof of payment -- the Worker learns that from Stripe's webhook -- so
+      // it says what the customer did, and the status page shows the truth.
+      if (new URLSearchParams(location.search).get('paid') === '1') {
+        document.title = 'Order placed — DiscoX';
+        document.getElementById('confirmLabel').textContent = 'Confirmation · Order placed';
+        document.getElementById('confirmTitle').innerHTML = 'Thank you — order <em>placed</em>';
+        document.getElementById('confirmText').textContent =
+          'Thanks for your order and payment. A confirmation email with your ' +
+          'receipt is on its way. Your DiscoX will be dispatched within 2 working ' +
+          'days, and you can follow it on your order status page.';
+      }
     })();
   </script>
 
