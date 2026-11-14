@@ -619,8 +619,8 @@
             <p class="ver-note" data-ver="v1">Showing the original device — four identical blue buttons, no orange trigger.</p>
 
             <div class="download-row" data-ver="v2">
-              <a href="mrzappy-v2.0.9.uf2" download="DiscoX2-v2.0.9.uf2" class="btn-link btn-link--primary">
-                Download DiscoX2-v2.0.9.uf2
+              <a href="mrzappy-v2.0.10.uf2" download="DiscoX2-v2.0.10.uf2" class="btn-link btn-link--primary">
+                Download DiscoX2-v2.0.10.uf2
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v14M6 13l6 6 6-6M5 21h14"/></svg>
               </a>
               <a href="https://github.com/blhall195/DiscoX-V2/releases" target="_blank" class="btn-link btn-link--outline">
@@ -630,7 +630,7 @@
             </div>
 
             <p data-ver="v2" style="font-family: var(--font-mono); font-size: .8rem; color: var(--text-dim); letter-spacing: .04em; margin-top: 8px;">
-              v2.0.9 · released 2026-10-10 · sha256 <code>18ab…a400</code>
+              v2.0.10 · released 2026-11-14 · sha256 <code>e878…cef2</code>
             </p>
 
             <div class="download-row" data-ver="v1">
@@ -724,7 +724,7 @@
             <p>With the device in Firmware Update Mode and the <code>DISCOX</code> drive mounted, you're ready to flash.</p>
 
             <div class="dropzone" aria-hidden="true">
-              <div class="dropzone__file" data-ver="v2">DiscoX2-v2.0.9.uf2</div>
+              <div class="dropzone__file" data-ver="v2">DiscoX2-v2.0.10.uf2</div>
               <div class="dropzone__file" data-ver="v1">discox-v0.2.0.uf2</div>
               <div class="dropzone__arrow"><span></span>drop<span></span></div>
               <div class="dropzone__drive">
@@ -797,6 +797,16 @@
           <article class="docs-section" id="changelog">
             <div class="docs-section__num">05 · What's new</div>
             <h2>Changelog</h2>
+
+            <h3 data-ver="v2">v2.0.10 — 2026-11-14</h3>
+            <ul data-ver="v2">
+              <li>Calibration is a little more accurate. Part 2 of the calibration included a fine-tuning step that turned out to be fitting itself to the small wobbles of a hand-held device rather than to anything real in the sensor. In our test calibration it could push a compass reading off by up to half a degree when the device was steeply tilted or rolled. That step has been removed.</li>
+              <li>To get the benefit, run Part 2 of the calibration again (Menu → Calibration). Part 1 does not need repeating. If you don't, nothing changes: your existing calibration carries on working exactly as before.</li>
+              <li>The accuracy figure shown at the end of Part 2 may read slightly higher than you are used to. The old figure was flattered by the step that has been removed; the calibration itself is not worse.</li>
+              <li>The instructions for Part 2 of the calibration now stay on screen until you press a button. When Part 2 followed straight on from Part 1 they flashed past and the device went straight to taking readings.</li>
+              <li>This release keeps the spinning disco ball start-up animation.</li>
+              <li>Your settings and calibration are kept when you update.</li>
+            </ul>
 
             <h3 data-ver="v2">v2.0.9 — 2026-10-10</h3>
             <ul data-ver="v2">
