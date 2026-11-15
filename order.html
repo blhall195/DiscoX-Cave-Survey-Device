@@ -484,7 +484,7 @@
         <aside class="stock-indicator" aria-label="Current stock">
           <span class="stock-indicator__label" id="stockLabel"><span class="stock-indicator__dot stock-indicator__dot--out" id="stockDot"></span><span id="stockWord">Out of stock</span></span>
           <span class="stock-indicator__count"><span id="stockCount">0</span><small>in stock</small></span>
-          <span class="stock-indicator__note" id="stockNote">More on the way — send an enquiry and I'll let you know.</span>
+          <span class="stock-indicator__note" id="stockNote">Next batch of 10 due 8 December — send an enquiry and I'll let you know.</span>
         </aside>
       </div>
     </div>
@@ -500,7 +500,7 @@
           <span class="order-card__tag" id="stockTag">● Out of stock</span>
           <h2>Order your DiscoX</h2>
           <p>Every DiscoX is built, calibrated, and bench-tested in the UK, and dispatched within 2 working days of payment. Changed your mind? Cancel for a full refund before it ships, or return it within 14 days of delivery.</p>
-          <p class="order-card__stocknote" id="stockCardNote">Out of stock right now — send an enquiry below and I'll email you as soon as more are ready.</p>
+          <p class="order-card__stocknote" id="stockCardNote">Out of stock right now. The next batch of 10 is due 8 December — send an enquiry below and I'll email you as soon as they're ready.</p>
           <div class="order-card__price">£525 <small>plus shipping</small></div>
           <ul class="order-card__list">
             <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Assembled and bench-tested</li>
@@ -950,12 +950,12 @@
         document.getElementById('stockCount').textContent = String(n);
         document.getElementById('stockNote').textContent = has
           ? 'Dispatched within 2 working days.'
-          : 'More on the way — send an enquiry and I\'ll let you know.';
+          : 'Next batch of 10 due 8 December — send an enquiry and I\'ll let you know.';
         document.getElementById('stockTag').textContent = has ? '● In stock' : '● Out of stock';
         document.getElementById('stockCardNote').hidden = has;
         document.getElementById('turnstile').hidden = !has;
         if (!has) document.getElementById('formIntro').textContent =
-          'DiscoX is out of stock right now. Add your details and send an enquiry, and I’ll email you as soon as more are ready.';
+          'DiscoX is out of stock right now. The next batch of 10 is due 8 December. Add your details and send an enquiry, and I’ll email you as soon as they’re ready.';
         else document.getElementById('formIntro').innerHTML = introHTML;
         getPrice.hidden = !has || !!quoteId.value;
         enquiryBtn.firstChild.textContent = has ? 'Send an enquiry instead ' : 'Send an enquiry ';
