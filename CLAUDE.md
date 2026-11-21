@@ -44,6 +44,7 @@ Analytics & Logs → Web Analytics.
 | `index.html` | Home. Features, specs, the pitch. The largest page. |
 | `order.html` | Ordering and pricing. |
 | `order-status.html` | A customer's order progress, looked up by `?ref=` from discox-api. |
+| `pay.html` | A private payment link (`?t=<token>`) Brendan sends from the CRM. Linked from nowhere, `noindex`. |
 | `build.html` | Build-it-yourself instructions. |
 | `firmware.html` | Firmware downloads, flashing guide, changelog. See below. |
 | `user-guide.html` | The full user guide, mirrored by `discox-user-guide.pdf`. |
@@ -168,6 +169,18 @@ stock — N", Get price and Pay work, "dispatched within 2 working days". Zero
 stock", Get price is hidden and the enquiry button is the main action. The
 markup is written as out of stock, so a page whose script fails can never
 offer to sell. Brendan sets the count in the CRM; never hard-code stock here.
+
+**Payment links (`pay.html`, 2026-11-21).** Brendan prices an enquiry in
+his CRM and emails the customer `pay.html?t=<token>`. The page `fetch()`es
+`GET /offers/<token>` from discox-api: their name, address, quantity, his
+price and the DHL options, already priced. It shows them as text (the same
+option cards as `order.html`) and posts the chosen option to
+`POST /offers/<token>/checkout`, which redirects to Stripe; cancelling there
+comes back here with `&cancelled=1`. A paid, replaced or expired link says
+so instead. The address is read-only by design -- shipping and tax are
+priced for it, so a wrong address is fixed in the CRM and a new link sent.
+Nothing on the site links to the page, it is `noindex` and `no-referrer`
+(the token is the only key), and it does not read or change website stock.
 
 Anything that needs a secret, storage or a call to another service (payments,
 DHL, order status, emails) belongs in `discox-api`, not in a page here. Its
