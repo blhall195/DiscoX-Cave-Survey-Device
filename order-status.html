@@ -244,7 +244,7 @@
         <div id="lookupView">
           <p class="mono-label">Order status</p>
           <h1>Where is my <em>order</em>?</h1>
-          <p>Enter the order reference from the page you saw after ordering. It looks
+          <p>Enter the reference from your confirmation page or email. It looks
              like <span style="font-family:var(--font-mono);color:var(--text)">K7Q2-9XMF-4LTA</span>.</p>
           <form class="lookup" id="lookupForm">
             <input id="refInput" name="ref" autocomplete="off" spellcheck="false"
@@ -276,8 +276,9 @@
           </div>
           <p class="status__help">Questions about your order? Email
              <a href="mailto:info@discox.co.uk">info@discox.co.uk</a> and quote your reference.
-             Tracking comes from DHL and refreshes about once an hour; the other steps I update
-             by hand, so they can lag a day or so behind what you hear from me.</p>
+             Card payments and DHL tracking update on their own, tracking about once an hour.
+             Other payments, such as bank transfers, we mark off by hand once they arrive, so
+             that step can take a day or two.</p>
         </div>
 
       </div>
@@ -322,9 +323,12 @@
 
       var TICK = '<svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
 
-      // The five steps a DiscoX order goes through, from the CRM's three
+      // The steps a DiscoX order goes through, from the CRM's three
       // independent statuses. They can move in any order (a device can ship
       // before it is invoiced), so each step is judged on its own.
+      // "Payment requested" is left out once an order is paid: the page cannot
+      // tell a card payment on the website from a paid invoice, and a card
+      // buyer was never emailed about payment.
       function steps(o) {
         var t = o.tracking;
         var paid = o.payment_status === 'paid';
@@ -345,23 +349,27 @@
         // step that still says it is on its way.
         var delivered = o.device_status === 'received' || (!returned && !!(t && t.delivered_at));
         return [
-          { title: 'Order received', done: true,
-            note: 'Your order is in. I check every one by hand.' },
+          // An enquiry is an order record too; it becomes an order once it is
+          // invoiced or paid for.
+          { title: invoiced ? 'Order received' : 'Enquiry received', done: true,
+            note: invoiced ? 'Your order is in. We check every one by hand.'
+                           : 'Your enquiry is in. We read every one ourselves.' },
+          (paid || refunded) ? null :
           { title: 'Payment requested', done: invoiced,
-            note: invoiced ? 'I’ve emailed you about payment.'
-                           : 'I’ll confirm shipping to your address and email you about payment.' },
+            note: invoiced ? 'We’ve emailed you about payment.'
+                           : 'We’ll confirm shipping to your address and email you about payment.' },
           { title: refunded ? 'Refunded' : 'Payment received', done: paid || refunded,
             note: refunded ? 'Your payment has been refunded.'
-                 : paid ? 'Thank you.' : 'Waiting for payment — check your email (and spam folder) for my message.' },
+                 : paid ? 'Thank you.' : 'Waiting for payment — check your email (and spam folder) for our message.' },
           { title: preparing ? 'Preparing shipment' : 'Shipped', done: shipped, active: preparing,
             note: preparing ? 'Your DiscoX is packed and labelled for DHL Express. Tracking appears here once DHL has it.'
                  : shipped ? (scanned ? 'Your DiscoX is on its way with DHL Express — tracking is below.' : 'Your DiscoX is on its way.')
                  : 'Each device is built and tested before it goes out.' },
           { title: returned ? 'Returned' : 'Delivered', done: delivered || returned,
-            note: returned ? 'The device has come back to me.'
-                 : delivered ? 'Delivered' + (t && t.delivered_at ? ' on ' + day(t.delivered_at) : '') +
-                               '. The user guide is at discox.co.uk/user-guide.html.' : '' },
-        ];
+            note: returned ? 'The device has come back to us.'
+                 : delivered ? 'Delivered' + (t && t.delivered_at ? ' on ' + day(t.delivered_at) : '') + '.' : '',
+            link: delivered && !returned ? { text: 'Read the user guide to get started →', href: '/user-guide.html' } : null },
+        ].filter(Boolean);
       }
 
       // Courier times are the local clock time where DHL scanned the parcel,
@@ -460,6 +468,13 @@
             var note = document.createElement('div');
             note.className = 'step__note';
             note.textContent = s.note;
+            if (s.link) {                             // our own fixed link, not data
+              var a = document.createElement('a');
+              a.href = s.link.href;
+              a.textContent = s.link.text;
+              note.appendChild(document.createTextNode(' '));
+              note.appendChild(a);
+            }
             li.appendChild(note);
           }
           list.appendChild(li);
@@ -484,7 +499,7 @@
           .catch(function (err) {
             $('refInput').value = ref;
             lookupMessage(err.message === 'notfound'
-              ? 'I can’t find an order with reference ' + ref + '. Check it against the one on your confirmation page, or email info@discox.co.uk.'
+              ? 'We can’t find an order with reference ' + ref + '. Check it against your confirmation page or email, or write to info@discox.co.uk.'
               : 'The order status service didn’t answer. Please try again in a few minutes.');
           });
       }
