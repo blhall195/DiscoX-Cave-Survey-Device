@@ -249,7 +249,7 @@
             <p class="panel__head">Delivering to</p>
             <ul class="address" id="address"></ul>
             <p class="address__contact" id="contact"></p>
-            <p class="fine">If anything here is wrong, reply to my email before paying and I’ll send you a corrected link. Shipping and import taxes are priced for this address.</p>
+            <p class="fine">If anything here is wrong, reply to our email before paying and we’ll send you a corrected link. Shipping and import taxes are priced for this address.</p>
           </div>
 
           <form id="payForm" method="post" class="panel">
@@ -260,13 +260,13 @@
             <input type="hidden" name="quote_id" id="quoteId" />
             <div class="paybox">
               <button type="submit" class="btn btn--primary btn--wide" id="payBtn" hidden>Pay securely</button>
-              <p class="quote__note" id="payNote" hidden>You’ll pay on Stripe’s secure card page. I’ll dispatch your order within 2 working days of payment and email you a receipt.</p>
+              <p class="quote__note" id="payNote" hidden>You’ll pay on Stripe’s secure card page. We’ll email you a receipt, and your DiscoX will be dispatched soon.</p>
             </div>
           </form>
 
-          <p class="pay__help">Questions before you pay? Reply to my email or write to
-             <a href="mailto:info@discox.co.uk">info@discox.co.uk</a>. You can cancel for a full refund before it ships,
-             or return it within 14 days of delivery &mdash; see the
+          <p class="pay__help">Questions before you pay? Reply to our email or write to
+             <a href="mailto:info@discox.co.uk">info@discox.co.uk</a>. You can cancel for a full refund before it ships;
+             after delivery you have 14 days to cancel and another 14 to send it back &mdash; see the
              <a href="/returns.html">cancellations &amp; returns policy</a>.</p>
         </div>
 
@@ -413,7 +413,7 @@
 
       if (!/^[A-Za-z0-9]{24}$/.test(token)) {
         closed('This link isn’t complete',
-          'The payment link seems to be cut short. Please open it again from my email, making sure you have all of it.');
+          'The payment link seems to be cut short. Please open it again from our email, making sure you have all of it.');
         return;
       }
       fetch(API + '/offers/' + encodeURIComponent(token), { cache: 'no-store' })
@@ -423,20 +423,20 @@
           if (d.state === 'open') return render(d);
           if (d.state === 'paid') {
             return closed('Paid — thank you',
-              'This order has been paid for. I’ll dispatch it within 2 working days of payment and you can follow it on your order status page.', d.ref);
+              'This order has been paid for. It will be dispatched soon, and you can follow it on your order status page.', d.ref);
           }
           if (d.state === 'revoked') {
             return closed('This link has been replaced',
-              'I’ve replaced or cancelled this payment link, so it can’t be used. Please use the newest link I sent you, or email me if you can’t find it. Nothing has been charged.');
+              'We’ve replaced or cancelled this payment link, so it can’t be used. Please use the newest link we sent you, or email us if you can’t find it. Nothing has been charged.');
           }
           if (d.state === 'expired') {
             return closed('This link has expired',
-              'Payment links last a couple of weeks. Reply to my email and I’ll send you a new one. Nothing has been charged.');
+              'Payment links last a couple of weeks. Reply to our email and we’ll send you a new one. Nothing has been charged.');
           }
-          closed('This link isn’t valid', d.error || 'Please open the payment link again from my email, making sure you have all of it.');
+          closed('This link isn’t valid', d.error || 'Please open the payment link again from our email, making sure you have all of it.');
         })
         .catch(function () {
-          closed('Something went wrong', 'I couldn’t load your order just now. Please check your connection and reload the page.');
+          closed('Something went wrong', 'We couldn’t load your order just now. Please check your connection and reload the page.');
         });
     })();
   </script>

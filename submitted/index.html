@@ -226,12 +226,12 @@
         <p class="mono-label" id="confirmLabel">Confirmation · Message sent</p>
         <h1 id="confirmTitle">Message <em>received</em></h1>
         <p id="confirmText">
-          Thanks for getting in touch — your message has landed straight in my
-          inbox. I'll try to get back to you soon, usually within a day or two.
+          Thanks for getting in touch — your message has landed straight in our
+          inbox. We'll try to get back to you soon, usually within a day or two.
         </p>
         <p class="success__ref" id="orderRef" hidden>
-          Your order reference is <strong id="orderRefValue"></strong>.
-          Quote it if you get in touch about this order.
+          Your reference is <strong id="orderRefValue"></strong>.
+          Quote it if you get in touch.
         </p>
         <div class="success__btns">
           <a href="/index.html" class="btn btn--primary">
@@ -256,12 +256,14 @@
       // Exactly the Worker's format, and set as text, never as HTML: anyone can
       // craft a link to this page with any ?ref= they like.
       if (!/^[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(ref)) return;
-      document.title = 'Order received — DiscoX';
-      document.getElementById('confirmLabel').textContent = 'Confirmation · Order received';
-      document.getElementById('confirmTitle').innerHTML = 'Order <em>received</em>';
+      // Without ?paid=1 this is an enquiry (the order form's "Send an enquiry"),
+      // not an order: nothing is bought until it is invoiced or paid.
+      document.title = 'Enquiry received — DiscoX';
+      document.getElementById('confirmLabel').textContent = 'Confirmation · Enquiry sent';
+      document.getElementById('confirmTitle').innerHTML = 'Enquiry <em>received</em>';
       document.getElementById('confirmText').textContent =
-        'Thanks for your order. I’ll check the details, confirm shipping to ' +
-        'your address and email you about payment, usually within a day or two.';
+        'Thanks for your enquiry. We’ll reply by email, usually within a day ' +
+        'or two, about availability, shipping to your address and payment.';
       document.getElementById('orderRefValue').textContent = ref;
       // After an order, the second button goes to their order status page; the
       // contact form keeps "Read the user guide".
@@ -270,7 +272,7 @@
       btn.textContent = 'View order status';
       document.getElementById('orderRef').hidden = false;
       document.getElementById('confirmNote').textContent =
-        'I’ll email you from info@discox.co.uk — worth checking your spam folder if nothing arrives.';
+        'We’ll email you from info@discox.co.uk — worth checking your spam folder if nothing arrives.';
       // Back from Stripe Checkout (?paid=1). This is only the redirect, not
       // proof of payment -- the Worker learns that from Stripe's webhook -- so
       // it says what the customer did, and the status page shows the truth.
@@ -280,8 +282,8 @@
         document.getElementById('confirmTitle').innerHTML = 'Thank you — order <em>placed</em>';
         document.getElementById('confirmText').textContent =
           'Thanks for your order and payment. A confirmation email with your ' +
-          'receipt is on its way. Your DiscoX will be dispatched within 2 working ' +
-          'days, and you can follow it on your order status page.';
+          'receipt is on its way. Your DiscoX will be dispatched soon, and ' +
+          'tracking will appear on your order status page automatically.';
       }
     })();
   </script>

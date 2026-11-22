@@ -477,14 +477,14 @@
     <div class="container">
       <div class="page-header__inner">
         <div class="page-header__text">
-          <p class="mono-label">Order · DiscoX v1</p>
+          <p class="mono-label">Order · DiscoX V2</p>
           <h1>Ready to go <em>surveying</em>.</h1>
-          <p>Each DiscoX is built, calibrated, and bench-tested in the UK, and dispatched by DHL within 2 working days of payment — tracked, UK and worldwide.</p>
+          <p>Each DiscoX is built, calibrated, and bench-tested before sale. Units are dispatched worldwide by DHL within a week after payment, although usually within 2 days.</p>
         </div>
         <aside class="stock-indicator" aria-label="Current stock">
           <span class="stock-indicator__label" id="stockLabel"><span class="stock-indicator__dot stock-indicator__dot--out" id="stockDot"></span><span id="stockWord">Out of stock</span></span>
           <span class="stock-indicator__count"><span id="stockCount">0</span><small>in stock</small></span>
-          <span class="stock-indicator__note" id="stockNote">Next batch of 10 due 8 December — send an enquiry and I'll let you know.</span>
+          <span class="stock-indicator__note" id="stockNote">Next batch of 10 due 8 December, units can be reserved by sending an enquiry.</span>
         </aside>
       </div>
     </div>
@@ -499,8 +499,8 @@
         <div class="order-card order-card--featured">
           <span class="order-card__tag" id="stockTag">● Out of stock</span>
           <h2>Order your DiscoX</h2>
-          <p>Every DiscoX is built, calibrated, and bench-tested in the UK, and dispatched within 2 working days of payment. Changed your mind? Cancel for a full refund before it ships, or return it within 14 days of delivery.</p>
-          <p class="order-card__stocknote" id="stockCardNote">Out of stock right now. The next batch of 10 is due 8 December — send an enquiry below and I'll email you as soon as they're ready.</p>
+          <p>Every DiscoX is built, calibrated, and bench-tested in the UK, and dispatched within a week after payment, although usually within 2 days. Changed your mind? Cancel for a full refund before it ships; after delivery you have 14 days to cancel and another 14 to send it back.</p>
+          <p class="order-card__stocknote" id="stockCardNote">Out of stock right now. The next batch of 10 is due 8 December, and you can reserve a unit by sending an enquiry below.</p>
           <div class="order-card__price">£525 <small>plus shipping</small></div>
           <ul class="order-card__list">
             <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Assembled and bench-tested</li>
@@ -514,7 +514,7 @@
         <div class="order-card">
           <span class="order-card__tag">● Order</span>
           <h2>Your details</h2>
-          <p id="formIntro">UK or international — add your address and how many you'd like, then press <strong>Get price</strong> to see shipping and import taxes for your country and pay securely by card. Rather talk first? Send an enquiry instead and I'll come back to you.</p>
+          <p id="formIntro">UK or international — add your address and how many you'd like, then press <strong>Get price</strong> to see shipping and import taxes for your country and pay securely by card. Rather talk first? Send an enquiry instead and we'll come back to you.</p>
 
           <form class="order-form" id="orderForm" action="https://discox-api.discox-api.workers.dev/order" method="POST">
             <!-- discox-api Worker (github.com/blhall195/discox-api) — stores the order for the CRM
@@ -524,7 +524,7 @@
             <div class="form-row">
               <div>
                 <label for="firstName">First name</label>
-                <input type="text" name="First name" id="firstName" />
+                <input type="text" name="First name" id="firstName" required autocomplete="given-name" />
               </div>
               <div>
                 <label for="lastName">Last name</label>
@@ -818,7 +818,7 @@
               <div class="quote__head">Choose delivery and import taxes</div>
               <div class="quote__test" id="quoteTest" hidden>Test mode — sample prices; no real payment is taken.</div>
               <div id="quoteOptions"></div>
-              <p class="quote__note">By paying you agree to the <a href="returns.html">cancellations &amp; returns policy</a>: cancel for a full refund any time before your DiscoX ships, or within 14 days of delivery.</p>
+              <p class="quote__note">By paying you agree to the <a href="returns.html">cancellations &amp; returns policy</a>: cancel for a full refund any time before your DiscoX ships; after delivery you have 14 days to cancel and another 14 to send it back.</p>
               <p class="quote__note">Prices are in GBP and held for 24 hours. Import duty and tax figures are DHL's estimate for your country; if you pay them now, nothing more is due on delivery.</p>
               <p class="quote__note" id="quoteNotes" hidden></p>
             </div>
@@ -849,11 +849,11 @@
       <div class="info-strip">
         <div class="info-strip__item">
           <h4>Dispatch</h4>
-          <p>Dispatched by DHL within 2 working days of payment, with tracking on your order status page. Cancel for a full refund any time before it ships. See the <a href="returns.html">cancellations &amp; returns policy</a>.</p>
+          <p>Dispatched by DHL within a week after payment, although usually within 2 days. Tracking appears on your order status page. Cancel for a full refund any time before it ships. See the <a href="returns.html">cancellations &amp; returns policy</a>.</p>
         </div>
         <div class="info-strip__item">
           <h4>Support</h4>
-          <p>Every device includes firmware updates and email support direct from the maker.</p>
+          <p>Every device includes firmware updates and email support direct from the people who build it.</p>
         </div>
         <div class="info-strip__item">
           <h4>Questions first?</h4>
@@ -949,13 +949,13 @@
         document.getElementById('stockWord').textContent = has ? 'In stock' : 'Out of stock';
         document.getElementById('stockCount').textContent = String(n);
         document.getElementById('stockNote').textContent = has
-          ? 'Dispatched within 2 working days.'
-          : 'Next batch of 10 due 8 December — send an enquiry and I\'ll let you know.';
+          ? 'Dispatched within a week, usually within 2 days.'
+          : 'Next batch of 10 due 8 December, units can be reserved by sending an enquiry.';
         document.getElementById('stockTag').textContent = has ? '● In stock' : '● Out of stock';
         document.getElementById('stockCardNote').hidden = has;
         document.getElementById('turnstile').hidden = !has;
         if (!has) document.getElementById('formIntro').textContent =
-          'DiscoX is out of stock right now. The next batch of 10 is due 8 December. Add your details and send an enquiry, and I’ll email you as soon as they’re ready.';
+          'DiscoX is out of stock right now. The next batch of 10 is due 8 December. Add your details and send an enquiry to reserve a unit.';
         else document.getElementById('formIntro').innerHTML = introHTML;
         getPrice.hidden = !has || !!quoteId.value;
         enquiryBtn.firstChild.textContent = has ? 'Send an enquiry instead ' : 'Send an enquiry ';

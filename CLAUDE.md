@@ -189,10 +189,17 @@ to Cloudflare.
 
 ## Voice
 
-Plain, specific, first person, no marketing language. The site explains what
-something does and what it costs you, including the drawbacks — see the laser
-module and PCB sections of `news-upgrading-the-design.html`, which is the model
-to write against.
+Plain, specific, first person **plural**, no marketing language. Always "we",
+"us", "our" -- never "I", "me", "my" (Brendan, 2026-11-22: the business should
+read as more than one person). That covers the site, the discox-api messages,
+the confirmation email and the receipt. Two things stay as they are: lines
+written in the customer's own voice ("Where is my order?", the cancellation
+form's "I hereby give notice..."), and the legal identity on `returns.html`
+and `privacy.html` -- Brendan Hall, sole trader trading as DiscoX, is the
+seller and the data controller, and that must stay stated by name. The site
+explains what something does and what it costs you, including the drawbacks --
+see the laser module and PCB sections of `news-upgrading-the-design.html`,
+which is the model to write against for substance.
 
 Things the existing copy does not do: exclamation marks, "revolutionary",
 "game-changing", "seamless", feature lists without a reason attached, or claims
